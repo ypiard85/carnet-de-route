@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma liste{% endblock %}
+
+{% block body %}
+
+
+<section class="list">
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for route in routes %}
+                    <tr>
+                        <td>{{ route.place.title }}</td>
+                        <td>{{ route.place.city.name }}</td>
+                        <td>
+
+                                <form method="post" action="{{ path('delete_route', {'id': route.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+
+                            <a href="" class="btn btn-success">Voir plus</a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </section>
+
+    {% endblock %}

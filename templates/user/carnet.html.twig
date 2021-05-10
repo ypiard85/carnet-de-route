@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon carnet de route{% endblock %}
+
+
+
+{% block body %}
+
+   {% verbatim %}
+   <div id="app">
+      <p class="alert alert-primary alert-msg" v-if="message != null">{{message}}</p>
+      <div v-else>
+      <div id="map" style="width:100vw;height:100vh; position: relative; z-index: 10;"></div>
+      <a class="btn btn-primary position-fixed fixed-bottom" href="#">Gérer mes lieux</a>
+      </div>
+  </div>
+  {% endverbatim %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script>
+
+var app  = new Vue({
+  el: "#app",
+  data: {
+    index: null,
+    url: null,
+    loc: window.location.pathname,
+    r: null,
+    i: [],
+    message: null,
+
+  },
+
+  mounted: async  function(){
+
+    /*Initialisation des variables*/
+    this.r = this.loc.split('/carnet/')
+    this.url = `http://127.0.0.1:8000/apip/route_likes?user.id=${this.r[1]}`
+    console.log(this.r)
+    //Recuperation de l'api
+    this.index = await axios.get(this.url).then(res => {
+      return res.data
+    })
+
+    if(this.index.length === 0){
+      this.message = "Votre carnet de route est vide"
+    }
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(this.index[0].place.lat, this.index[0].place.longs), // 지도의 중심좌표
+        level: 10 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+
+
+for(let p = 0; p < this.index.length; p ++ ){
+  // 마커가 표시될 위치입니다
+var markerPosition  = new kakao.maps.LatLng(this.index[p].place.lat, this.index[p].place.longs);
+
+// 마커를 생성합니다
+var marker = new kakao.maps.Marker({
+    position: markerPosition
+});
+
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
+
+var iwContent = `<a class="marker" href="https://map.kakao.com/link/to/${this.index[p].place.title},${this.index[p].place.lat},${this.index[p].place.longs}" target="_blank"><i class="fas fa-location-arrow"></i>${this.index[p].place.title}</a>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = new kakao.maps.LatLng(this.index[p].place.lat, this.index[p].place.longs); //인포윈도우 표시 위치입니다
+
+// 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({
+    position : iwPosition,
+    content : iwContent
+});
+
+// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+infowindow.open(map, marker);
+
+}
+
+  },
+
+})
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+<section class="home">
+  .
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 col-sm-12">
+        <div class="title">
+          <h1>Découvrez</h1>
+          <h3>la Corée Du Sud</h3>
+        </div>
+        <p>
+          La corée du sud est un pays regorgant de surprises , d’admiration
+          devant les paysages de cartes postals et d’étonnant lieux atipique. La
+          tranquilité, la facilité de transport et la sécurité font de la corée
+          une destination idéale pour un dépaysement total
+        </p>
+        <p class="date">
+          <img src="{{ asset('./korean.png') }}" alt="" />
+          <span>{{ h }} : {{ m }}</span>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <video
+          src="{{ asset('./South-Korea-4K.mp4') }}"
+          controls
+          preload
+          width="100%"
+          height="100%"
+        ></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home_carnet">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="title">
+          <h1>
+            Elaborer votre carnet de route
+          </h1>
+          <p>
+            Choisisez vos destinnations préférer en 1 clic et construisé votre
+            carnet de route parmis des milliers de destinations conseiller par la
+            communauté.
+          </p>
+        </div>
+        <a href="" class="btn btn-success btn-lg mb-3">Voir mon carnet de route</a>
+        <a href="/place/new" class="btn btn-outline-primary btn-lg mb-3">Ajouter une destination</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block javascripts %}
+
+{% endblock %}

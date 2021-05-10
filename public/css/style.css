@@ -1,0 +1,266 @@
+:root{
+    --title: rgb(123, 123, 226);
+    --bg-home: rgb(180, 180, 252);
+    --shadow: 1px 1px 10px rgb(155, 126, 126);
+    --padding: 100px 0 0px 0;
+}
+
+*{
+    transition: 0.3s!important;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+section{
+    padding: var(--padding);
+}
+
+/* Home (page d'accueil) */
+
+.home{
+    background: var(--bg-home);
+    border-radius: 0 0 400px 0;
+    box-shadow: var(--shadow);
+}
+
+.home p{
+    color: white;
+}
+
+.home .title{
+    color: blue;
+}
+
+
+.navbar-collapse{
+    flex-grow: 0!important;
+}
+
+.date{
+    font-size: 38px;
+    color: black!important;
+    font-weight: bold;
+}
+
+.date img{
+    width: 50px;
+    vertical-align: middle;
+}
+
+/* template de formulaire */
+.form{
+    padding: var(--padding);
+    max-width: 80%;
+    margin-bottom: 50px;
+}
+
+.form label{
+    margin: 10px 0;
+}
+
+.form .btn{
+    margin-top: 20px;
+}
+
+.custom-file{
+    margin-bottom: -30px;
+}
+
+.form_search{
+    padding-top: 100px;
+}
+
+.form_search form{
+    box-shadow: 0 0 5px black;
+    padding: 10px;
+    width: 800px;
+    max-width: 100%;
+}
+
+.form_content{
+    width: 100%;
+    display: flex;
+}
+
+.form_content *{
+    outline: none;
+}
+
+.form_content input{
+    flex: 1;
+    border: none;
+    padding: 3px;
+}
+
+.form_content button{
+    border: none;
+    background: transparent;
+}
+
+
+/* barre de navigation */
+nav{
+    z-index: 1000;
+}
+
+.navbar{
+    background: rgb(255, 255, 255);
+    box-shadow: 0 0 5px black;
+}
+
+.navbar *{
+    color: black;
+}
+
+/* Carousel */
+
+.carousel-place{
+    width: 100%;
+    position: relative;
+    height: 300px;
+}
+
+.carousel-place .card{
+    width: 250px!important;
+    height: 150px!important;
+    background-size: cover;
+    background-position: center;
+    margin-right: 5px;
+    position: relative;
+    color: black;
+    outline: none;
+}
+
+.carousel-place .card:hover .card-body{
+    background: rgba(128, 128, 128, 0.274);
+}
+
+.carousel-place .card img{
+    max-height: 100px;
+    min-height: 150px;
+}
+
+.carousel-place{
+    width: 100%;
+    position: relative;
+    height: 300px;
+}
+
+.carousel-place .card{
+    width: 250px!important;
+    height: 150px!important;
+    background-size: cover;
+    background-position: center;
+    margin-right: 5px;
+    position: relative;
+    z-index: 50;
+}
+
+
+
+.carousel-place .slick-next, .slider-nav .slick-next{
+    right: 0px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.418);
+    z-index: 100;
+    padding: 8px 10px;
+    border-radius: 50%;
+}
+
+.carousel-place .slick-prev, .slider-nav .slick-prev{
+    left: 0px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.418);
+    z-index: 100;
+    padding: 8px 10px;
+    border-radius: 50%;
+}
+
+.carousel-place .card-title{
+    color: black;
+}
+
+.carousel-item {
+    height: 500px;
+    width: 100%;
+}
+
+.carousel-item img{
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    text-align: center!important;
+}
+
+
+
+.avatar{
+    width: 80px;
+    height: 80px;
+    border-radius: 90%;
+    position: relative;
+}
+
+#user_avatar{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 90%;
+    opacity: 0;
+    z-index: 200;
+}
+
+.imgAvatar{
+    object-fit: cover;
+    object-position: center;
+    z-index: 50;
+
+    border-radius: 90%;
+    height: 80px;
+    width: 80px;
+    position: relative;
+}
+
+.commentaire img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.flash{
+    width: 400px;
+}
+
+.alert-msg{
+    width: 500px;
+    margin: 200px auto 200px auto;
+    text-align: center;
+}
+
+
+.marker i{
+    margin: auto;
+    font-size: 20px;
+    color: green;
+}
+
+.place_recommander img{
+    width: 500px;
+    max-width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+}

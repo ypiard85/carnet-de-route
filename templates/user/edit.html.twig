@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+    <div class="form container">
+        {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-2">
+            <div class="avatar">
+                {{ form_row(form.avatar)}}
+            <img src="{{ asset('./avatar') }}/{{user.avatar}}" class="imgAvatar" alt="">
+            </div>
+        </div>
+    </div>
+    {{ form_row(form.email) }}
+    {{ form_row(form.pseudo) }}
+    {{ form_row(form.description) }}
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+    </div>
+<script>
+    const inpFile = document.getElementById("user_avatar")
+    const imgAvatar = document.querySelector(".avatar img")
+    const svg = document.querySelector("svg")
+
+    inpFile.addEventListener("change", function() {
+        var file = this.files[0]
+
+        if(file){
+
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function() {
+                imgAvatar.setAttribute("src", this.result);
+            })
+            reader.readAsDataURL(file)
+        }
+    })
+</script>
+
+{% endblock %}

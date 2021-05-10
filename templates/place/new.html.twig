@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Place{% endblock %}
+
+{% block body %}
+<div class="form container">
+    <h1>Create new Place</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.images) }}
+
+    <div class="row">
+        <div class="col-md-6 col-sm-2">
+            {{ form_row(form.city) }}
+        </div>
+        <div class="col-md-2 col-sm-2">
+            {{ form_row(form.lat, {'attr' : {'readonly': 'true'}  } ) }}
+        </div>
+        <div class="col-md-2 col-sm-2">
+            {{ form_row(form.longs, {'attr' : {'readonly': 'true'}  } ) }}
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <!-- Button trigger modal -->
+            <p type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#exampleModalTwo">
+                L
+            </p>
+        </div>
+    </div>
+    <button onsubmit="submitform" type="submit" class="btn btn-success my-3">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+
+
+  <!-- Modal -->
+  <div id="kakao">
+      <div class="modal fade modalkakao" id="exampleModalTwo" tabindex="-1" aria-labelledby="exampleModalLabelTwo" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabelTwo">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="" methods="GET" onsubmit="info(event)">
+                <input type="text" placeholder="33.450701, 126.570667" name="location" class="form-control" />
+                <button class="btn btn-primary my-3">Recherche</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="map" style="width: 100%; height: 400px;" ></div>
+
+</div>
+
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
+<script src="{{ asset('./js/placenew.js') }}"></script>
+{% endblock %}
