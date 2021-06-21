@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Webmozart\Assert\Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -92,12 +93,24 @@ class User implements UserInterface
      */
     private $places;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Sujet::class, mappedBy="User")
+     */
+    private $sujets;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="user")
+     */
+    private $sujetResponses;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->routeLikes = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->places = new ArrayCollection();
+        $this->sujets = new ArrayCollection();
+        $this->sujetResponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -351,6 +364,66 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->user;
+        return array($this->user, $this->avatar);
+    }
+
+    /**
+     * @return Collection|Sujet[]
+     */
+    public function getSujets(): Collection
+    {
+        return $this->sujets;
+    }
+
+    public function addSujet(Sujet $sujet): self
+    {
+        if (!$this->sujets->contains($sujet)) {
+            $this->sujets[] = $sujet;
+            $sujet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSujet(Sujet $sujet): self
+    {
+        if ($this->sujets->removeElement($sujet)) {
+            // set the owning side to null (unless already changed)
+            if ($sujet->getUser() === $this) {
+                $sujet->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SujetResponse[]
+     */
+    public function getSujetResponses(): Collection
+    {
+        return $this->sujetResponses;
+    }
+
+    public function addSujetResponse(SujetResponse $sujetResponse): self
+    {
+        if (!$this->sujetResponses->contains($sujetResponse)) {
+            $this->sujetResponses[] = $sujetResponse;
+            $sujetResponse->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSujetResponse(SujetResponse $sujetResponse): self
+    {
+        if ($this->sujetResponses->removeElement($sujetResponse)) {
+            // set the owning side to null (unless already changed)
+            if ($sujetResponse->getUser() === $this) {
+                $sujetResponse->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

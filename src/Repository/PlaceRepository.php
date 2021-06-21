@@ -3,8 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Place;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Data\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryJoinParser;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Place|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,22 +18,68 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PlaceRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,  PaginatorInterface $paginator)
     {
         parent::__construct($registry, Place::class);
+
+        $this->paginator = $paginator;
+    }
+
+    public function findPlaceByUser($value){
+
+             $this->createQueryBuilder('u')
+                ->andWhere('u.id = :val')
+                ->setParameter('val', $value)
+                ->getQuery()
+                ->getResult()
+                ;
     }
 
     /**
-     * @return Place[] Returns an array of Place objects
+     * @return PaginationInterface
+     *
+     * Watch get aime for probleme
+     *
      */
-    public function findPlaceByUser($value)
+    public function findSearch(SearchData $search): PaginationInterface
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.user = :id')
-            ->setParameter('id', $value)
-            ->orderBy('p.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+        $query = $this->createQueryBuilder('p')
+                    ->select('p')
+                    ->join('p.city', 'c' )
+                    ->innerJoin('p.likes', 'l');
+
+
+                    if(!empty($search->q)){
+                        $query = $query
+                        ->andWhere('p.title LIKE :q')
+                        //->orWhere('c.name LIKE :q')
+                        ->setParameter('q', "%{$search->q}%" );
+                    }
+
+                    if(!empty($search->city)){
+                        $query = $query
+                        ->andWhere('c.name  LIKE :city')
+                        ->setParameter('city', $search->city );
+                    }
+
+                    if(!empty($search->filter)){
+                        switch ($search->filter) {
+                            case 'az':
+                                $query = $query->orderBy('p.title', 'ASC');
+                                break;
+                            case 'za':
+                                $query = $query->orderBy('p.title', 'DESC');
+                                break;
+                            default:
+                                $query = $query->orderBy('p.id', 'ASC');
+                                break;
+                        }
+                    }
+
+          $query = $query->getQuery();
+          return  $this->paginator->paginate($query, $search->page, 20);
+
+        }
+
+
 }

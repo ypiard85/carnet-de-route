@@ -6,23 +6,14 @@
     <h1>Edit User</h1>
     <div class="form container">
         {{ form_start(form) }}
-    <div class="row">
-        <div class="col-md-2">
-            <div class="avatar">
-                {{ form_row(form.avatar)}}
-            <img src="{{ asset('./avatar') }}/{{user.avatar}}" class="imgAvatar" alt="">
-            </div>
-        </div>
-    </div>
-    {{ form_row(form.email) }}
-    {{ form_row(form.pseudo) }}
     {{ form_row(form.description) }}
-
-    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    {{ form_row(form.pseudo, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
+    {{ form_row(form.email, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
+        <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+    {{ form_end(form) }}
     </div>
 <script>
-    const inpFile = document.getElementById("user_avatar")
+    /*const inpFile = document.getElementById("user_avatar")
     const imgAvatar = document.querySelector(".avatar img")
     const svg = document.querySelector("svg")
 
@@ -38,7 +29,7 @@
             })
             reader.readAsDataURL(file)
         }
-    })
+    })*/
 </script>
 
 {% endblock %}

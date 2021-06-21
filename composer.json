@@ -13,10 +13,14 @@
         "doctrine/doctrine-bundle": "2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
+        "fresh/vich-uploader-serialization-bundle": "~3.1",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
+        "knplabs/knp-paginator-bundle": "^5.5",
+        "knplabs/knp-time-bundle": "^1.16",
         "nelmio/cors-bundle": "^2.1",
         "nesbot/carbon": "^2.46",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "ps/image-optimizer": "^2.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",
@@ -45,10 +49,12 @@
         "symfony/ux-dropzone": "^1.2",
         "symfony/validator": "5.2.*",
         "symfony/web-link": "5.2.*",
+        "symfony/workflow": "5.2.*",
         "symfony/yaml": "5.2.*",
         "symfonycasts/verify-email-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "ublaboo/datagrid": "^6.8"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.2",

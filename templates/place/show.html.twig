@@ -2,96 +2,146 @@
 
 {% block title %}Place{% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+{% endblock %}
 
 {% block body %}
-    <div class="viewone">
-        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for images in place.images %}
-              <div class="carousel-item">
-                <img src="{{ images }}" alt="">
-              </div>
-                {% endfor %}
+<div class="show-place">
+
+  <!--SWIPER JS-->
+  <div class="viewone">
+         <div id="carouselExampleFade" class="carousel slide carousel-fade posiiton-relative" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            {% for rows in place.images %}
+            <div class="carousel-item">
+              <img src="{{ rows }}" class="d-block w-100" alt="...">
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+            {% endfor %}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+          <div id="meteo-temp" class="d-flex position-absolute bottom-0 align-items-center end-0" style="z-index: 100; margin-right: 20px">
+
           </div>
         </div>
-    <div>
+</div>
 
+  <!--Information du lieu-->
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-6  bg-light border border-5 border-white">
+    <div class="py-3 px-3 m-3">
+      <div style="padding-bottom: 10px" class="title border border-top-0 border-start-0 border-end-0 border-dark">
+        <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mb-3 fw-bold text-primary"><i class="fas fa-map-marker-alt"></i> {{ place.city.name }}</a>
+        <p class="fs-4">{{ place.title }}</p>
+        <a href="{{ path('user_show', {'id' : place.user.id }) }}" class="fw-bold"><i class="fas fa-user"></i> {{ place.user.pseudo }}</a>
+      </div>
 
+      <p class="mt-3">{{ place.description | nl2br }}</p>
 
-<div class="container mt-4 p-3">
-    <div class="row border-bottom">
-        <div class="col-md-8">
-          <div class="d-flex align-content-center">
-            <div>
-              {% if app.user and place.isRouteUser(app.user) %}
-              <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-danger js_like">J'annule</a>
-              {% else %}
-              <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-primary js_like">Je veux visiter</a>
-              {% endif %}
-            </div>
-            <div class="align-items-center">
-              <p class="align-items-center ms-3">
-                {% if app.user and place.isLike(app.user) %}
-                <a href="{{ path('like_place', { 'id': place.id } ) }}" class="fas fa-heart fs-2 text-danger like"></a>
-                {% else %}
-                <a href="{{ path('like_place', { 'id': place.id } ) }}" class="far fa-heart fs-2 text-danger like"></a>
-                {% endif %}
-                <span id="is-like">{{ place.likes | length }}</span>
-              </p>
-            </div>
-          </div>
-            <h1>{{ place.title }}</h1>
+      <div class="d-flex justify-content-center align-content-center">
+        <div>
+          {% if app.user and place.isRouteUser(app.user) %}
+          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-danger js_like">J'annule</a>
+          {% else %}
+          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-primary js_like">Je veux visiter</a>
+          {% endif %}
         </div>
-        <div class="col-md-4">
-            <h4> {{ place.user.pseudo }} </h4>
+        <div class="align-items-center">
+          <p class="align-items-center ms-3">
+            {% if app.user and place.isLike(app.user) %}
+            <a href="{{ path('like_place', { 'id': place.id } ) }}" class="fas fa-heart fs-2 text-danger like"></a>
+            {% else %}
+            <a href="{{ path('like_place', { 'id': place.id } ) }}" class="far fa-heart fs-2 text-danger like"></a>
+            {% endif %}
+            <span id="is-like">{{ place.likes | length }}</span>
+          </p>
         </div>
+      </div>
     </div>
-    <div class="row border-bottom">
-        <div class="col py-4">
-            <p>{{ place.description | nl2br }}</p>
-        </div>
-    </div>
-    <h4 class="py-3">Commentaires</h4>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" onclick="submitform" class="btn btn-outline-success my-3"><i class="fas fa-paper-plane"></i></button>
-  {{ form_end(form) }}
+  </div>
+  <div id="map" class="col-md-6 col-12 position-relative border border-5 border-white" style="background-color: rgba(255, 255, 255, 0.808); height: 300px;" >
+    <div style="position: absolute; top: 0; bottom: 0; left:0; right: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); z-index: 10;"></div>
+  </div> <!-- 지도를 표시할 div 입니다 -->
+</div>
+</div>
+
+<!--MAP DE LA PLACE-->
+<div class="container-fluid">
+  <div class="row">
+    <div id="roadview" class="col-md-12 col-12 border border-5 border-white" style="height:300px"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+  </div>
+</div>
+
+
+
+<div class="container mb-5 ">
+    <h4 class="py-3">Commentaires - {{ findComment | length  }} </h4>
+        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcomment">
+      <i class="far fa-comment"></i>
+      Commenter
+    </button>
 
     {% for fd in findComment %}
-    <div class="commentaire border rounded p-3 mb-3">
-      <div class="d-flex align-items-center border-bottom">
-            <img src="{{ asset('./avatar/')}}{{ fd.user.avatar }}" alt="">
-            <p class="mx-3">{{ fd.user.pseudo }} <br> {{  fd.date }} </p>
-          </div>
+
+    <div class="commentaire border  border-bottom border-top-0 border-start-0 border-end-0 p-3 mb-3">
+      <div>
+            <a class="fw-bold" href="{{ path('user_show', {'id': fd.user.id}) }}"><i class="fas fa-user"></i> {{ fd.user.pseudo }} </a><br>
+            <small class="text-decoration-underline">{{  fd.date }}</small>
+        </div>
       <p class="py-2">{{ fd.content | raw | nl2br }}</p>
     </div>
     {% endfor %}
+
+
+<!-- Modal COMMENTAIRE-->
+<div class="modal fade" id="modalcomment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+          <button type="submit" onclick="submitform" class="btn btn-outline-success my-3"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+
+
+
+</div>
 </div>
 
     {% endblock %}
 
 {% block javascripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="{{ asset('./js/carousel.js') }}"></script>
+
 <script>
+
   function onClickBtn(event){
       event.preventDefault();
 
       const url = this.href;
 
       const btnlike = document.querySelector('.js_like');
-
-
 
       axios.get(url).then(res => {
 
@@ -137,9 +187,125 @@
   document.querySelector('.fa-heart').addEventListener('click', isLiked)
 
 
+  async function getPlace()
+  {
 
+    var urlname = window.location.pathname
+    var url = urlname.split('/place/')
+
+
+
+    let api = `http://127.0.0.1:8000/apip/places`
+
+    let index =  await axios.get(api).then(res => {
+        return res.data
+      })
+
+      var result =  index.filter(results => results['id'] == url[1] )
+
+      var result = result[0]
+
+      return result;
+
+    }
+
+    async function getMeteo(){
+      var result = await getPlace();
+      var apikey = "2b1ec7a5b325cfbf7c1bc18b936df3f3"
+      var urlmeteo = `http://api.openweathermap.org/data/2.5/weather?q=${result.city.name}&units=metric&appid=2b1ec7a5b325cfbf7c1bc18b936df3f3`
+
+      try {
+       await axios.get(urlmeteo).then(res => {
+           var index = res.data
+
+          var htmlContent =
+          `<img width="100" src="http://openweathermap.org/img/wn/${index.weather[0].icon}.png" alt="${result.city.name}">
+            <p class="fs-4">
+              <span>${ Math.ceil(index.main.temp)} °C</span>
+            </p>
+            `
+           document.getElementById('meteo-temp').innerHTML = htmlContent
+
+
+
+        })
+      } catch (error) {
+        console.log(error)
+      }
+
+      var intl = new Intl.DateTimeFormat("kr-KR", {weekday:"long"});
+      var dt= new Date()
+    }
+
+  getMeteo()
+
+  document.querySelector('.viewone .carousel-item').classList.add('active')
+
+</script>
+
+<script>
+
+  async function viewMap(){
+
+    let place = await getPlace();
+
+    console.log(place);
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapCenter = new kakao.maps.LatLng(place.lat, place.longs), // 지도의 중심 좌표
+    mapOption = {
+        center: mapCenter, // 지도의 중심 좌표
+        level: 13 // 지도의 확대 레벨
+    };
+
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    var myPosition = new kakao.maps.LatLng(place.lat, place.longs);
+
+    // 지도에 올릴 마커를 생성합니다.
+    var mMarker = new kakao.maps.Marker({
+      position: myPosition, // 지도의 중심좌표에 올립니다.
+      map: map // 생성하면서 지도에 올립니다.
+    });
+    console.log(mMarker);
+
+var rvContainer = document.getElementById('roadview'); // 로드뷰를 표시할 div
+
+var rv = new kakao.maps.Roadview(rvContainer); // 로드뷰 객체 생성
+var rc = new kakao.maps.RoadviewClient(); // 좌표를 통한 로드뷰의 panoid를 추출하기 위한 로드뷰 help객체 생성
+var rvPosition = new kakao.maps.LatLng(place.lat, place.longs);
+
+rc.getNearestPanoId(rvPosition, 50, function(panoid) {
+    rv.setPanoId(panoid, rvPosition);//좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
+});
+
+// 로드뷰 초기화 이벤트
+kakao.maps.event.addListener(rv, 'init', function() {
+
+    // 로드뷰에 올릴 마커를 생성합니다.
+    var rMarker = new kakao.maps.Marker({
+        position: myPosition,
+        map: rv //map 대신 rv(로드뷰 객체)로 설정하면 로드뷰에 올라갑니다.
+    });
+    rMarker.setAltitude(6); //마커의 높이를 설정합니다. (단위는 m입니다.)
+    rMarker.setRange(100); //마커가 보일 수 있는 범위를 설정합니다. (단위는 m입니다.)
+
+    // 로드뷰 마커가 중앙에 오도록 로드뷰의 viewpoint 조정합니다.
+    var projection = rv.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
+
+    // 마커의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
+    var viewpoint = projection.viewpointFromCoords(rMarker.getPosition(), rMarker.getAltitude());
+    rv.setViewpoint(viewpoint); //로드뷰에 뷰포인트를 설정합니다.
+});
+
+  }
+
+viewMap();
 
 </script>
 
 
-{% endblock %}
+
+  {% endblock %}

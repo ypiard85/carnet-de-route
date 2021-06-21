@@ -1,0 +1,19 @@
+{% extends 'template-forum.html.twig' %}
+
+{% block title %}Hello ForumController!{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        <div class="form-content">
+            <h1 class="mb-3">Ecrire un sujet</h1>
+            {{ form_start(form) }}
+            {{ form_row(form.title)}}
+            {{ form_row(form.categorie)}}
+            {{ form_row(form.content, {'attr' : {'rows' : '10'} })}}
+            <button class="btn btn-primary">Créer</button>
+            {{ form_end(form) }}
+            <div>
+    </section>
+
+{% endblock %}

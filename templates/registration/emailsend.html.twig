@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Email envoyé{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+
+<section class="container">
+    <div class="card text-white fw-bold p-3" style="background-color: rgb(180, 180, 252); width: 800px; max-width: 100%; margin: auto;">
+        <p>
+            <span class="fs-2"> Héhé ! Bienvenue dans la communauté de ...</span> <br>
+            Nous sommes ravis de t'avoir enfin parmis nous, afin de valider ton inscription, un email t'as été envoyer. <br>
+            Si tu vois se mail n'oublie pas de cliquer sur le lien pour activer ton compte. <br>
+            <span class="fs-3">A tout de suite. </span>
+        </p>
+        <a class="text-dark" href="{{ path('home') }}">Revenir à l'accueil</a>
+    </div>
+</section>
+
+
+{% endblock %}

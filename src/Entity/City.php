@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Ublaboo\DataGrid\DataGrid;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CityRepository;
 use Doctrine\Common\Collections\Collection;
@@ -23,7 +24,7 @@ class City
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"routes:read"})
+     * @Groups({"routes:read", "place:read"})
      */
     private $name;
 
@@ -87,4 +88,6 @@ class City
     public function __toString(){
         return $this->name;
     }
+
+
 }

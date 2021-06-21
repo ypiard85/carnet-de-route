@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use Carbon\Carbon;
+use App\Entity\City;
 use App\Entity\Like;
 use App\Entity\User;
 use App\Entity\Image;
 use App\Entity\Place;
 use App\Entity\Comment;
 use App\Form\PlaceType;
+use App\Data\SearchData;
+use App\Form\SearchType;
 use App\Entity\RouteLike;
 use App\Form\CommentType;
 use App\Repository\CityRepository;
@@ -19,7 +22,6 @@ use App\Repository\RouteLikeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -28,16 +30,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PlaceController extends AbstractController
 {
 
+
     /**
      * @Route("/carnet-de-route", name="carnet_de_route", methods={"GET"})
      */
-    public function index(PlaceRepository $placeRepository, cityRepository $city): Response
+    public function index(PlaceRepository $placeRepository, cityRepository $city, Request $request): Response
     {
+
+        $data = new SearchData();
+
         $villes = $city->CityByName();
 
+        $form = $this->createForm(SearchType::class, $data);
+        $form->handleRequest($request);
+
+        $places = $placeRepository->findSearch($data);
+        $data->page = $request->get('page', 1);
+
         return $this->render('place/index.html.twig', [
-            'places' => $placeRepository->findAll(),
-            'villes' => $villes
+            'places' => $places,
+            'villes' => $villes,
+            'form' => $form->createView()
         ]);
     }
 
@@ -51,12 +64,13 @@ class PlaceController extends AbstractController
 
         $place = new Place();
 
-        $user = new User();
+
 
         $form = $this->createForm(PlaceType::class, $place);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+
+        if($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
             //on récupere les images
             foreach($images as $image){
@@ -77,7 +91,6 @@ class PlaceController extends AbstractController
             $place->setUser($this->getUser());
             $em->persist($place);
             $em->flush();
-
             return $this->redirectToRoute('carnet_de_route');
         }
 
@@ -90,7 +103,7 @@ class PlaceController extends AbstractController
     /**
      * @Route("/{id}", name="place_show", methods={"POST", "GET"})
      */
-    public function show(Request $request, Place $place, UserInterface $user, CommentRepository $cr): Response
+    public function show(Request $request, Place $place, CommentRepository $cr): Response
     {
 
 

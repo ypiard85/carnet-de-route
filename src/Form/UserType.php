@@ -7,25 +7,43 @@ use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UserType extends AbstractType
 {
 
 
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
 
 
         $builder
             ->add('email')
             ->add('pseudo')
-            ->add('avatar', FileType::class, ['attr' => ['class' => 'form-group' ], 'label' => false, 'data_class' => null, 'required' => false])
+            ->add('avatar', FileType::class,
+                ['attr' => ['class' => 'form-group' ],
+                'label' => false, 'data_class' => null, 'required' => false,
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => "L'image doit être de type .png, .jpg, .jpeg",
+                    ])
+                ],
+                ])
+
             ->add('description', TextareaType::class, ['attr' => ['rows' => '10'] ] )
+
             ;
 
     }
@@ -36,7 +54,6 @@ class UserType extends AbstractType
 
         $resolver->setDefaults([
             'data_class' => User::class,
-            'avatar' => UserInterface::class,
         ]);
     }
 }

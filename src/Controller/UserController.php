@@ -77,48 +77,52 @@ class UserController extends AbstractController
     /**
      * @Route("/{pseudo}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user, UserInterface $ui): Response
+    public function edit(Request $request, User $user, UserRepository $userrepo): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if($form['avatar']->getData() == null ){
-            $user->setAvatar($ui->getAvatar());
-        }
+
+
 
         $image = $form->get('avatar')->getData();
 
-                if ($form->isSubmitted() && $form->isValid()) {
-                            //on récupere les images
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                        if($form->get('avatar')->getData() !== $ui->getAvatar() ){
+                //on récupere les images
 
-                                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-                                //on copie le fichier dans le dossier où l'image dois se Uploader
-                                $image->move(
-                                    $this->getParameter('user_avatar'),
-                                    $fichier
-                                );
-                                $user->setAvatar($fichier);
-                            }
+                if($image !== $user->getAvatar() ){
 
+                    $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                    //on copie le fichier dans le dossier où l'image dois se Uploader
+                    $image->move(
+                        $this->getParameter('user_avatar'),
+                        $fichier
+                    );
 
-                                //ajour d'un message flash
-                                $this->addFlash(
-                                    'notice',
-                                    'Profil mis a jour'
-                                );
-
-                                $this->getDoctrine()->getManager()->flush();
-
-                                return $this->redirectToRoute('user_index');
-
-                        }
+                    $user->setAvatar($fichier);
+                }else if($image == null){
+                    $user->setAvatar($request->request->get('user[filename]'));
+                }
 
 
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
+
+                //ajour d'un message flash
+                $this->addFlash(
+                    'notice',
+                    'Profil mis a jour'
+                );
+
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('user_index');
+            }
+
+
+
+            return $this->render('user/edit.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
         ]);
     }
 

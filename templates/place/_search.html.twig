@@ -1,0 +1,36 @@
+<section class=" container">
+
+<form action="" class="row">
+  <div class="col-md-6 m-auto">
+    <input type="text" class="form-control" placeholder="Recherchez une destination" name="q">
+  </div>
+</form>
+
+
+  <h5><i class="fas fa-sliders-h"></i> Filtrer</h5>
+
+  <div class="row mt-3 mb-5 d-flex align-items-center">
+    <form action="" class="d-flex col-md-3 col-6">
+      <input  placeholder="Seoul...." list="ice-cream-flavors" class="form-control" id="ice-cream-choice" name="city"/>
+      <datalist id="ice-cream-flavors">
+        {% for ville in villes %}
+          <option value="{{ ville }}"></option>
+        {% endfor %}
+        </datalist>
+    </form>
+    <form action="" method="get" class='d-flex col-md-1 col-2'>
+      <input type="hidden" name="filter" value="aime" >
+      <button class="btn bg-transparent"><i class="fab text-danger fa-gratipay fs-1"></i></button>
+    </form>
+    <div class="col-md-1 col-1 d-flex">
+      <form action="" method="get" class=''>
+        <input type="hidden" name="filter" value="az">
+        <button type="submit" class="btn btn-primary border border-bottom-0 border-top-0" style="margin-right: -5px"><i class="fas fa-sort-alpha-up"></i></button>
+      </form>
+      <form action="" method="get">
+        <input type="hidden" name="filter" value="za">
+        <button type="submit" class="btn btn-primary border border-bottom-0 border-top-0"><i class="fas fa-sort-alpha-down-alt"></i></button>
+      </form>
+    </div>
+  </div>
+  </section>

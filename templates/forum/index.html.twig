@@ -1,0 +1,57 @@
+{% extends 'template-forum.html.twig' %}
+
+{% block title %}Hello ForumController!{% endblock %}
+
+{% block body %}
+
+<section class="container mb-5">
+    <div class="forum">
+        <div class="content mb-2">
+            <h1 class="mb-5">Sujets par catégories</h1>
+            {% include 'forum/_search.html.twig' %}
+            <div class="btn-filtre d-flex justify-content-between">
+                <div class="left">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{{ path('forum_accueil') }}" type="button" class="btn btn-info border">Categorie</a>
+                        <a href="{{ path('forum_sujet') }}"  type="button" class="btn btn-info border">Derniers sujets</a>
+                      </div>
+                    </div>
+                <div class="right">
+                    <a href=" {{ path('sujet_new') }} " class="btn fw-bold" style="background-color: orange; color: white;">Nouveau sujet</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <table>
+        {% for categorie in categories %}
+        <tr class="categorie_table">
+            <td class="text-center left p-3">
+                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">
+                    {% if categorie.categorie == 'logement' %}
+                    <h5 class="badge badge-small bg-secondary">{{ categorie.categorie }}</h5>
+                    {% elseif categorie.categorie == 'visa' %}
+                    <h5 class="badge bg-warning">{{ categorie.categorie }}</h5>
+                    {% elseif categorie.categorie == 'vie quotidienne' %}
+                    <h5 class="badge bg-success">{{ categorie.categorie }}</h5>
+                    {% elseif categorie.categorie == 'transport' %}
+                    <h5 class="badge bg-danger">{{ categorie.categorie }}</h5>
+                    {% endif%}
+                </a>
+            </td>
+            <td class="center text-left p-3">
+                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.description }}</a>
+            </td>
+            <td class="right text-center pt-3 d-md-block d-none">
+                <p><i class="far fa-file-alt fs-3" title="Sujet"></i><br>
+                    {{ categorie.sujets | length }}
+                </p>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</section>
+
+
+{% endblock %}

@@ -28,11 +28,9 @@ class LikeRepository extends ServiceEntityRepository
             ->andWhere('l.user = :val')
             ->setParameter('val', $value)
             ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
+            //->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-
-
 }

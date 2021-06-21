@@ -3,10 +3,12 @@
     --bg-home: rgb(180, 180, 252);
     --shadow: 1px 1px 10px rgb(155, 126, 126);
     --padding: 100px 0 0px 0;
+    --color-table-border: rgb(24, 24, 208);
 }
 
 *{
     transition: 0.3s!important;
+    text-decoration: none!important;
 }
 
 a{
@@ -53,20 +55,20 @@ section{
     vertical-align: middle;
 }
 
-/* template de formulaire */
+/* template de formulaire*/
+
+.auth{
+    padding: 50px 0;
+    width: 80%;
+}
+
 .form{
-    padding: var(--padding);
-    max-width: 80%;
-    margin-bottom: 50px;
+    width: 700px;
+    max-width: 100%;
+    margin: auto;
 }
 
-.form label{
-    margin: 10px 0;
-}
-
-.form .btn{
-    margin-top: 20px;
-}
+/*
 
 .custom-file{
     margin-bottom: -30px;
@@ -118,89 +120,101 @@ nav{
     color: black;
 }
 
-/* Carousel */
 
-.carousel-place{
+.card-bell{
     width: 100%;
-    position: relative;
-    height: 300px;
-}
-
-.carousel-place .card{
-    width: 250px!important;
-    height: 150px!important;
-    background-size: cover;
-    background-position: center;
-    margin-right: 5px;
-    position: relative;
-    color: black;
-    outline: none;
-}
-
-.carousel-place .card:hover .card-body{
-    background: rgba(128, 128, 128, 0.274);
-}
-
-.carousel-place .card img{
-    max-height: 100px;
-    min-height: 150px;
-}
-
-.carousel-place{
-    width: 100%;
-    position: relative;
-    height: 300px;
-}
-
-.carousel-place .card{
-    width: 250px!important;
-    height: 150px!important;
-    background-size: cover;
-    background-position: center;
-    margin-right: 5px;
-    position: relative;
-    z-index: 50;
-}
-
-
-
-.carousel-place .slick-next, .slider-nav .slick-next{
-    right: 0px;
-    background-color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.418);
-    z-index: 100;
-    padding: 8px 10px;
-    border-radius: 50%;
-}
-
-.carousel-place .slick-prev, .slider-nav .slick-prev{
-    left: 0px;
-    background-color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.418);
-    z-index: 100;
-    padding: 8px 10px;
-    border-radius: 50%;
-}
-
-.carousel-place .card-title{
-    color: black;
-}
-
-.carousel-item {
-    height: 500px;
-    width: 100%;
-}
-
-.carousel-item img{
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
     display: block;
+    position: relative;
+}
+.card-bell img{
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
-    text-align: center!important;
 }
 
+.card-bell-body{
+    position: absolute;
+    top: 0;
+    bottom:0;
+    text-align: center;
+}
+
+.card_img{
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    -o-object-position: center;
+    -moz-object-position: center;
+    -o-object-fit: cover;
+    -moz-object-fit: cover;
+    width: 100%;
+}
+
+/*
+CAROUSEL
+*/
+
+.viewone{
+    margin: 50px 0 0px 0;
+    padding: 10px ;
+    position:relative;
+}
+
+.viewone img{
+    height: 100%;
+}
+
+.viewone .carousel-inner{
+    height: 500px;
+}
+
+.viewone .carousel-inner img{
+    height:500px;
+    object-fit: cover;
+}
+
+
+/*FILTER SEARCH*/
+
+
+@media screen and (min-width: 300px) AND (max-width: 710px)
+{
+    .place_one .swiper-slide{
+        height: 100%;
+        width: 100%;
+    }
+
+    .viewone .carousel-inner{
+        height: 300px;
+    }
+
+    .viewone .carousel-inner img{
+        height: 300px;
+        object-fit: cover;
+    }
+}
+
+/*
+END CAROUSEL
+*/
+
+/*PLACE*/
+
+.place .card .card-body a:hover{
+    text-decoration: none!important;
+}
+
+.place .card-head{
+    overflow: hidden;
+}
+
+.place .card:hover img{
+   transform: scale(1.2);
+   -o-transform: scale(1.2);
+   -moz-transform: scale(1.2);
+
+}
 
 
 .avatar{
@@ -257,10 +271,55 @@ nav{
     color: green;
 }
 
-.place_recommander img{
-    width: 500px;
-    max-width: 100%;
-    height: 300px;
-    object-fit: cover;
-    object-position: center;
+table .left{
+    width: 10%;
+    border-right: 2px solid var(--color-table-border);
+}
+
+table .right{
+    min-width: 100px;
+    border-left: 2px solid var(--color-table-border);
+}
+
+table .middle{
+    width: 100%;
+    padding-left: 15px;
+}
+
+table .categorie_table{
+    border: 2px solid var(--color-table-border);
+}
+
+.sujet_table{
+    box-shadow: 0 0 5px rgba(151, 151, 151, 0.521);
+    display: flex;
+}
+
+.sujet_table .left{
+    width: 150px;
+    text-align: center;
+}
+
+.sujet_table .center{
+    margin: 50px 10px;
+}
+
+
+.show-place .meteo{
+    background-image: linear-gradient(180deg, rgba(249,249,255,0.21900097929796913) 100%, rgba(200,200,222,0.41507941067051823) 100%), url('../galery/clouds.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.show-place .meteo .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }

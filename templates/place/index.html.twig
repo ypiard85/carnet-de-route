@@ -2,100 +2,56 @@
 
 {% block title %}Place index{% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+{% endblock %}
 
 {% block body %}
 
-<div class="container form_search d-flex justify-content-center">
-  <form action="">
-      <div class="form_content">
-          <input type="text" placeholder="Rechercher une destination">
-          <button type="submit"><i class="fas fa-search"></i></button>
-      </div>
-  </form>
-</div>
-
-
-<section class=" container">
-  <p>
-  <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Recherche par ville
-  </button>
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    <div class="list-group">
-    {% for ville in villes %}
-  <a href="" class="list-group-item list-group-item-action text-capitalize">{{ ville }}</a>
-  {% endfor %}
-</div>
-  </div>
-</div>
-</section>
-
-
-<section class="place_recommander container mb-5">
-  <h1 class="mb-4">Nos recommandation de la semaine</h1>
-  <div class="row align-items-center">
-    <a href="#" class="col-md-4 col-sm-12">
-        <img src="{{ places[0].images[0].name }}" alt="">
-        <p class="mt-2"><i class="fas fa-map-marker-alt me-2"></i> {{ places[0].city }} </p>
-        <p class="fs-5"> {{ places[0].title }} </p>
-    </a>
-    <a href="#" class="col-md-4 col-sm-12">
-        <img src="{{ places[0].images[0].name }}" alt="">
-        <p class=" mt-2"><i class="fas fa-map-marker-alt me-2"></i> {{ places[0].city }} </p>
-        <p class=" fs-5"> {{ places[0].title }} </p>
-    </a>
-    <a href="#" class="col-md-4 col-sm-12">
-        <img src="{{ places[0].images[0].name }}" alt="">
-        <p class="mt-2"><i class="fas fa-map-marker-alt me-2"></i> {{ places[0].city }} </p>
-        <p class=" fs-5"> {{ places[0].title }} </p>
-    </a>
-  </div>
-</section>
-
+{% include 'place/_search.html.twig' %}
 
 
 <div class="place container mb-5">
-    <h1 class="mb-4">Idée de lieux à visiter</h1>
-      <div class="carousel-place d-flex align-items-center">
-        {% for place in places %}
-            <a href="/place/{{ place.id }}" class="card text-black">
-            <img src="{{ place.images[0].name }}" class="card-img" alt="...">
-            <div class="card-body">
-              <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i> {{ place.city }} </p>
-              <p class="card-text fs-5"> {{ place.title }} </p>
-            </div>
-            </a>
-          {% endfor %}
-        </div>
-    </div>
-  </div>
 
-<div class="place container">
-  <h1 class="mb-4">Lieux les plus <i class="fas fa-heart text-danger" style="font-size: 48px;"></i></h1>
-      <div class="carousel-place d-flex align-items-center">
-        {% for place in places %}
-            <a href="/place/{{ place.id }}" class="card text-black">
-            <img src="{{ place.images[0].name }}" class="card-img" alt="...">
-            <div class="card-body">
-              <p class="card-text"><i class="fas fa-map-marker-alt me-2"></i> {{ place.city }} </p>
-              <p class="card-text fs-5"> {{ place.title }} </p>
-            </div>
-            </a>
-          {% endfor %}
-        </div>
-    </div>
-  </div>
+    <div class="container">
+          <div class="row">
+          {% if places %}
+          {% for place in places %}
+          <div class="col-md-3 col-6 mb-3">
+            <a href="/place/{{ place.id }}" class="card" style="width: 500px; max-width: 100%;">
+              <div class="position-absolute p-2 text-danger fs-5">
+                <i class="fas fa-heart"></i> <span>{{ place.likes | length }}</span>
+              </div>
+              <div class="card-head">
+                <img src="{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
+              </div>
 
+              <div class="card-body">
+                <p class="card-title text-dark fs-6">{{ place.title }}</p>
+                <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ place.city }}</h6>
+              </div>
+
+            </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Aucun résultat trouvé</p>
+        {% endif %}
+        <div>
+          {{ knp_pagination_render(places) }}
+        </div>
+      </div>
+</div>
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('./js/slick/slick.js') }}"></script>
-<script src=" {{ asset('./js/carousel.js')}}"></script>
-<script>
-  window.onload = CarouselPlace();
-</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+
 {% endblock %}
 
 {% endblock %}

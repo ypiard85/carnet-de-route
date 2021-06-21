@@ -28,22 +28,24 @@
           <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Blog</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Lieux
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{ path('carnet_de_route') }}">Voir tout</a></li>
+              <li><a class="dropdown-item" href="{{ path('place_new') }}">Ajouter un lieu</a></li>
+            </ul>
+          </li>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ path('carnet_de_route') }}">Carnet de route</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Forum</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Discussion</a>
+          <a class="nav-link" href=" {{ path('forum_accueil') }} ">Forum</a>
         </li>
         <li class="nav-item">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search text-white"></i>
           </button>
-       </li>
+       </li>  
         {% if app.user %}
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,12 +78,10 @@
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
             <div class="modal-body">
-                ...
+                <form action="{{ path('carnet_de_route') }}" method="get">
+                    <input type="text" name="q" class="form-control" placeholder="Recherchez une destination">
+                </form>
             </div>
           </div>
         </div>

@@ -5,14 +5,28 @@ namespace App\Entity;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PlaceRepository;
+use JMS\Serializer\Annotation\Exclude;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
+use JMS\Serializer\Annotation as JMS;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+
 
 /**
  * @ORM\Entity(repositoryClass=PlaceRepository::class)
+ * @Vich\Uploadable
+ * @Fresh\VichSerializableClass
+ * @ApiResource(
+ *  normalizationContext={"groups"={"place:read"}},
+ *  collectionOperations={"get"},
+ *  itemOperations={"get"}
+ * )
+ * @ApiFilter(NumericFilter::class, properties={"places.id"})
  */
 class Place
 {
@@ -20,20 +34,20 @@ class Place
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"routes:read"})
+     * @Groups({"routes:read", "place:read" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"routes:read"})
+     * @Groups({"routes:read", "place:read"})
      */
     private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="places")
-     *@Groups({"routes:read"})
-     *@ORM\JoinColumn(onDelete="CASCADE")
+     * @Groups({"routes:read", "place:read"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $city;
 
@@ -44,18 +58,21 @@ class Place
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="place", cascade={"persist"})
+     * @var File|null
+     *
+     * @Vich\UploadableField(mapping="lieux_img", fileNameProperty="photoLieuName")
      */
     private $images;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"routes:read"})
+     * @Groups({"routes:read", "place:read"})
      */
     private $lat;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"routes:read"})
+     * @Groups({"routes:read", "place:read"})
      */
     private $longs;
 
