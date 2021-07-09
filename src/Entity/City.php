@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Ublaboo\DataGrid\DataGrid;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use App\Repository\CityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CityRepository::class)
+ *
  */
 class City
 {
@@ -19,17 +21,21 @@ class City
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"routes:read"})
+     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"routes:read", "place:read"})
+     *
+     *
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Place::class, mappedBy="city")
+     *
      */
     private $places;
 

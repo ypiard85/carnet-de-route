@@ -7,12 +7,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class Twig_Extensions_Extension_Date extends Twig_Extension
 {
     public static $units = array(
-        'y' => 'year',
-        'm' => 'month',
-        'd' => 'jours',
-        'h' => 'hour',
-        'i' => 'm',
-        's' => 'second',
+        'y' => 'ans',
+        'm' => 'mois',
+        'd' => 'jour',
+        'h' => 'heure',
+        'i' => 'minutes',
+        's' => 'seconde',
     );
 
     /**

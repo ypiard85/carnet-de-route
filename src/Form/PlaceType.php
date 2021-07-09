@@ -3,7 +3,7 @@
 namespace App\Form;
 
 
-use App\Entity\Place;                          
+use App\Entity\Place;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,8 +25,8 @@ class PlaceType extends AbstractType
                 'required' => true,
             ])
             ->add('city')
-            ->add('lat', TextType::class, ['required' => true])
-            ->add('longs', TextType::class, ['required' => true])
+            ->add('lat', TextType::class, ['required' => true, 'label' => 'Latitude'])
+            ->add('longs', TextType::class, ['required' => true, 'label' => 'longitude'])
         ;
     }
 

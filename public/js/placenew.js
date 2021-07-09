@@ -40,7 +40,7 @@ other.style.display = 'none';
     var long = Number(po[1])
 
 
-if(getLocation != null){
+if(getLocation != ''){
     other.style.display = 'block';
     document.querySelector('#place_lat').value = lat
     document.querySelector('#place_longs').value = long

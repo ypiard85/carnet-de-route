@@ -1,36 +1,32 @@
-<section class=" container">
 
-<form action="" class="row">
-  <div class="col-md-6 m-auto">
-    <input type="text" class="form-control" placeholder="Recherchez une destination" name="q">
-  </div>
-</form>
+  <form action="{{ path('carnet_de_route') }}" class=" input-group-lg d-flex position-absolute start-0 end-0 px-3" style="width: 700px; max-width: 100%; margin: auto; bottom: 50%; z-index: 1000;">
+    <input type="text" value="{{ filter[0] }}" class="form-control form-select-lg rounded-0" placeholder="lac, foret, temple, montagne..." name="q">
 
-
-  <h5><i class="fas fa-sliders-h"></i> Filtrer</h5>
-
-  <div class="row mt-3 mb-5 d-flex align-items-center">
-    <form action="" class="d-flex col-md-3 col-6">
-      <input  placeholder="Seoul...." list="ice-cream-flavors" class="form-control" id="ice-cream-choice" name="city"/>
+      <input  value="{{ filter[1] }}"  placeholder="Seoul...." list="ice-cream-flavors" class="form-control rounded-0" id="ice-cream-choice" name="city"/>
       <datalist id="ice-cream-flavors">
         {% for ville in villes %}
-          <option value="{{ ville }}"></option>
+        <option value="{{ ville }}"></option>
         {% endfor %}
-        </datalist>
-    </form>
-    <form action="" method="get" class='d-flex col-md-1 col-2'>
-      <input type="hidden" name="filter" value="aime" >
-      <button class="btn bg-transparent"><i class="fab text-danger fa-gratipay fs-1"></i></button>
-    </form>
-    <div class="col-md-1 col-1 d-flex">
-      <form action="" method="get" class=''>
-        <input type="hidden" name="filter" value="az">
-        <button type="submit" class="btn btn-primary border border-bottom-0 border-top-0" style="margin-right: -5px"><i class="fas fa-sort-alpha-up"></i></button>
-      </form>
-      <form action="" method="get">
-        <input type="hidden" name="filter" value="za">
-        <button type="submit" class="btn btn-primary border border-bottom-0 border-top-0"><i class="fas fa-sort-alpha-down-alt"></i></button>
-      </form>
+      </datalist>
+    <div class="dropdown">
+      <a class="btn btn-light dropdown-toggle btn-lg rounded-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-ellipsis-v text-success"></i>
+      </a>
+
+      <ul class="dropdown-menu border bg-transparant border-0 radio_filter" aria-labelledby="dropdownMenuLink">
+        <label for="az">
+          <span>A-Z</span>
+          <input type="radio" checked="checked" id="az" name="filter" value="az" >
+        </label><br>
+        <label for="za">
+          <span>Z-A</span>
+          <input type="radio" id="za" name="filter" value="za" >
+        </label><br>
+          <label for="aime">
+            <span>Like</span>
+            <input type="radio" id="aime" name="filter" value="aime"  >
+          </label>
+      </ul>
     </div>
-  </div>
-  </section>
+    <button class="d-none">Submit</button>
+  </form>

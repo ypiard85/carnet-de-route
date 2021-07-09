@@ -25,11 +25,10 @@ class PlaceRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
-    public function findPlaceByUser($value){
+    public function findPlaceByUser(){
 
-             $this->createQueryBuilder('u')
-                ->andWhere('u.id = :val')
-                ->setParameter('val', $value)
+             $this->createQueryBuilder('p')
+
                 ->getQuery()
                 ->getResult()
                 ;
@@ -46,8 +45,7 @@ class PlaceRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
                     ->select('p')
                     ->join('p.city', 'c' )
-                    ->innerJoin('p.likes', 'l');
-
+                    ;
 
                     if(!empty($search->q)){
                         $query = $query
@@ -69,6 +67,9 @@ class PlaceRepository extends ServiceEntityRepository
                                 break;
                             case 'za':
                                 $query = $query->orderBy('p.title', 'DESC');
+                                break;
+                            case 'aimes':
+                                $query = $query->orderBy('l.place', 'DESC');
                                 break;
                             default:
                                 $query = $query->orderBy('p.id', 'ASC');

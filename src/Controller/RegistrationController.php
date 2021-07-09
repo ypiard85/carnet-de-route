@@ -42,6 +42,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $email = $form['email']->getData();
+
             $user->setRoles(['USER']);
             $user->setAvatar('user-tie-solid.svg');
 
@@ -49,12 +52,13 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('yoann.piard@gmail.com', 'la coree en grand'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Confirmation de votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
@@ -66,7 +70,7 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );*/
 
-            return $this->redirectToRoute('app_verify_email');
+            return $this->redirectToRoute('email_send');
 
         }
 
@@ -81,29 +85,25 @@ class RegistrationController extends AbstractController
     public function verifyUserEmail(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+           $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('email_send');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('email_valid', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('app_login');
     }
 
     /**
      * @Route("/emailsend", name="email_send" )
      */
     public function emailsend(){
-
-
-
         return $this->render('registration/emailsend.html.twig');
     }
 }

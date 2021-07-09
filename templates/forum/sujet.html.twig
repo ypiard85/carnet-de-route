@@ -17,7 +17,7 @@
         <div class="sujet_table w-100 position-relative">
            <div class="left bg-light">
             <i class="fas fa-crown fs-1 position-absolute start-0" style="transform: rotate(-35deg);margin-left: -20px; margin-top: -0.5em; color: rgb(175, 175, 17)"></i>
-               <a href="{{ path('user_show', {'id' : sujet.user.id }) }}" class="fw-bold p-3 mt-4 d-block">thekoreandream boss</a>
+               <a href="{{ path('user_show', {'id' : sujet.user.id }) }}" class="fw-bold p-3 mt-4 d-block">{{ sujet.user.pseudo }}</a>
            </div>
            <div class="center">
                 <p style="line-height: 1em;">{{ sujet.content | nl2br }}</p>
@@ -43,9 +43,15 @@
 
         <div class="row mb-5">
             <div class="col-12 mt-5" align="center">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Répondre
                 </button>
+                {% else %}
+                <a href="{{ path('app_login') }}" class="btn btn-success">
+                    Répondre <i class="fas fa-lock"></i>
+                </a>
+                {% endif %}
             </div>
         </div>
 </section>

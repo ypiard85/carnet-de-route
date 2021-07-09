@@ -37,6 +37,14 @@ class PlaceController extends AbstractController
     public function index(PlaceRepository $placeRepository, cityRepository $city, Request $request): Response
     {
 
+        if($request){
+            $filter = [
+            $request->get('q'),
+            $request->get('city'),
+            $request->get('aime')
+            ];
+        }
+
         $data = new SearchData();
 
         $villes = $city->CityByName();
@@ -45,12 +53,14 @@ class PlaceController extends AbstractController
         $form->handleRequest($request);
 
         $places = $placeRepository->findSearch($data);
+
         $data->page = $request->get('page', 1);
 
         return $this->render('place/index.html.twig', [
             'places' => $places,
             'villes' => $villes,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'filter' => $filter
         ]);
     }
 
@@ -105,6 +115,7 @@ class PlaceController extends AbstractController
      */
     public function show(Request $request, Place $place, CommentRepository $cr): Response
     {
+
 
 
         $comment = new Comment();

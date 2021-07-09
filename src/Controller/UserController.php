@@ -60,12 +60,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(User $user, PlaceRepository $placerepo, LikeRepository $likerepo ): Response
+    public function show(User $user, PlaceRepository $placerepo, LikeRepository $likerepo, Request $request, $id ): Response
     {
 
-        $places = $placerepo->findPlaceByUser($user->getId());
+        $places = $placerepo->findBy(['user' => $id]);
 
-        $likes = $likerepo->findLikeByUser($user->getId());
+
+
+        $likes = $likerepo->findLikeByUser($id);
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -83,29 +85,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
 
-
-
-        $image = $form->get('avatar')->getData();
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-                //on récupere les images
-
-                if($image !== $user->getAvatar() ){
-
-                    $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-                    //on copie le fichier dans le dossier où l'image dois se Uploader
-                    $image->move(
-                        $this->getParameter('user_avatar'),
-                        $fichier
-                    );
-
-                    $user->setAvatar($fichier);
-                }else if($image == null){
-                    $user->setAvatar($request->request->get('user[filename]'));
-                }
-
-
 
                 //ajour d'un message flash
                 $this->addFlash(
@@ -115,7 +95,8 @@ class UserController extends AbstractController
 
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('user_index');
+
+                return $this->redirectToRoute('user_show', [ 'id' => $user->getId()] );
             }
 
 

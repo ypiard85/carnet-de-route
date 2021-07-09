@@ -1,44 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}{% endblock %}
+
+
 {% block title %}Place{% endblock %}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-{% endblock %}
 
 {% block body %}
 <div class="show-place">
-
-  <!--SWIPER JS-->
-  <div class="viewone">
-         <div id="carouselExampleFade" class="carousel slide carousel-fade posiiton-relative" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            {% for rows in place.images %}
-            <div class="carousel-item">
-              <img src="{{ rows }}" class="d-block w-100" alt="...">
-            </div>
-            {% endfor %}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-          <div id="meteo-temp" class="d-flex position-absolute bottom-0 align-items-center end-0" style="z-index: 100; margin-right: 20px">
-
-          </div>
-        </div>
-</div>
-
   <!--Information du lieu-->
 <div class="container-fluid">
-<div class="row">
-  <div class="col-md-6  bg-light border border-5 border-white">
-    <div class="py-3 px-3 m-3">
+<div class="row flex-md-row flex-column-reverse">
+  <div class="col-md-6 bg-light ">
+    <div class="py-3 px-3">
       <div style="padding-bottom: 10px" class="title border border-top-0 border-start-0 border-end-0 border-dark">
         <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mb-3 fw-bold text-primary"><i class="fas fa-map-marker-alt"></i> {{ place.city.name }}</a>
         <p class="fs-4">{{ place.title }}</p>
@@ -68,16 +42,40 @@
       </div>
     </div>
   </div>
-  <div id="map" class="col-md-6 col-12 position-relative border border-5 border-white" style="background-color: rgba(255, 255, 255, 0.808); height: 300px;" >
-    <div style="position: absolute; top: 0; bottom: 0; left:0; right: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); z-index: 10;"></div>
-  </div> <!-- 지도를 표시할 div 입니다 -->
+  <div class="col-md-6 col-sm-12">
+    <div  class="swiper-container mySwiper2 position-relative" >
+      <div class="swiper-wrapper">
+        {% for rows in place.images %}
+      <div class="swiper-slide w-100">
+        <img src="{{ rows }}" />
+      </div>
+      {% endfor %}
+    </div>
+    <div id="meteo-temp" class="d-flex position-absolute bottom-0 align-items-center end-0" style="z-index: 100; margin-right: 20px"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <div thumbsSlider="" class="swiper-container mySwiper">
+    <div class="swiper-wrapper">
+      {% for rows in place.images %}
+        <div class="swiper-slide">
+          <img src="{{ rows }}" />
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 </div>
 </div>
 
 <!--MAP DE LA PLACE-->
 <div class="container-fluid">
-  <div class="row">
-    <div id="roadview" class="col-md-12 col-12 border border-5 border-white" style="height:300px"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+  <div class="row flex-md-row flex-column-reverse">
+    <div id="roadview" class="col-md-8 col-sm-12 border border-5 border-white" style="height: 400px"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+    <div id="map" class="col-md-4 col-sm-12 position-relative" style="background-color: rgba(255, 255, 255, 0.808); min-height: 400px;" >
+      <div style="position: absolute; top: 0; bottom: 0; left:0; right: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); z-index: 10;"></div>
+    </div> <!-- 지도를 표시할 div 입니다 -->
   </div>
 </div>
 
@@ -132,7 +130,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-<script src="{{ asset('./js/carousel.js') }}"></script>
+
+
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 5,
+      slidesPerView: 4,
+      freeMode: true,
+      watchSlidesVisibility: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+
+  </script>
 
 <script>
 
@@ -255,7 +274,7 @@
     mapCenter = new kakao.maps.LatLng(place.lat, place.longs), // 지도의 중심 좌표
     mapOption = {
         center: mapCenter, // 지도의 중심 좌표
-        level: 13 // 지도의 확대 레벨
+        level: 11 // 지도의 확대 레벨
     };
 
 

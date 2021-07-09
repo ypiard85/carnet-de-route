@@ -1,4 +1,4 @@
-{% extends 'template-forum.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello ForumController!{% endblock %}
 
@@ -9,15 +9,17 @@
         <div class="content mb-2">
             <h1 class="mb-5">Sujets par catégories</h1>
             {% include 'forum/_search.html.twig' %}
-            <div class="btn-filtre d-flex justify-content-between">
-                <div class="left">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ path('forum_accueil') }}" type="button" class="btn btn-info border">Categorie</a>
-                        <a href="{{ path('forum_sujet') }}"  type="button" class="btn btn-info border">Derniers sujets</a>
-                      </div>
+            <div class="content my-5">
+                <div class="btn-filtre clearfix">
+                    <div class="left float-start mb-3">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="{{ path('forum_accueil') }}" type="button" class="btn btn-info border">Categorie</a>
+                            <a href="{{ path('forum_sujet') }}"  type="button" class="btn btn-info border">Derniers sujets</a>
+                          </div>
                     </div>
-                <div class="right">
-                    <a href=" {{ path('sujet_new') }} " class="btn fw-bold" style="background-color: orange; color: white;">Nouveau sujet</a>
+                    <div class="right float-end">
+                        <a href=" {{ path('sujet_new') }} " class="btn fw-bold" style="background-color: orange; color: white;">Nouveau sujet</a>
+                    </div>
                 </div>
             </div>
 
@@ -40,13 +42,17 @@
                 </a>
             </td>
             <td class="center text-left p-3">
+                {% if categorie.sujets | length > 0 %}
                 <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.description }}</a>
+                {% else %}
+                <a href="{{ path('sujet_new') }}">{{ categorie.description }}  </a>
+                <h6><span class="badge bg-warning">Soyer le premier à vous exprimer</span></h6>
+                {% endif %}
             </td>
             <td class="right text-center pt-3 d-md-block d-none">
                 <p><i class="far fa-file-alt fs-3" title="Sujet"></i><br>
                     {{ categorie.sujets | length }}
                 </p>
-
             </td>
         </tr>
         {% endfor %}

@@ -4,6 +4,7 @@
 
 {% block body %}
 
+
     <section class="container">
         <div class="forum">
             <!--Titre de la catégorie-->
@@ -23,18 +24,18 @@
             </div>
             </div>
             </div>
-            </div>
+        </div>
 
 
             <div class="content my-5">
-                <div class="btn-filtre d-flex justify-content-between">
-                    <div class="left">
+                <div class="btn-filtre clearfix">
+                    <div class="left float-start">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{{ path('forum_accueil') }}" type="button" class="btn btn-info border">Categorie</a>
                             <a href="{{ path('forum_sujet') }}"  type="button" class="btn btn-info border">Derniers sujets</a>
                           </div>
                     </div>
-                    <div class="right">
+                    <div class="right float-end">
                         <a href=" {{ path('sujet_new') }} " class="btn fw-bold" style="background-color: orange; color: white;">Nouveau sujet</a>
                     </div>
                 </div>
@@ -62,5 +63,4 @@
                 {% endfor %}
             </table>
     </section>
-
 {% endblock %}

@@ -221,7 +221,7 @@ class Place
                 $routeLike->setPlace(null);
             }
         }
-
+        
         return $this;
     }
 

@@ -8,10 +8,19 @@
         <div class="form-content">
             <h1 class="mb-3">Ecrire un sujet</h1>
             {{ form_start(form) }}
-            {{ form_row(form.title)}}
-            {{ form_row(form.categorie)}}
-            {{ form_row(form.content, {'attr' : {'rows' : '10'} })}}
-            <button class="btn btn-primary">Créer</button>
+            <div class="mb-3">
+                <label for="title" class="mb-3">Title</label>
+                {{ form_row(form.title, {'label' : false } )}}
+            </div>
+            <div class="mb-3">
+                <label for="title" class="mb-3">Catégorie</label>
+                {{ form_row(form.categorie, {'label' : false })}}
+            </div>
+            <div class="mb-3">
+                <label for="title" class="mb-3">Message</label>
+                {{ form_row(form.content, {'attr' : {'rows' : '10'}, 'label' : false } ) }}
+            </div>
+            <button class="btn btn-warning">Créer mon sujet</button>
             {{ form_end(form) }}
             <div>
     </section>
