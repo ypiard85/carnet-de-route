@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 :root{
     --title: #6366f1;
     --bg-home: rgb(180, 180, 252);
@@ -5,6 +8,11 @@
     --padding: 70px 0 30px 0;
     --color-table-border: rgb(24, 24, 208);
     --bg-body: white;
+    --footer: rgba(219, 218, 218, 0.404);
+
+    --font_amatic: 'Amatic SC', cursive;
+    --font_roboto: 'Roboto', sans-serif;
+
 }
 
 *{
@@ -14,6 +22,20 @@
 
 a{
     text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+h4, label{
+    font-family: var(--font_roboto);
+    font-weight: bold;
+}
+
+footer ul{
+    padding: 0;
+    margin-right: 30px;
 }
 
 body{
@@ -33,11 +55,6 @@ section{
     box-shadow: var(--shadow);
 }
 
-
-
-h1{
-    color: var( --title);
-}
 
 .home p{
     color: white;
@@ -249,7 +266,7 @@ CAROUSEL
     background-position: center;
 }
 
-.explor_swiper .swiper-button-prev:after, .explor_swiper .swiper-button-next:after{
+.explor_swiper .swiper-button-prev:after, .explor_swiper .swiper-button-next:after, .theme .swiper-button-prev:after, .theme .swiper-button-next:after{
     font-size: 20px!important;
     background-color: white;
     color: black;
@@ -264,13 +281,13 @@ CAROUSEL
 }
 
 .theme img{
-    height: 100%;
+    height: 250px;
     width: 100%;
     object-fit: cover;
 }
 
 .theme{
-    height: 250px;
+    height: 300px;
 }
 
 .theme a{
@@ -278,8 +295,29 @@ CAROUSEL
     color: black;
 }
 
-.theme{
-    text-align: center;
+
+.form_search{
+    background-color: white;
+    padding: 10px;
+    border-radius: 90px;
+    margin: 0 20px;
+    box-shadow: 0 0 10px black;
+}
+
+.footer{
+    background-color: var(--footer);
+}
+
+.footer li{
+    line-height: 40px;
+}
+
+.footer a{
+    color: black;
+}
+
+.footer_bottom ul li{
+    margin: 0 10px;
 }
 
 .viewone{
@@ -360,11 +398,11 @@ CAROUSEL
 }
 
 @media screen and (max-width: 500px){
-    .explor_swiper img{
+    .explor_swiper img, .theme img{
         height: 150px;
     }
 
-    .explor_swiper{
+    .explor_swiper, .theme{
         height: 200px;
     }
 }
@@ -513,6 +551,54 @@ table .categorie_table{
     position: relative;
     background-image:linear-gradient(#2d22ce80, #643c5e5e), url('../banner.jpg');
 
+}
+
+.tabs_user{
+    background-color: #444!important;
+}
+
+.tabs_user li{
+    color: white;
+    font-weight: bold;
+}
+
+.tabs_user .active{
+    background-color: #007b55!important;
+}
+
+
+.profil{
+    padding-top: 100px;
+}
+
+.profil .description{
+    text-align: left;
+    width: 500px;
+    margin: auto;
+}
+
+.profil .profil_header{
+    text-align: center;
+}
+
+.explor_swiper p, .theme p{
+    font-family: var(--font_amatic);
+    font-size: 2em!important;
+}
+
+.profil .profil_header h1{
+    font-family: var(--font_roboto);
+    color: #008245;
+    font-weight: bold;
+    line-height: 40px;
+}
+
+.profil .profil_header small{
+    color: gray;
+}
+
+.profil .profil_header i{
+    font-size: 2em;
 }
 
 .radio_filter > label > input:target + .radio_filter span{

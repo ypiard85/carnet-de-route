@@ -1,32 +1,42 @@
 
-  <form action="{{ path('carnet_de_route') }}" class=" input-group-lg d-flex position-absolute start-0 end-0 px-3" style="width: 700px; max-width: 100%; margin: auto; bottom: 50%; z-index: 1000;">
-    <input type="text" value="{{ filter[0] }}" class="form-control form-select-lg rounded-0" placeholder="lac, foret, temple, montagne..." name="q">
 
+  <form action="{{ path('carnet_de_route') }}" class=" d-flex flex-column flex-md-row  position-absolute start-0 end-0 px-3" style="width: 600px; max-width: 90%; margin: auto; bottom: 50%; ">
+    <div>
+      <input  value="{{ filter[3] }}"  placeholder="temple, plage, architecture..." list="categorie" class="form-control rounded-0" id="ice-cream-choice" name="categorie"/>
+      <datalist id="categorie">
+        {% for categorie in categories %}
+        <option value="{{ categorie.nom }}"></option>
+        {% endfor %}
+      </datalist>
+    </div>
+    <div class="d-flex">
       <input  value="{{ filter[1] }}"  placeholder="Seoul...." list="ice-cream-flavors" class="form-control rounded-0" id="ice-cream-choice" name="city"/>
       <datalist id="ice-cream-flavors">
         {% for ville in villes %}
         <option value="{{ ville }}"></option>
         {% endfor %}
       </datalist>
-    <div class="dropdown">
-      <a class="btn btn-light dropdown-toggle btn-lg rounded-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-ellipsis-v text-success"></i>
-      </a>
+      <div class="dropdown">
+        <a class="btn btn-light dropdown-toggle rounded-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-ellipsis-v text-success"></i>
+        </a>
 
-      <ul class="dropdown-menu border bg-transparant border-0 radio_filter" aria-labelledby="dropdownMenuLink">
-        <label for="az">
-          <span>A-Z</span>
-          <input type="radio" checked="checked" id="az" name="filter" value="az" >
-        </label><br>
-        <label for="za">
-          <span>Z-A</span>
-          <input type="radio" id="za" name="filter" value="za" >
-        </label><br>
+        <ul class="dropdown-menu border bg-transparant border-0 radio_filter" aria-labelledby="dropdownMenuLink">
+          <label for="az">
+            <span>A-Z</span>
+            <input type="radio" checked="checked" id="az" name="filter" value="az" >
+          </label><br>
+          <label for="za">
+            <span>Z-A</span>
+            <input type="radio" id="za" name="filter" value="za" >
+          </label><br>
           <label for="aime">
             <span>Like</span>
             <input type="radio" id="aime" name="filter" value="aime"  >
           </label>
-      </ul>
+        </ul>
+      </div>
     </div>
-    <button class="d-none">Submit</button>
+
+      <button class="d-none">Submit</button>
   </form>

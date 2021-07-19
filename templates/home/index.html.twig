@@ -17,16 +17,16 @@
 
 
 
-<div class="container mt-5">
+<div class="container  mt-5">
   <h4>Explorer les environs</h4>
   <div class="swiper-container explor_swiper mt-3">
   <div class="swiper-wrapper">
-    <a href="{{ path('carnet_de_route') }}?city=Seoul" class="swiper-slide" ><img class="rounded" src="{{ asset('./accueil/explorer/seoul.jpg') }}" alt=""><p class="fs-5">Seoul</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Busan" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/explorer/busan.jpg') }}" alt=""><p class="fs-5">Busan</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Jeju" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/explorer/jeju.jpg') }}" alt=""><p class="fs-5">L'île de Jeju</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Sokcho" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/explorer/sokcho.jpg') }}" alt=""><p class="fs-5">Sokcho</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Chuncheon" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/explorer/Chuncheon.jpg') }}" alt=""><p class="fs-5">Chuncheon</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Incheon" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/explorer/incheon.jpg') }}" alt=""><p class="fs-5">Incheon</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Seoul" class="swiper-slide" ><img src="{{ asset('./accueil/explorer/seoul.jpg') }}" alt=""><p class="fs-5">Seoul</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Busan" class="swiper-slide"><img src="{{ asset('./accueil/explorer/busan.jpg') }}" alt=""><p class="fs-5">Busan</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Jeju" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/jeju.jpg') }}" alt=""><p class="fs-5">L'île de Jeju</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Sokcho" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/sokcho.jpg') }}" alt=""><p class="fs-5">Sokcho</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Chuncheon" class="swiper-slide"><img src="{{ asset('./accueil/explorer/Chuncheon.jpg') }}" alt=""><p class="fs-5">Chuncheon</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Incheon" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/incheon.jpg') }}" alt=""><p class="fs-5">Incheon</p></a>
   </div>
   <div class="swiper-button-next explor_next "></div>
   <div class="swiper-button-prev explor_prev "></div>
@@ -37,11 +37,15 @@
   <h4>Un thème particulier ?</h4>
     <div class="swiper-container theme mt-3">
       <div class="swiper-wrapper">
-        <a href="{{ path('carnet_de_route') }}?q=forêt" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/theme/foret.jpg') }}" alt=""><p class="fs-5">Forêt</p></a>
-        <a href="{{ path('carnet_de_route') }}?q=montagne" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/theme/montagne.jpg') }}" alt=""><p class="fs-5">Montagne</p></a>
-        <a href="{{ path('carnet_de_route') }}?q=campagne" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/theme/campagne.jpg') }}" alt=""><p class="fs-5">Campagne</p></a>
-        <a href="{{ path('carnet_de_route') }}?q=plage" class="swiper-slide"><img class="rounded" src="{{ asset('./accueil/theme/plage.jpg') }}" alt=""><p class="fs-5">Plage</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Lieu insolite" class="swiper-slide"><img  src="{{ asset('./accueil/theme/insolite.jpg') }}" alt=""><p class="fs-5">Lieux Insolites</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Forêt" class="swiper-slide"><img  src="{{ asset('./accueil/theme/foret.jpg') }}" alt=""><p class="fs-5">Forêts</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Montagne" class="swiper-slide"><img  src="{{ asset('./accueil/theme/montagne.jpg') }}" alt=""><p class="fs-5">Montagnes</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Architectures" class="swiper-slide"><img  src="{{ asset('./accueil/theme/architecture.jpg') }}" alt=""><p class="fs-5">Architectures</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Campagne" class="swiper-slide"><img  src="{{ asset('./accueil/theme/campagne.jpg') }}" alt=""><p class="fs-5">Campagnes</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Plage" class="swiper-slide"><img src="{{ asset('./accueil/theme/plage.jpg') }}" alt=""><p class="fs-5">Plages</p></a>
       </div>
+      <div class="swiper-button-next theme_next "></div>
+      <div class="swiper-button-prev theme_prev "></div>
 </div>
 </div>
 
@@ -60,7 +64,7 @@
     </div>
 
     <div class="type_option text-center">
-      <p class="fs-1 title">Aquerie</p>
+      <p class="fs-1 title">Aguerri</p>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
        <p><small>Entre 30 et 50 publications</small></p>
@@ -141,6 +145,10 @@
       var theme = new Swiper(".theme", {
         slidesPerView: 2,
         spaceBetween: 20,
+        navigation: {
+          nextEl: ".theme_next",
+          prevEl: ".theme_prev",
+        },
         breakpoints: {
           640: {
             slidesPerView: 2,

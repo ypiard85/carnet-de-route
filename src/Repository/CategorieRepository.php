@@ -2,28 +2,28 @@
 
 namespace App\Repository;
 
-use App\Entity\City;
+use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method City|null find($id, $lockMode = null, $lockVersion = null)
- * @method City|null findOneBy(array $criteria, array $orderBy = null)
- * @method City[]    findAll()
- * @method City[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Categorie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Categorie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Categorie[]    findAll()
+ * @method Categorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CityRepository extends ServiceEntityRepository
+class CategorieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, City::class);
+        parent::__construct($registry, Categorie::class);
     }
 
 
-    public function CityByName()
+    public function categoriebynom()
     {
         return $this->createQueryBuilder('c')
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('c.nom', 'ASC')
             ->getQuery()
             ->getResult()
         ;
@@ -31,7 +31,7 @@ class CityRepository extends ServiceEntityRepository
 
 
     /*
-    public function findOneBySomeField($value): ?City
+    public function findOneBySomeField($value): ?Categorie
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

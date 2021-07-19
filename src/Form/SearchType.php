@@ -37,6 +37,10 @@ class SearchType extends AbstractType
                 ]
             ])
 
+            ->add('categorie', HiddenType::class, [
+                'data' => ''
+            ])
+
             ->add('city', HiddenType::class, [
                 'data' => '',
             ])

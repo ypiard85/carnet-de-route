@@ -14,11 +14,13 @@ use App\Data\SearchData;
 use App\Form\SearchType;
 use App\Entity\RouteLike;
 use App\Form\CommentType;
+use App\Repository\CategorieRepository;
 use App\Repository\CityRepository;
 use App\Repository\LikeRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\CommentRepository;
 use App\Repository\RouteLikeRepository;
+use Nette\Application\Responses\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,20 +36,23 @@ class PlaceController extends AbstractController
     /**
      * @Route("/carnet-de-route", name="carnet_de_route", methods={"GET"})
      */
-    public function index(PlaceRepository $placeRepository, cityRepository $city, Request $request): Response
+    public function index(PlaceRepository $placeRepository, CategorieRepository $catrepo, cityRepository $city, Request $request): Response
     {
 
         if($request){
             $filter = [
-            $request->get('q'),
-            $request->get('city'),
-            $request->get('aime')
+                $request->get('q'),
+                $request->get('city'),
+                $request->get('aime'),
+                $request->get('categorie'),
             ];
         }
 
         $data = new SearchData();
 
         $villes = $city->CityByName();
+
+        $categories = $catrepo->categoriebynom();
 
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
@@ -57,6 +62,7 @@ class PlaceController extends AbstractController
         $data->page = $request->get('page', 1);
 
         return $this->render('place/index.html.twig', [
+            'categories' => $categories,
             'places' => $places,
             'villes' => $villes,
             'form' => $form->createView(),
@@ -174,16 +180,22 @@ class PlaceController extends AbstractController
     public function edit(Request $request, Place $place): Response
     {
 
-        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $form = $this->createForm(PlaceType::class, $place);
+
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('lieu_edit_success', 'Votre lieu à été modifier avec sucess' );
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('carnet_de_route');
         }
+
 
         return $this->render('place/edit.html.twig', [
             'place' => $place,
@@ -265,4 +277,46 @@ class PlaceController extends AbstractController
 
     }
 
+    /**
+     * @Route("delete/image/{id}", name="lieu_delte_img" , methods={"GET"} )
+     */
+    public function deleteImage(Image $image, Request $request, $id){
+
+       /* $data = json_decode($request->getContent(), true);
+
+        // On vérifie si le token est valide
+    if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
+        // On récupère le nom de l'image
+        $nom = $image->getName();
+        // On supprime le fichier
+        unlink($this->getParameter('image_place'). '/' .$nom);
+
+        // On supprime l'entrée de la base
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($image);
+        $em->flush();
+
+        // On répond en json
+        return new JsonResponse(['success' => 1]);
+    }else{
+        return new JsonResponse(['error' => 'Token Invalide'], 400);
+    }*/
+
+
+    $nom = $image->getName();
+    if(strlen($image) > 1 ){
+        // On supprime le fichier
+        unlink($this->getParameter('image_place'). '/' .$nom);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($image);
+        $em->flush();
+    }
+
+
+
+    $referer = $request->headers->get('referer');
+    return $this->redirect($referer);
+
+}
 }

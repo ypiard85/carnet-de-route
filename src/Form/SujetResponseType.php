@@ -6,6 +6,7 @@ use App\Entity\SujetResponse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SujetResponseType extends AbstractType
@@ -17,6 +18,7 @@ class SujetResponseType extends AbstractType
                 'label' => false,
                 'attr' => ['rows' => '10'],
                 ])
+
             //->add('user')
             //->add('createdAt')
             //->add('sujet')

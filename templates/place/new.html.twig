@@ -9,28 +9,29 @@
 <section class="form container">
     <h1>Créer votre lieu</h1>
     {{ form_start(form) }}
-    <div class="row align-items-end align-content-center ">
+        <div class="d-flex mt-3">
+            <button type="button" class="col-md-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalTwo"><i class="fas fa-edit"></i></button>
+            <button id="find-me" class="col-md-2 ms-3 d-block btn btn-info text-white">Où suis-je ?</button>
+        </div>
+    <div class="row">
         <div class="col-md-4 col-4">
             {{ form_row(form.lat, {'attr' : {'readonly': 'true'}  } ) }}
         </div>
         <div class="col-md-4 col-4">
             {{ form_row(form.longs, {'attr' : {'readonly': 'true'}  } ) }}
         </div>
-        <div class="col-md-2 col-2">
-            <!-- Button trigger modal -->
-            <span type="button" class="btn btn-primary vertical-align-basseline" data-bs-toggle="modal" data-bs-target="#exampleModalTwo">Localisation</span>
-        </div>
+        <small class="mt-3">Si la carte est blanche, c'est que vous n'avez pas bien renseigné la longitude ou la latitude </small>
     </div>
     <div id="other-form">
-        <button class="btn btn-warning mt-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-            Suivant >
+        <button class="btn btn-primary mt-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+            Continuer
         </button>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Editer le lieu</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
-            <div class="p-3 mt-3">
+            <div class="p-3 mt-0">
                 <div class="my-3">
                     {{ form_row(form.city) }}
                 </div>
@@ -38,10 +39,13 @@
                     {{ form_row(form.title) }}
                 </div>
                 <div class="my-3">
+                    {{ form_row(form.categorie) }}
+                </div>
+                <div class="my-2">
                     {{ form_row(form.description, {'attr': {'rows' : '7' } })}}
                 </div>
                 {{ form_row(form.images) }}
-                <button  type="submit" class="btn btn-success my-3">{{ button_label|default('Enregistrer') }}</button>
+                <button  type="submit" class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
             </div>
             {{ form_end(form) }}
         </div>
@@ -78,4 +82,33 @@
 {% block javascripts %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
 <script src="{{ asset('./js/placenew.js') }}"></script>
+
+<script>
+ function geoFindMe() {
+
+
+function success(position) {
+  const latitude  = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  status.textContent = '';
+
+  location.href = `?location=${latitude},${longitude} `
+}
+
+function error() {
+  status.textContent = 'Unable to retrieve your location';
+}
+
+if (!navigator.geolocation) {
+  status.textContent = 'Geolocation is not supported by your browser';
+} else {
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+}
+
+document.querySelector('#find-me').addEventListener('click', geoFindMe);
+</script>
+
 {% endblock %}

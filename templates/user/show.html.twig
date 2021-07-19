@@ -3,18 +3,15 @@
 {% block title %}User{% endblock %}
 {% block body %}
 
-<section class="profil container pb-5">
+<section class="profil container">
+    <div class="profil_header">
 
-  <div class="row align-items-center position-relative">
-    <div class="col-md-5">
-      <h5>{{ user.pseudo }}
-        {% if user.pseudo == app.user.pseudo %}
-        <a class="btn btn-success btn-sm" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit"></i></a>
-        {% endif %}
-      </h5>
-      <div class="palmares border-bottom mb-2">
+      <h1>{{ user.pseudo }}</h1>
+
+
+      <div class="palmares  mb-2">
         {% if places|length < 29 %}
-      <p><small>Voyaeur novice</small> <br> <i class="fas fa-star text-warning"></i></p>
+        <p><small>Voyaeur novice</small> <br> <i class="fas fa-star text-warning"></i></p>
         {% elseif places|length > 49 %}
         <p><small>Voyageur aquerie</small> <br> <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></p>
 
@@ -25,23 +22,28 @@
           <i class="fas fa-star text-warning"></i>
         </p>
         {% endif %}
-    </div>
+      </div>
 
-      <p>
+      <div class="description">
         {{ user.description | raw }}
-      </p>
-    </div>
+        {% if user.pseudo == app.user.pseudo %}
+        <a class="btn  btn-sm" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit text-dark"></i></a>
+      {% endif %}
+      </div>
+
   </div>
-</section>
+  </section>
 
 <div class="container">
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <ul class="nav nav-pills tabs_user p-2" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Lieux publiés - {{ places | length }} </button>
+      <button class="nav-link active text-white fw-bold btn-sm" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Lieux publiés - {{ places | length }} </button>
     </li>
+    {% if user.pseudo == app.user.pseudo %}
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Lieux aimés - {{ likes | length }}  </button>
+      <button class="nav-link text-white fw-bold btn-sm" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Lieux aimés - {{ likes | length }}  </button>
     </li>
+    {% endif %}
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active mt-3" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -51,16 +53,31 @@
       <tr class="align-midle">
         <td>
           <img src="{{ asset('./place/') }}{{ place.images[0].name }}" class="img-fuild mx-auto" width="100" alt=""><br>
+          <small class="bg-info d-inline-block text-white px-1 rounded mt-2">{{ place.categorie.nom }}</small>
           <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mt-2 d-block"> <i class="fas fa-map-marker-alt"></i>  {{ place.city.name }}</a>
-          </td>
+        </td>
         <td>
          {{ place.title }}
         </td>
         <td>
-          <a href=" {{ path('place_show', { 'id': place.id } )}} " class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
-          {% if place.user.id == app.user.id %}
-          <a href=" {{ path('place_delete', {'id': place.id} ) }} " onclick="return confirm('Voulez vous supprimer cette place ?')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-          {% endif %}
+          <div class="btn-group">
+            <button style="outline: none!important;" type="button" class="btn btn-secondary bg-transparent border-0 p-0" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-cog fs-3" style="color: rgb(158, 158, 158)"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href=" {{ path('place_show', { 'id': place.id } )}} " class="btn btn-success btn-sm dropdown-item"><i class="fas fa-eye"></i> apercus</a></li>
+              <li>
+                {% if place.user.id == app.user.id %}
+                <a href=" {{ path('place_edit', {'id': place.id} ) }} " class="btn btn-primary btn-sm dropdown-item"><i class="fas fa-edit"></i> edit</a>
+                {% endif %}
+              </li>
+              <li>
+                {% if place.user.id == app.user.id %}
+                <a href=" {{ path('place_delete', {'id': place.id} ) }} " onclick="return confirm('Voulez vous supprimer cette place ?')" class="btn btn-danger btn-sm dropdown-item"><i class="fas fa-trash-alt"></i> supprimer</a>
+                {% endif %}
+              </ul>
+          </div>
+
         </td>
       </tr>
         {% endfor %}
@@ -69,27 +86,42 @@
         <p> Aucune places publiées  </p>
       {% endif %}
     </div>
+
+    {% if user.pseudo == app.user.pseudo %}
     <div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         {% if likes|length > 0 %}
+        <table class="table table-responsive">
       {% for like in likes %}
-      <div class="card p-3 mb-3">
-          <div class="row align-items-center">
-            <div class="col-md-5 col-12">
-              <img src="{{ asset('./place/') }}{{ like.place.images[0].name }}"  width="100"   alt="">
-            </div>
-            <div class="col-md-4 col-12">
-              <p>{{ like.place.title }} <span class="fw-bold"> | {{ like.place.city.name }} </span> </p>
-            </div>
-            <div class="col-md-3 col-12">
-              <a href="{{ path('place_show', { 'id': like.place.id } ) }}" class="btn btn-success btn-sm">Voir le lieu</a>
-            </div>
+      <tr class="align-midle">
+        <td>
+          <img src="{{ asset('./place/') }}{{ like.place.images[0].name }}"  width="100"   alt=""><br>
+          <small class="bg-info d-inline-block text-white px-1 rounded mt-2">{{ like.place.categorie.nom }}</small>
+          <a href="{{ path('carnet_de_route') }}?city={{ like.place.city.name }}" class="mt-2 d-block"> <i class="fas fa-map-marker-alt"></i>  {{ like.place.city.name }}</a>
+        </td>
+        <td>
+         {{ like.place.title }}
+        </td>
+        <td>
+          <div class="btn-group">
+            <button style="outline: none!important;" type="button" class="btn btn-secondary bg-transparent border-0 p-0" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-cog fs-3" style="color: rgb(158, 158, 158)"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href=" {{ path('place_show', { 'id': like.place.id } )}} " class="btn btn-success btn-sm dropdown-item">
+                  <i class="fas fa-eye"></i> apercus</a>
+                </li>
+              </ul>
           </div>
-      </div>
+
+        </td>
+        </tr>
       {% endfor %}
+      </table>
       {% else %}
         <p> Aucune places aimées  </p>
       {% endif %}
-
+      {% endif %}
     </div>
   </div>
 </div>

@@ -45,6 +45,7 @@ class PlaceRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
                     ->select('p')
                     ->join('p.city', 'c' )
+                    ->join('p.categorie', 't' )
                     ;
 
                     if(!empty($search->q)){
@@ -60,6 +61,12 @@ class PlaceRepository extends ServiceEntityRepository
                         ->setParameter('city', $search->city );
                     }
 
+                    if(!empty($search->categorie)){
+                        $query = $query
+                            ->andWhere('t.nom LIKE :categorie')
+                            ->setParameter('categorie', "%{$search->categorie}%");
+                    }
+
                     if(!empty($search->filter)){
                         switch ($search->filter) {
                             case 'az':
@@ -72,9 +79,11 @@ class PlaceRepository extends ServiceEntityRepository
                                 $query = $query->orderBy('l.place', 'DESC');
                                 break;
                             default:
-                                $query = $query->orderBy('p.id', 'ASC');
+                                $query = $query->orderBy('p.name', 'ASC');
                                 break;
                         }
+                    }else{
+                        $query = $query->orderBy('p.id', 'DESC');
                     }
 
           $query = $query->getQuery();

@@ -12,8 +12,7 @@
 {% block body %}
 
 <div class="banner d-flex justify-content-center align-items-center">
-
-  {% include 'place/_search.html.twig' %}
+  {% include 'place/_search.html.twig'  %}
 </div>
 
 
@@ -21,7 +20,7 @@
 
     <div class="container-fluid">
           <div class="row">
-          {% if places %}
+          {% if places | length > 0 %}
           {% for place in places %}
           <div class="col-md-3 col-12 mb-3">
             <a href="/place/{{ place.id }}"
@@ -35,7 +34,8 @@
                 <img src="{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
               </div>
 
-              <div class="card-body">
+              <div class="card-body p-0 mt-4" style="line-height: 1em;">
+                <p class="bg-info d-inline-block text-white p-1 rounded">{{ place.categorie.nom }}</p>
                 <p class="card-title text-dark fs-6">{{ place.title }}</p>
                 <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ place.city }}</h6>
               </div>

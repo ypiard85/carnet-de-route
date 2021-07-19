@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
+
 use Webmozart\Assert\Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -32,6 +32,8 @@ class User implements UserInterface
      *
      */
     private $id;
+
+    private $user;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -347,10 +349,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /*
     public function __toString()
     {
         return array($this->user);
-    }
+    }*/
 
     /**
      * @return Collection|Sujet[]

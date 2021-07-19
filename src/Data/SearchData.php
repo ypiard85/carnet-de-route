@@ -4,6 +4,8 @@ namespace App\Data;
 
 use App\Entity\City;
 
+use App\Entity\Categorie;
+
 class SearchData{
 
     /**
@@ -11,10 +13,16 @@ class SearchData{
      */
     public $page = 1;
 
+
     /**
      * @var string
      */
      public $q = "";
+
+     /**
+     * @var string
+     */
+    public $categorie = "";
 
      /**
       * @var string

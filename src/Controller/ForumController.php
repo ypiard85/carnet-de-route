@@ -10,11 +10,15 @@ use App\Form\SearchType;
 use App\Entity\SujetResponse;
 use App\Entity\ForumCategorie;
 use App\Form\SujetResponseType;
+use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
 use App\Repository\SujetRepository;
 use App\Repository\SujetResponseRepository;
 use App\Repository\ForumCategorieRepository;
 use Knp\Bundle\TimeBundle\DateTimeFormatter;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
@@ -109,7 +113,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/sujet/{id}/{title}", name="sujet_view", methods={"POST", "GET"} )
      */
-    public function sujet( SujetResponseRepository $responserepo, Sujet $sujet, Request $request) : Response
+    public function sujet( SujetResponseRepository $responserepo, Sujet $sujet, Request $request, UserRepository $userrepo, MailerInterface $mailer) : Response
     {
 
 
@@ -123,6 +127,25 @@ class ForumController extends AbstractController
 
         if($form->isSubmitted() AND $form->isValid())
         {
+
+            $userpost = $userrepo->find($sujet->getUser()->getId());
+            $userpostemail = $userpost->getEmail();
+
+            if($this->getUser()->getId() != $sujet->getUser()->getId())
+            {
+                //send email
+                $email = (new TemplatedEmail())
+                ->from('contact@lacoree.fr')
+                ->to($userpostemail)
+                ->subject('Time for Symfony Mailer!')
+                ->htmlTemplate('forum/email.html.twig')
+                ->context([
+                    'id' => $sujet->getId(),
+                    'title' => $sujet->getTitle(),
+                ]);
+                $mailer->send($email);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $sujetresponse->setUser($this->getUser());
             $sujetresponse->setSujet($sujet);

@@ -92,11 +92,18 @@ class Place
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="places")
+     */
+    private $categorie;
+
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->routeLikes = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,7 +228,7 @@ class Place
                 $routeLike->setPlace(null);
             }
         }
-        
+
         return $this;
     }
 
@@ -289,6 +296,23 @@ class Place
 
         return $this;
     }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->categorie;
+    }
+
 
 
 }

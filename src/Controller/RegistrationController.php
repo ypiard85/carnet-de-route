@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
             $email = $form['email']->getData();
 
             $user->setRoles(['USER']);
-            $user->setAvatar('user-tie-solid.svg');
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
