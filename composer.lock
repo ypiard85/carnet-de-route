@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1999f7c9d39c0fa1d60dba304e9ee6b5",
+    "content-hash": "5d8c042814733826b12fe77ddf59689a",
     "packages": [
         {
             "name": "api-platform/core",
@@ -8939,16 +8939,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.2.10",
+            "version": "v5.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "dc49cfb0d1d1bf6a9aaccccee570ef62e7b095c4"
+                "reference": "ecf9ee05f5f099523cf60196c523de52aa8d45a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/dc49cfb0d1d1bf6a9aaccccee570ef62e7b095c4",
-                "reference": "dc49cfb0d1d1bf6a9aaccccee570ef62e7b095c4",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/ecf9ee05f5f099523cf60196c523de52aa8d45a0",
+                "reference": "ecf9ee05f5f099523cf60196c523de52aa8d45a0",
                 "shasum": ""
             },
             "require": {
@@ -9012,7 +9012,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.2.10"
+                "source": "https://github.com/symfony/translation/tree/v5.2.11"
             },
             "funding": [
                 {
@@ -9028,7 +9028,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-26T17:40:38+00:00"
+            "time": "2021-06-06T09:50:27+00:00"
         },
         {
             "name": "symfony/translation-contracts",

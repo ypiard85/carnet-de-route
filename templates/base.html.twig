@@ -61,6 +61,9 @@
               {{ app.user.pseudo }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% if is_granted('ROLE_ADMIN') == true %}
+              <li><a class="dropdown-item" href="/admin">Dashboard Admin</a></li>
+              {% endif %}
               <li><a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a></li>
               <li><a class="dropdown-item" href=" {{ path('maliste', {id: app.user.id} ) }} ">Ma liste</a></li>
               <li><a class="dropdown-item" href="{{ path('carnet_route', {id: app.user.id} ) }}">Mon carnet de route</a></li>

@@ -52,7 +52,7 @@
                         <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title }) }}">
                             {{ sujet.title }}
                         </a>
-                        <p>Il y a {{ sujet.createdAt | ago }}</p>
+                        <p>{{ sujet.createdAt | ago }}</p>
                     </td>
                     <td class="right text-center ">
                         <i class="far fa-comment fs-3"></i>

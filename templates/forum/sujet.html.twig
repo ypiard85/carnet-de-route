@@ -31,12 +31,12 @@
 
          <div class="mt-5 sujet_table w-100 position-relative">
             <div class="left bg-light">
-                <a href="{{ path('user_show', {'id' : re.user.id }) }}" class="fw-bold">{{ re.user.pseudo }}</a>
+                <a href="{{ path('user_show', {'id' : re.user.id }) }}" class="p-3 mt-4 d-block">{{ re.user.pseudo }}</a>
             </div>
             <div class="center">
                  <p style="line-height: 1em;">{{ re.content | nl2br }}</p>
              </div>
-             <small class="position-absolute end-0 fw-bold" style="margin: 10px;">Il y a {{ re.createdAt | ago  }}</small>
+             <small class="position-absolute end-0 fw-bold" style="margin: 10px;">{{ re.createdAt | ago  }}</small>
          </div>
 
          {% endfor %}

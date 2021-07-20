@@ -6,14 +6,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Twig_Extensions_Extension_Date extends Twig_Extension
 {
-    public static $units = array(
-        'y' => 'ans',
-        'm' => 'mois',
-        'd' => 'jour',
-        'h' => 'heure',
-        'i' => 'minutes',
-        's' => 'seconde',
-    );
+    public static $units = array();
 
     /**
      * @var TranslatorInterface

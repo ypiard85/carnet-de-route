@@ -119,9 +119,10 @@ class Sujet
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->createdAt;
+       return $this->createdAt AND $this->title;
+
     }
 
     /**

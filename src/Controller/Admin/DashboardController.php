@@ -4,14 +4,15 @@ namespace App\Controller\Admin;
 
 use App\Entity\City;
 use App\Entity\Place;
+
+use App\Entity\Sujet;
 use App\Entity\Comment;
-use App\Controller\PlaceController;
-use App\Entity\Image;
+use App\Entity\SujetResponse;
+use App\Entity\ForumCategorie;
+use App\Controller\Admin\PlaceCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
@@ -22,6 +23,8 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
         return $this->redirect($routeBuilder->setController(PlaceCrudController::class)->generateUrl());
     }
@@ -29,10 +32,12 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::section('Important');
-        yield MenuItem::linkToCrud('Places', 'fa fa-file-pdf', Place::class);
-        yield MenuItem::linkToCrud('Villes', 'fa fa-file-pdf', City::class);
-        yield MenuItem::linkToCrud('Images', 'fa fa-file-pdf', Image::class);
-        yield MenuItem::linkToCrud('Commentaires', 'fa fa-file-pdf', Comment::class);
+        yield MenuItem::linkToCrud('Lieux', 'fas fa-location-arrow', Place::class);
+        yield MenuItem::linkToCrud('Villes', 'fas fa-city', City::class);
+        yield MenuItem::linkToCrud('Commentaires places', 'fas fa-comments', Comment::class);
+        yield MenuItem::linkToCrud('Sujets', 'fas fa-align-justify', Sujet::class);
+        yield MenuItem::linkToCrud('Commentaires sujets', 'fas fa-comment-dots', SujetResponse::class);
+        yield MenuItem::linkToCrud('Categories sujets', 'fas fa-book', ForumCategorie::class);
     }
 
 
