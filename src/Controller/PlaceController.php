@@ -187,7 +187,6 @@ class PlaceController extends AbstractController
         $form->handleRequest($request);
 
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash('lieu_edit_success', 'Votre lieu à été modifier avec sucess' );
@@ -280,43 +279,68 @@ class PlaceController extends AbstractController
     /**
      * @Route("delete/image/{id}", name="lieu_delte_img" , methods={"GET"} )
      */
-    public function deleteImage(Image $image, Request $request, $id){
+    public function deleteImage(Image $image, Request $request){
 
-       /* $data = json_decode($request->getContent(), true);
+            $nom = $image->getName();
+            if(strlen($image) > 1 ){
+                // On supprime le fichier
+                unlink($this->getParameter('image_place'). '/' .$nom);
 
-        // On vérifie si le token est valide
-    if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
-        // On récupère le nom de l'image
-        $nom = $image->getName();
-        // On supprime le fichier
-        unlink($this->getParameter('image_place'). '/' .$nom);
-
-        // On supprime l'entrée de la base
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($image);
-        $em->flush();
-
-        // On répond en json
-        return new JsonResponse(['success' => 1]);
-    }else{
-        return new JsonResponse(['error' => 'Token Invalide'], 400);
-    }*/
-
-
-    $nom = $image->getName();
-    if(strlen($image) > 1 ){
-        // On supprime le fichier
-        unlink($this->getParameter('image_place'). '/' .$nom);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($image);
-        $em->flush();
-    }
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($image);
+                $em->flush();
+            }
 
 
 
-    $referer = $request->headers->get('referer');
-    return $this->redirect($referer);
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
 
-}
+        }
+
+        /**
+         * @Route("/addimage/{id}", name="lieu_add_img" , methods={"GET", "POST"} )
+         */
+        public function addImageEdit(Request $request, Place $place, $id){
+
+
+            $form = $this->createForm(PlaceType::class, $place);
+
+            $form->handleRequest($request);
+
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $images = $form->get('images')->getData();
+                //on récupere les images
+                foreach($images as $image){
+                    $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                    //on copie le fichier dans le dossier où l'image dois se Uploader
+                    $image->move(
+                        $this->getParameter('image_place'),
+                        $fichier
+                    );
+
+                    $img = new Image();
+                    $img->setName($fichier);
+                    $place->addImage($img);
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+
+                $this->addFlash('lieu_edit_success', 'Image editer avec success' );
+
+                return $this->redirectToRoute('carnet_de_route');
+
+
+            }
+
+            return $this->render('place/imageedit.html.twig', [
+
+                'form' => $form->createView(),
+            ]);
+
+        }
 }

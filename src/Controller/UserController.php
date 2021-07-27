@@ -65,8 +65,6 @@ class UserController extends AbstractController
 
         $places = $placerepo->findBy(['user' => $id]);
 
-
-
         $likes = $likerepo->findLikeByUser($id);
 
         return $this->render('user/show.html.twig', [

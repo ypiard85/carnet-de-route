@@ -9,7 +9,7 @@
     --color-table-border: rgb(24, 24, 208);
     --bg-body: white;
     --footer: rgba(219, 218, 218, 0.404);
-
+    --border-card-premium: rgb(65, 218, 134);
     --font_amatic: 'Amatic SC', cursive;
     --font_roboto: 'Roboto', sans-serif;
 
@@ -616,4 +616,78 @@ table .categorie_table{
     width: 600px;
     max-width: 100%;
     margin: auto;
+}
+
+.cadeaux .card-headers{
+ width:300px;
+ height: 150px;
+}
+
+.cadeaux img{
+    object-fit: cover;
+    -o-object-fit: cover;
+    -moz-object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+
+.premium_header{
+    position: relative;
+    background-color: rgb(65, 218, 134);
+    border-radius:20px 20px 0px 0px;
+}
+
+.premium_header::after{
+    content: '';
+    width: 0px;
+    height: 0px;
+    margin-top: 15px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left:0;
+    right: 0;
+    position:absolute;
+    border-style: solid;
+    border-width: 20px 20px 0 20px;
+    border-color: var(--border-card-premium) transparent transparent transparent;
+}
+
+.card-premium{
+    margin: 20px 50px;
+}
+
+.premium{
+    background-color: rgb(230, 230, 231);
+}
+
+.premium-footer{
+    background-color: var(--border-card-premium);
+    padding: 20px 0;
+    border-radius: 0 0 20px 20px;
+}
+
+.premium_content{
+    padding: 20px 10px;
+    background: white;
+}
+
+.premium_content div{
+    padding: 10px 0;
+}
+
+.premium_content div:not(:last-child){
+    border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+
+/*stripe*/
+
+.success_abonnement{
+  width: 500px;
+  max-width: 100%;
+  border: 1px solid rgb(155, 155, 155);
+  margin: auto;
 }
