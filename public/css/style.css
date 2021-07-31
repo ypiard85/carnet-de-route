@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import "navbar.css";
 
 :root{
     --title: #6366f1;
@@ -13,6 +14,37 @@
     --font_amatic: 'Amatic SC', cursive;
     --font_roboto: 'Roboto', sans-serif;
 
+    --bleu-principal: #064899;
+    --gris-principal: #a6a6a634;
+    --red-principal: #CF2C3A;
+}
+
+.red{
+    color: var(--red-principal)!important;
+}
+
+.bg_red{
+    background-color: var(--red-principal)!important;
+}
+
+.bleu{
+    color: var(--bleu-principal)!important;
+}
+
+.bg_bleu{
+    background: var(--bleu-principal);
+}
+
+.gris{
+    color: var(--gris-principal)!important;
+}
+
+.bg_gris{
+    background-color: var(--gris-principal)!important;
+}
+
+.mtop{
+    margin-top: 130px;
 }
 
 *{
@@ -31,6 +63,10 @@ li{
 h4, label{
     font-family: var(--font_roboto);
     font-weight: bold;
+}
+
+nav a{
+    color: black!important;
 }
 
 footer ul{
@@ -635,7 +671,7 @@ table .categorie_table{
 
 .premium_header{
     position: relative;
-    background-color: rgb(65, 218, 134);
+    background-color: var(--bleu-principal);
     border-radius:20px 20px 0px 0px;
 }
 
@@ -652,19 +688,17 @@ table .categorie_table{
     position:absolute;
     border-style: solid;
     border-width: 20px 20px 0 20px;
-    border-color: var(--border-card-premium) transparent transparent transparent;
+    border-color: var(--bleu-principal) transparent transparent transparent;
 }
 
 .card-premium{
     margin: 20px 50px;
 }
 
-.premium{
-    background-color: rgb(230, 230, 231);
-}
+
 
 .premium-footer{
-    background-color: var(--border-card-premium);
+    background-color: var(--bleu-principal);
     padding: 20px 0;
     border-radius: 0 0 20px 20px;
 }
@@ -682,6 +716,11 @@ table .categorie_table{
     border-bottom: 2px solid rgb(190, 190, 190);
 }
 
+.top_margin{
+    margin-top: 50px;
+}
+
+
 
 /*stripe*/
 
@@ -690,4 +729,66 @@ table .categorie_table{
   max-width: 100%;
   border: 1px solid rgb(155, 155, 155);
   margin: auto;
+}
+
+
+.mapdiv form{
+    margin-top: 100px;
+}
+
+.crochet{
+    position: absolute;
+    z-index: 1000;
+    top: 50%;
+    left: 0px;
+    background-color:white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.mapdiv{
+    position: fixed;
+    top:0;
+    bottom:0;
+    right: 0;
+    background-color: white;
+    width: 400px;
+    z-index: 800;
+    overflow-y: auto;
+}
+
+.m{
+    display: none;
+}
+
+@media screen and (max-width: 995px){
+
+    .nav_link{
+       flex-direction: column;
+       position: fixed;
+       top: 100px;
+       background-color: white;
+       bottom: 0;
+       right: 0;
+       width: 50%;
+       padding: 0 20px;
+       box-shadow: 0 10px 10px;
+       transform: translateX(250px);
+    }
+
+    .open{
+        transform: translateX(0px);
+    }
+}
+
+@media screen and (max-width: 700px){
+    .mapdiv{
+        display: none;
+    }
+
+    .m{
+        display: block;
+        width: 80%;
+    }
 }

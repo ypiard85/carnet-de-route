@@ -3,55 +3,60 @@
 {% block title %}New Place{% endblock %}
 
 
+{% block stylesheets %}
+<style>
 
+    footer{
+        display: none!important;
+}
+</style>
+
+{% endblock %}
 
 {% block body %}
-<section class="form container">
-    <h1>Créer votre lieu</h1>
+
+
+<div class="crochet shadow" onclick="document.querySelector('.mapdiv').classList.toggle('m')" ><i class="fas fa-chevron-right"></i></div>
+<div class="mapdiv px-3 shadow">
+
     {{ form_start(form) }}
-        <div class="d-flex mt-3">
-            <button type="button" class="col-md-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalTwo"><i class="fas fa-edit"></i></button>
-            <button id="find-me" class="col-md-2 ms-3 d-block btn btn-info text-white">Où suis-je ?</button>
-        </div>
+    <div class="d-flex w-100">
+        <button type="button" class=" btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalTwo"><i class="fas fa-edit"></i></button>
+        <button id="find-me" class=" ms-3 d-block btn btn-info text-white">Où suis-je ?</button>
+    </div>
     <div class="row">
-        <div class="col-md-4 col-4">
+        <div class="col-md-6 col-4">
             {{ form_row(form.lat, {'attr' : {'readonly': 'true'}  } ) }}
         </div>
-        <div class="col-md-4 col-4">
+        <div class="col-md-6 col-4">
             {{ form_row(form.longs, {'attr' : {'readonly': 'true'}  } ) }}
         </div>
         <small class="mt-3">Si la carte est blanche, c'est que vous n'avez pas bien renseigné la longitude ou la latitude </small>
     </div>
-    <div id="other-form">
-        <button class="btn btn-primary mt-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-            Continuer
-        </button>
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Editer le lieu</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-            <div class="p-3 mt-0">
-                <div class="my-3">
-                    {{ form_row(form.city) }}
-                </div>
-                <div class="my-3">
-                    {{ form_row(form.title) }}
-                </div>
-                <div class="my-3">
-                    {{ form_row(form.categorie) }}
-                </div>
-                <div class="my-2">
-                    {{ form_row(form.description, {'attr': {'rows' : '7' } })}}
-                </div>
-                {{ form_row(form.images) }}
-                <button  type="submit" class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
-            </div>
-            {{ form_end(form) }}
-        </div>
-    </div>
 
-    <div id="map" style="width: 100%; height: 400px;" class="my-3" ></div>
+    <div class="mt-0">
+        <div class="my-3">
+            {{ form_row(form.title) }}
+        </div>
+        <div class="my-3">
+            {{ form_row(form.city) }}
+        </div>
+        <div class="my-3">
+            {{ form_row(form.categorie) }}
+        </div>
+        <div class="my-2">
+            {{ form_row(form.description, {'attr': {'rows' : '7' } })}}
+        </div>
+        {{ form_row(form.images) }}
+        <button  type="submit" class="btn btn-success mb-5">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    {{ form_end(form) }}
+
+</div>
+
+<div id="kakaomap" style="width: 100vw; height: 100vh; z-index: 100; overflow-y: none;"></div>
+<div id="map" style="width: 100vw; height: 100vh; z-index: 100; " ></div>
+
 
 
   <!-- Modal -->
@@ -75,8 +80,6 @@
 
 </div>
 
-
-</section>
 {% endblock %}
 
 {% block javascripts %}
@@ -84,6 +87,19 @@
 <script src="{{ asset('./js/placenew.js') }}"></script>
 
 <script>
+
+
+var mapContainer2 = document.getElementById('kakaomap'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(37.527593, 126.891654), // 지도의 중심좌표
+        level: 12 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer2, mapOption);
+
+
+
  function geoFindMe() {
 
 

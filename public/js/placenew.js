@@ -1,3 +1,6 @@
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        document.getElementById('kakaomap').style.display = "block";
+        document.getElementById('map').style.display = "none";
 
 function info(){
 
@@ -18,17 +21,15 @@ function submitform(){
 }
 
 
+
 //get Data
 const local = JSON.parse(localStorage.getItem('formData'))
-console.log(local)
 
 document.getElementById('place_title').value = local.title
 document.getElementById('place_description').value = local.description
 document.getElementById('place_city').value = local.city
 
-var other = document.getElementById('other-form');
 
-other.style.display = 'none';
 
     let loc = window.location.search
     let getparams = new URLSearchParams(loc)
@@ -41,11 +42,14 @@ other.style.display = 'none';
 
 
 if(getLocation != ''){
-    other.style.display = 'block';
+    document.getElementById('map').style.display = "block";
+    document.getElementById('kakaomap').style.display = "none";
+
     document.querySelector('#place_lat').value = lat
     document.querySelector('#place_longs').value = long
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+var  mapContainer= document.getElementById('map'); // 지도를 표시할 div
 
 mapOption = {
 center: new kakao.maps.LatLng(lat, long ), // 지도의 중심좌표
@@ -63,26 +67,6 @@ var marker = new kakao.maps.Marker({
 position: markerPosition
 });
 
-
-
-// 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
-/*
-var iwContent = '<div style="padding:5px;">Hello World! <br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-iwPosition = new kakao.maps.LatLng(lat, long); //인포윈도우 표시 위치입니다
 
-//iwPosition.La =  lat
-//iwPosition.Ma =  long
-
-// 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({
-position : iwPosition,
-content : iwContent
-});
-
-console.log(infowindow)
-
-// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-infowindow.open(map, marker);
-*/
 }

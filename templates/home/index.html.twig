@@ -54,7 +54,7 @@
   <a href="{{ path('carnet_de_route') }}?filtre=aime" class="btn btn-warning d-block">Découvrez nos coups de coeurs</a>
 </div>
 
-<div class="container type_voyageur mt-5 border-bottom border-3 border-info">
+<div class="container type_voyageur mt-5">
   <h1 class="text-center position-relative">Quel type de voyageur êtes-vous ?</h1>
   <div class="d-flex justify-content-around mt-5 flex-wrap align-items-center">
     <div class="type_option text-center">
@@ -82,18 +82,19 @@
 </div>
 
 <!--Gagner des cadeaux-->
-<div class="my-5 container cadeaux">
-  <div class="text-center">
-    <h1 class="text-primary">Tentez de gagner des cadeaux </h1>
-    <h3>En partageant vos coups de coeurs</h3>
-    <a href="{{ path('place_new') }}" class="btn btn-primary btn-lg mt-3">Je partage <i class="fas fa-caret-right" ></i></a>
-  </div>
-  <div class="d-flex flex-wrap justify-content-around mt-5">
-    <div class="card text-center">
-      <div class="card-headers">
-        <img src="{{ asset('/accueil/cadeaux/avion.jpg') }}" alt="">
-      </div>
-      <p class="mt-2">Voyages</p>
+<div class="my-5 py-3">
+  <div class="container cadeaux">
+    <div class="text-center">
+      <h1 class="text-primary">Tentez de gagner des cadeaux </h1>
+      <h3>En partageant vos coups de coeurs</h3>
+      <a href="{{ path('place_new') }}" class="btn btn-primary btn-lg mt-3">Je partage <i class="fas fa-caret-right" ></i></a>
+    </div>
+    <div class="d-flex flex-wrap justify-content-around mt-5">
+      <div class="card text-center bg_bleu">
+        <div class="card-headers">
+          <img src="{{ asset('/accueil/cadeaux/avion.jpg') }}" alt="">
+        </div>
+      <p class="mt-2 text-white fw-bold">Voyages</p>
     </div>
     <div class="card text-center">
       <div class="card-headers">
@@ -109,6 +110,7 @@
     </div>
   </div>
 </div>
+</div>
 
 
 <!--Devenir premium-->
@@ -120,11 +122,11 @@
 
   <div class="card-premium mb-5" style="width: 350px; max-width: 100%;">
     <div class="premium_header  py-3 text-center">
-      <h2 class="fw-bold text-danger">Basic</h2>
+      <h1 class="fw-bold text-white">Basic</h1>
       <i class="mb-4">Aidez-nous à nous développer</i>
       <p class="fs-1 text-white fw-bold"> 2,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >/mois</span> </p>
     </div>
-    <div class="premium_content">
+    <div class="premium_content shadow">
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
         <p>Accès à la page évènement</p>
@@ -161,11 +163,11 @@
 
   <div class="card-premium" style="width: 350px; max-width: 100%">
     <div class="premium_header  py-3 text-center">
-      <h2 class="fw-bold text-danger">Entreprise</h2>
+      <h1 class="fw-bold text-white">Entreprise</h1>
       <i class="mb-4">Réserver aux entreprises</i>
       <p class="fs-1 text-white fw-bold"> 59,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >/mois</span> </p>
     </div>
-    <div class="premium_content">
+    <div class="premium_content shadow">
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
         <p>Accès à la page évènement</p>

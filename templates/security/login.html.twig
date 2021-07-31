@@ -3,15 +3,20 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<div class="container auth mt-5">
-    <div class="card form">
-        <div class="card-header fs-3">
+<div class="container mtop">
+    <div class="card form rounded-0">
+        <div class="card-header bg_bleu rounded-0 fs-3 text-white">
           Connexion
         </div>
         <div class="card-body">
             {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+            {% for message in app.flashes('message') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
             <form method="post" >
                 <div class="row g-3 align-items-center">
                     <div class="col-md-2">

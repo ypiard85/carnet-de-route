@@ -21,7 +21,7 @@ class PlaceType extends AbstractType
             ->add('description')
             ->add('images', FileType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'image',
+                'label' => 'Images',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,

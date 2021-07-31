@@ -17,13 +17,17 @@ class UserChecker implements UserCheckerInterface
         }
 
 
-
     }
 
     public function checkPostAuth(UserInterface $user): void
     {
         if (!$user instanceof AppUser) {
             return;
+        }
+
+        if($user->getActivationToken() != null)
+        {
+            throw new CustomUserMessageAccountStatusException("Votre compte n'est pas activer");
         }
 
     }

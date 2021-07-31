@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -30,11 +31,14 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
+
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -45,8 +49,11 @@ class RegistrationController extends AbstractController
 
             $email = $form['email']->getData();
 
-            $user->setRoles(['USER']);
+            $user->setRoles(['ROLE_USER']);
 
+
+            //on génère le token d'activation
+            $user->setActivationToken(md5(uniqid()));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -59,7 +66,8 @@ class RegistrationController extends AbstractController
                     ->from(new Address('yoann.piard@gmail.com', 'la coree en grand'))
                     ->to($user->getEmail())
                     ->subject('Confirmation de votre email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->context(['token' => $user->getActivationToken()])
+                    ->htmlTemplate('registration/activation.html.twig')
             );
             // do anything else you need here, like send an email
 
@@ -97,7 +105,7 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('email_valid', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('activation');
     }
 
     /**
@@ -105,5 +113,31 @@ class RegistrationController extends AbstractController
      */
     public function emailsend(){
         return $this->render('registration/emailsend.html.twig');
+    }
+
+    /**
+     * @Route("/activation/{token}", name="activation" )
+     */
+    public function activation($token, UserRepository $userrepo)
+    {
+
+        $user = $userrepo->findOneBy(['activation_token' => $token]);
+
+        //si aucun utilisateur n'existe avec ce token
+        if(!$user)
+        {
+            throw $this->createNotFoundException("Cet utilisateur n'existe pas ");
+        }
+
+            //on supprime le token
+            $user->setActivationToken(null);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+        $this->addFlash('message', 'Votre compte est activé');
+
+        return $this->redirectToRoute('app_login');
+
     }
 }

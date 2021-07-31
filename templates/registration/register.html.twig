@@ -5,20 +5,17 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
 
-<div class="container form">
 
-    <h1>Register</h1>
-
-    <div class="container auth">
-        <div class="card form">
-            <div class="card-header fs-3">
+    <div class="container mtop">
+        <div class="card form rounded-0">
+            <div class="card-header bg_bleu rounded-0 fs-3 text-white">
               Créer un compte
             </div>
             <div class="card-body">
+                {% for flashError in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
                 {{ form_start(registrationForm) }}
                     <div class="row g-2 align-items-center">
                         <div class="col-md-3">
@@ -49,7 +46,7 @@
                             {{ form_row(registrationForm.agreeTerms) }}
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success mt-3">Créer un compte</button>
+                    <button type="submit" class="btn btn-primary mt-3">Créer un compte</button>
                     {{ form_end(registrationForm) }}
 
                 </div>
@@ -57,10 +54,4 @@
           </div>
     </div>
 
-
-
-
-
-
-</div>
 {% endblock %}

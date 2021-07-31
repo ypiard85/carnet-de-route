@@ -4,7 +4,7 @@
 
     <p>
         Veuillez confirmer votre adresse e-mail en cliquant sur le lien suivant: <br><br>
-        <a href="{{ signedUrl|raw }}">Je confirme mon email</a>.
+        <a href="{{ absolute_url(path('activation', {'token' : token } )) }}">Je confirme mon email</a>.
         Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
     </p>
 </section>

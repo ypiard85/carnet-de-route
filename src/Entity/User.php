@@ -101,6 +101,11 @@ class User implements UserInterface
      */
     private $sujetResponses;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $activation_token;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -418,5 +423,17 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->pseudo;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
     }
 }

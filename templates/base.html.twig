@@ -14,83 +14,97 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="{{ asset('./css/style.css') }}">
 
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+        {#{{ encore_entry_link_tags('app') }}#}
+    {% endblock %}
 
     </head>
     <body>
-<nav class="navbar navbar-expand-lg navbar-light  position-fixed  top-0 w-100" style="z-index: 800;" >
-  <div class="container">
-    <a class="navbar-brand" href="{{ path('home') }}">LaCoree</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Lieux
+      <nav class="position-fixed top-0 py-3 w-100 bg-white">
+        <div class="container d-flex align-items-center justify-content-between flex-wrap">
+          <div class="nav_left">
+            <a class="navbar-brand" href="{{ path('home') }}">
+              <img width="200" style="max-width: 100%;" src="{{ asset('logo.png') }}" alt="">
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{ path('carnet_de_route') }}">Voir tout</a></li>
-              <li><a class="dropdown-item" href="{{ path('place_new') }}">
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                Ajouter un lieu
-                {% else %}
-                Ajouter un lieu
-                <i class="fas fa-lock"></i>
-                {% endif %}
-              </a></li>
-            </ul>
-          </li>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=" {{ path('forum_accueil') }} ">Forum</a>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="fas fa-search text-white"></i>
-          </button>
-       </li>
-        {% if app.user %}
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ app.user.pseudo }}
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              {% if is_granted('ROLE_ADMIN') == true %}
-              <li><a class="dropdown-item" href="/admin">Dashboard Admin</a></li>
+          </div>
+          <div class="nav_right">
+            <ul class="d-flex align-items-center">
+              <div class="nav_link d-flex">
+                <li>
+                  <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Lieux
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{{ path('carnet_de_route') }}">Voir tout</a></li>
+                  <li>
+                    <a class="dropdown-item" href="{{ path('place_new') }}">
+                      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                      Ajouter un lieu
+                      {% else %}
+                      Ajouter un lieu
+                      <i class="fas fa-lock"></i>
+                      {% endif %}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a class="nav-link" href=" {{ path('forum_accueil') }} ">Forum</a>
+              </li>
+              {% if app.user %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ app.user.pseudo }}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% if is_granted('ROLE_ADMIN') == true %}
+                  <li><a class="dropdown-item" href="/admin">Dashboard Admin</a></li>
+                  {% endif %}
+                  <li><a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a></li>
+                  <li><a class="dropdown-item" href=" {{ path('maliste', {id: app.user.id} ) }} ">Ma liste</a></li>
+                  <li><a class="dropdown-item" href="{{ path('carnet_route', {id: app.user.id} ) }}">Mon carnet de route</a></li>
+                  <li><a class="dropdown-item" href=" {{ path('app_logout') }} ">Logout</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li >
+                <a class="nav-link mr-3" href="{{ path('app_register') }}">S'inscrire</a>
+              </li>
+              <li>
+                <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+              </li>
               {% endif %}
-              <li><a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a></li>
-              <li><a class="dropdown-item" href=" {{ path('maliste', {id: app.user.id} ) }} ">Ma liste</a></li>
-              <li><a class="dropdown-item" href="{{ path('carnet_route', {id: app.user.id} ) }}">Mon carnet de route</a></li>
-              <li><a class="dropdown-item" href=" {{ path('app_logout') }} ">Logout</a></li>
+            </div>
+              <div class="nav_box d-flex align-items-center">
+                <li>
+                  <i style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="fas fa-search bleu mt-2 fs-5"></i>
+                    </li>
+                    <li>
+                      <svg class="ham hamRotate ham1" viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active')">
+                        <path
+                        class="line top"
+                        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+                        <path
+                        class="line middle"
+                        d="m 30,50 h 40" />
+                        <path
+                        class="line bottom"
+                        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+                      </svg>
+                    </li>
+                </div>
             </ul>
-          </li>
-          {% else %}
-          <ul class="navbar-nav d-flex">
-              <li class="nav-item">
-                  <a class="nav-link mr-3" href="{{ path('app_register') }}">S'inscrire</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                </li>
-            </ul>
-            {% endif %}
-      </ul>
-    </div>
-  </div>
-</nav>
+          </div>
+        </div>
+      </nav>
 
-<!-- Modal -->
+    <!-- Modal -->
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-body">
                 <form action="{{ path('carnet_de_route') }}" method="get">
                     <input type="text" name="q" class="form-control" placeholder="lac, foret, temple, montagne...">
@@ -137,7 +151,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!--<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>-->
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+<script>
+  document.querySelector('.ham1').addEventListener('click', function(){
+    document.querySelector('.nav_link').classList.toggle('open')
+  })
+
+</script>
+{% endblock %}
 
     </body>
 </html>
