@@ -5,4 +5,4 @@ api_platform:
         json:
             mime_types: ['application/json']
     swagger:
-        versions: [3]
+        versions: [2]

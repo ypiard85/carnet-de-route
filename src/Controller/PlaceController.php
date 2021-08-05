@@ -182,6 +182,13 @@ class PlaceController extends AbstractController
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+
+        $user = new User();
+
+        if($place->getUser() != $this->getUser() ){
+           return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(PlaceType::class, $place);
 
         $form->handleRequest($request);
@@ -222,6 +229,8 @@ class PlaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($like);
             $entityManager->flush();
+
+
 
             return $this->json(['code' => 200, 'message' => 'Lieu aimer bien supprimer'], 200);
         }

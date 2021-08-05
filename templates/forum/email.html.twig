@@ -1,6 +1,19 @@
 
 <div class="container emailpost">
-    <p style="background-color: orange; font-weight: bold; font-size: 3em; color: white; text-align: center; padding: 20px;">Un utilisateur à répondu à votre post<br>
+    <p >Un utilisateur à répondu à votre post<br>
         <a style="text-align: center;" href=" http://127.0.0.1:8000/sujet/{{ id }}/{{ title }}">Voir le post</a>
     </p>
 </div>
+
+<section style="width: 700px; max-width: 100%; margin: auto;">
+    <div style="padding: 15px; background-color: #064899;">
+        <h3 style="text-align: center; color: white;">Un utilisateur à répondu à votre post</h3>
+    </div>
+<div class="template_center my-3" style="margin: 20px 0">
+    <div style="margin: 20px 0; text-align: center">
+        <img width="250"  src="http://127.0.0.1:8000/logo.png" alt="">
+    </div>
+    <p style="padding: 20px;">Vous avez recus une réponse à votre questionnement cliquer sur le lien pour voir le post</p>
+    <a style="text-align: center;" href=" http://127.0.0.1:8000/sujet/{{ id }}/{{ title }}">Voir le post</a>
+</div>
+</section>

@@ -1,12 +1,11 @@
-{% extends 'template-forum.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello ForumController!{% endblock %}
 
 {% block body %}
-    <section class="container">
-
+    <section class="container top_margin">
         <div class="form-content">
-            <h1 class="mb-3">Ecrire un sujet</h1>
+            <h1 class="mb-3 text-center bleu">Ecrire un sujet</h1>
             {{ form_start(form) }}
             <div class="mb-3">
                 <label for="title" class="mb-3">Title</label>

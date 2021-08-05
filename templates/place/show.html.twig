@@ -7,15 +7,15 @@
 
 
 {% block body %}
-<div class="show-place">
+<div class="show-place top_margin">
   <!--Information du lieu-->
 <div class="container-fluid">
 <div class="row flex-md-row flex-column-reverse">
   <div class="col-md-6 bg-light ">
     <div class="py-3 px-3">
       <div style="padding-bottom: 10px" class="title position-relative border border-top-0 border-start-0 border-end-0 border-dark">
-        <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mb-3 fw-bold text-primary d-flex  align-items-center"><i class="fas fa-map-marker-alt"></i> {{ place.city.name }}
-          <span id="meteo-temp" class="d-flex  align-items-center " style="z-index: 100;"></span>
+        <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mb-3 bleu fw-bold text-primary d-flex  align-items-center"><i class="me-1 fas fa-map-marker-alt"></i> {{ place.city.name }}
+          <span id="meteo-temp" class="d-flex align-items-center ms-3 text-black" style="z-index: 100;"></span>
         </a>
         <p class="fs-4">{{ place.title }}</p>
         <a href="{{ path('user_show', {'id' : place.user.id }) }}" class="fw-bold"><i class="fas fa-user"></i> {{ place.user.pseudo }}</a>
@@ -239,8 +239,8 @@
            var index = res.data
 
           var htmlContent =
-          `<img width="70" src="http://openweathermap.org/img/wn/${index.weather[0].icon}.png" alt="${result.city.name}">
-            <p class="fs-6">
+          `<img width="60" src="http://openweathermap.org/img/wn/${index.weather[0].icon}.png" alt="${result.city.name}">
+            <p class="fs-5">
               <span class="text-dark">${ Math.ceil(index.main.temp)} °C</span>
             </p>
             `

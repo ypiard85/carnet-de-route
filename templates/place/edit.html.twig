@@ -3,9 +3,9 @@
 {% block title %}Edit Place{% endblock %}
 
 {% block body %}
-<section class="container">
+<section class="container top_margin">
 
-    <h1>Edit Place</h1>
+    <h1 class="text-center bleu">Editer votre lieu</h1>
     {% for messages in app.flashes('lieu_edit_success') %}
 
     <div class="alert alert-success">{{ messages }} <a href="{{ path('user_show',  {'id': app.user.id} ) }}">retourner au porfil</a> </div>

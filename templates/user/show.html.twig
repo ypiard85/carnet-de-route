@@ -3,19 +3,22 @@
 {% block title %}User{% endblock %}
 {% block body %}
 
-<section class="profil container">
+<section class="profil container top_margin">
     <div class="profil_header">
 
-      <h1>{{ user.pseudo }}</h1>
+      <h1 class="bleu">{{ user.pseudo }}</h1>
+      {% if  user.roles == 'ROLE_ADMIN' %}
+        <h6 class="fw-bold">ADMINISTRATEUR</h6>
+      {% endif %}
 
-
+      {% if user.roles != 'ROLE_ADMIN'  %}
       <div class="palmares  mb-2">
-        {% if places|length < 29 %}
+        {% if places|length < 50 %}
         <p><small>Voyaeur novice</small> <br> <i class="fas fa-star text-warning"></i></p>
-        {% elseif places|length > 49 %}
+        {% elseif places|length < 300 %}
         <p><small>Voyageur aquerie</small> <br> <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></p>
 
-        {% elseif places|length > 299 %}
+        {% elseif places|length > 300 %}
         <p><small>Voyageur expert</small> <br>
           <i class="fas fa-star text-warning"></i>
           <i class="fas fa-star text-warning"></i>
@@ -23,11 +26,11 @@
         </p>
         {% endif %}
       </div>
-
+      {% endif %}
       <div class="description">
         {{ user.description | raw }}
         {% if user.pseudo == app.user.pseudo %}
-        <a class="btn  btn-sm" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit text-dark"></i></a>
+        <a class="text-center d-block" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit text-black"></i> Editer</a>
       {% endif %}
       </div>
 

@@ -62,7 +62,7 @@ class ForumController extends AbstractController
      */
     public function new(Request $request) : Response
     {
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $sujet = new Sujet();
 
 
@@ -85,7 +85,7 @@ class ForumController extends AbstractController
                 'Sujet ajouter avec succes'
             );
 
-           return $this->redirectToRoute('forum_accueil');
+           return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
 
@@ -127,7 +127,7 @@ class ForumController extends AbstractController
 
         if($form->isSubmitted() AND $form->isValid())
         {
-
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
             $userpost = $userrepo->find($sujet->getUser()->getId());
             $userpostemail = $userpost->getEmail();
 

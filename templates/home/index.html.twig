@@ -8,17 +8,19 @@
 
 <div class="swiper-container homeswiper mt-5">
     {% include 'place/_search.html.twig' %}
-  <div class="swiper-wrapper" style="z-index: -1;">
-    <div class="swiper-slide w-100" style="background-image: url(' {{ asset("./accueil/carousel/image.jpg") }} ') " > </div>
-    <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/Jeju-Cascade-Cheonjeyeon.jpg") }}')"></div>
-    <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/.jpg") }}')"></div>
+    <div class="swiper-wrapper" style="z-index: -1;">
+      <div class="swiper-slide w-100" style="background-image: url(' {{ asset("./accueil/carousel/temple_boudisme.jpg") }} '); "></div>
+      <div class="swiper-slide w-100" style="background-image: url(' {{ asset("./accueil/carousel/image.jpg") }} '); "></div>
+    <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/Seoul.jpg") }}'); "></div>
+    <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/Jeju-Cascade-Cheonjeyeon.jpg") }}'); "></div>
+    <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/sunset-3664096_1280.jpg") }}'); "></div>
   </div>
 </div>
 
 
 
 <div class="container  mt-5">
-  <h4>Explorer les environs</h4>
+  <h4 class="bleu">Explorer les environs</h4>
   <div class="swiper-container explor_swiper mt-3">
   <div class="swiper-wrapper">
     <a href="{{ path('carnet_de_route') }}?city=Seoul" class="swiper-slide" ><img src="{{ asset('./accueil/explorer/seoul.jpg') }}" alt=""><p class="fs-5">Seoul</p></a>
@@ -34,10 +36,11 @@
 </div>
 
 <div class="container mt-5">
-  <h4>Un thème particulier ?</h4>
+  <h4 class="bleu">Un thème particulier ?</h4>
     <div class="swiper-container theme mt-3">
       <div class="swiper-wrapper">
         <a href="{{ path('carnet_de_route') }}?categorie=Lieu insolite" class="swiper-slide"><img  src="{{ asset('./accueil/theme/insolite.jpg') }}" alt=""><p class="fs-5">Lieux Insolites</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Temple" class="swiper-slide"><img  src="{{ asset('./accueil/theme/temple.jpg') }}" alt=""><p class="fs-5">Temple</p></a>
         <a href="{{ path('carnet_de_route') }}?categorie=Forêt" class="swiper-slide"><img  src="{{ asset('./accueil/theme/foret.jpg') }}" alt=""><p class="fs-5">Forêts</p></a>
         <a href="{{ path('carnet_de_route') }}?categorie=Montagne" class="swiper-slide"><img  src="{{ asset('./accueil/theme/montagne.jpg') }}" alt=""><p class="fs-5">Montagnes</p></a>
         <a href="{{ path('carnet_de_route') }}?categorie=Architectures" class="swiper-slide"><img  src="{{ asset('./accueil/theme/architecture.jpg') }}" alt=""><p class="fs-5">Architectures</p></a>
@@ -54,74 +57,48 @@
   <a href="{{ path('carnet_de_route') }}?filtre=aime" class="btn btn-warning d-block">Découvrez nos coups de coeurs</a>
 </div>
 
-<div class="container type_voyageur mt-5">
-  <h1 class="text-center position-relative">Quel type de voyageur êtes-vous ?</h1>
+<div class="container d-block type_voyageur mt-5">
+  <h1 class="text-center position-relative bleu">Quel type de voyageur êtes-vous ?</h1>
   <div class="d-flex justify-content-around mt-5 flex-wrap align-items-center">
-    <div class="type_option text-center">
+    <div class="type_option shadow text-center">
       <p class="fs-1 title">Novice</p>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
-       <p><small>Moins de 30 publications</small></p>
+       <p><small>Moins de 50 publications</small></p>
     </div>
 
-    <div class="type_option text-center">
+    <div class="type_option shadow text-center">
       <p class="fs-1 title">Aguerri</p>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
-       <p><small>Entre 30 et 50 publications</small></p>
+       <p><small>de 50 à 300 publications</small></p>
     </div>
 
-    <div class="type_option text-center">
+    <div class="type_option shadow text-center">
       <p class="fs-1 title">Expert</p>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
       <i class="fas fa-star text-warning fs-1 mb-3"></i>
        <p><small>Plus de 300 publications</small></p>
     </div>
-
   </div>
-</div>
-
-<!--Gagner des cadeaux-->
-<div class="my-5 py-3">
-  <div class="container cadeaux">
-    <div class="text-center">
-      <h1 class="text-primary">Tentez de gagner des cadeaux </h1>
-      <h3>En partageant vos coups de coeurs</h3>
-      <a href="{{ path('place_new') }}" class="btn btn-primary btn-lg mt-3">Je partage <i class="fas fa-caret-right" ></i></a>
-    </div>
-    <div class="d-flex flex-wrap justify-content-around mt-5">
-      <div class="card text-center bg_bleu">
-        <div class="card-headers">
-          <img src="{{ asset('/accueil/cadeaux/avion.jpg') }}" alt="">
-        </div>
-      <p class="mt-2 text-white fw-bold">Voyages</p>
-    </div>
-    <div class="card text-center">
-      <div class="card-headers">
-        <img src="{{ asset('/accueil/cadeaux/money.jpg') }}" alt="">
-      </div>
-      <p class="mt-2">Réductions</p>
-    </div>
-    <div class="card text-center">
-      <div class="card-headers">
-        <img src="{{ asset('/accueil/cadeaux/ticket.jpg') }}" alt="">
-      </div>
-      <p class="mt-2">Évènements privés</p>
-    </div>
+  <div class="w-100 text-center">
+    <a href="{{ path('place_new') }}" class="btn btn-primary">Je partage <i class="fas fa-caret-right" ></i></a>
   </div>
-</div>
 </div>
 
 
 <!--Devenir premium-->
 
-<div class="premium  py-5">
-  <h1 align="center" class="text-primary mb-5">Je deviens premium</h1>
+<div class="premium py-5 mt-5" >
+  <h1 class="text-primary text-center mb-2 bleu">
+    Accés<br>
+    <span style="color: yellow" class="fw-bold">VIP</span>
+  </h1>
 
 <div class="d-flex flex-wrap justify-content-center">
 
   <div class="card-premium mb-5" style="width: 350px; max-width: 100%;">
-    <div class="premium_header  py-3 text-center">
+    <div class="premium_header bg_rouge py-3 text-center">
       <h1 class="fw-bold text-white">Basic</h1>
       <i class="mb-4">Aidez-nous à nous développer</i>
       <p class="fs-1 text-white fw-bold"> 2,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >/mois</span> </p>
@@ -162,7 +139,7 @@
   </div>
 
   <div class="card-premium" style="width: 350px; max-width: 100%">
-    <div class="premium_header  py-3 text-center">
+    <div class="premium_header bg_rouge py-3 text-center">
       <h1 class="fw-bold text-white">Entreprise</h1>
       <i class="mb-4">Réserver aux entreprises</i>
       <p class="fs-1 text-white fw-bold"> 59,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >/mois</span> </p>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\subscribers;
+namespace App\Subscribers;
 
 use App\Entity\Place;
 use Symfony\Component\Security\Core\Security;
@@ -9,7 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 
 
-class PlaceSubscraber implements EventSubscriberInterface
+class PlaceSubscriber implements EventSubscriberInterface
 {
     /**
      * @var Security

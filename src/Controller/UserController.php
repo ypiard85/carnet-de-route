@@ -172,4 +172,21 @@ class UserController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+     /**
+     * @Route("/deleteplacelike/{id}", name="placelike_delete", methods={"POST", "GET"})
+     */
+    public function deleteplaceLike(RouteLike $routelike, Request $request)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($routelike);
+        $entityManager->flush();
+
+        $this->addFlash('message', 'Le lieu a été enlevé de votre carnet de route' );
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+
+    }
+
 }

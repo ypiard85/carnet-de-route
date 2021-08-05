@@ -3,9 +3,9 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <section>
+    <section class="top_margin">
         <div class="form container">
-            <h1>Editer votre description</h1>
+            <h1 class="text-center mb-4 bleu">Editer votre description</h1>
             {{ form_start(form) }}
             {{ form_row(form.description, {'label' : false} ) }}
             {{ form_row(form.pseudo, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}

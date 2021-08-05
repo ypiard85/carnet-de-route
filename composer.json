@@ -23,7 +23,7 @@
         "nesbot/carbon": "^2.46",
         "phpdocumentor/reflection-docblock": "^5.2",
         "ps/image-optimizer": "^2.0",
-        "sensio/framework-extra-bundle": "^5.1",
+        "sensio/framework-extra-bundle": "^6.1",
         "stripe/stripe-php": "^7.91",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",

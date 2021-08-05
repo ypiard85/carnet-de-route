@@ -83,18 +83,20 @@ class StripeController extends AbstractController
     /**
      * @Route("/success", name="success")
      */
-    public function success(UserRepository $userrepo){
+    public function success(UserRepository $userrepo, Request $request){
 
-        $getuser = $userrepo->find(['id' => $this->getUser()->getId()]);
 
-        $getuser->setRoles(['PREMIUM']);
+            $getuser = $userrepo->find(['id' => $this->getUser()->getId()]);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
+            $getuser->setRoles(['ROLE_PREMIUM']);
 
-        return $this->render('stripe/successentreprise.html.twig', [
-            'controller_name' => 'StripeController',
-        ]);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->render('stripe/success.html.twig', [
+                'controller_name' => 'StripeController',
+            ]);
+
     }
 
     /**
@@ -106,9 +108,6 @@ class StripeController extends AbstractController
         ]);
     }
 
-
-
-
     /**
      * @Route("/successentreprise", name="success_entreprise")
      */
@@ -116,7 +115,7 @@ class StripeController extends AbstractController
 
         $getuser = $userrepo->find(['id' => $this->getUser()->getId()]);
 
-        $getuser->setRoles(['ENTREPRISE']);
+        $getuser->setRoles(['ROLE_ENTREPRISE']);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

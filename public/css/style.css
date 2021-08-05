@@ -13,18 +13,18 @@
     --border-card-premium: rgb(65, 218, 134);
     --font_amatic: 'Amatic SC', cursive;
     --font_roboto: 'Roboto', sans-serif;
-
     --bleu-principal: #064899;
     --gris-principal: #a6a6a634;
-    --red-principal: #CF2C3A;
+    --rouge-principal: #CF2C3A;
 }
+
 
 .red{
-    color: var(--red-principal)!important;
+    color: var(--rouge-principal)!important;
 }
 
-.bg_red{
-    background-color: var(--red-principal)!important;
+.bg_rouge{
+    background-color: var(--rouge-principal)!important;
 }
 
 .bleu{
@@ -389,28 +389,60 @@ CAROUSEL
     position: absolute;
     left: 0;
     right: 0;
-    background: blue;
+    background: var(--rouge-principal);
     bottom: -20px;
     margin: auto;
 }
 
 .type_option .title {
     font-family: 'SimSun-ExtB', Arial, -apple-system, sans-serif;
-    border-right: 2px solid black;
-    border-bottom: 1px solid black;
 }
 
 .type_option{
     padding: 50px;
-    border: 3px solid rgba(0, 0, 255, 0.377);
     width: 300px;
     max-width: 100%;
     margin-bottom: 20px;
+    border-bottom: 7px solid var(--bleu-principal);
 }
 
 
+
+/*Erreur page*/
+
+.error_page{
+    min-height: 70vh;
+}
+
 /*FILTER SEARCH*/
 
+/*Actualite*/
+
+
+.actualite_header{
+    height: 300px;
+    max-height: 300px;
+    max-width: 100%;
+}
+
+.actualite_header img{
+    width: 300px;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.banner_actu{
+    height: 200px;
+    background-image: url('../banner.jpg');
+    background-size: cover;
+    background-position: center center;
+}
+
+.banner_actu h1{
+    text-shadow: 3px 3px 3px var(--bleu-principal);
+}
 
 @media screen and (min-width: 300px) AND (max-width: 710px)
 {
@@ -668,10 +700,12 @@ table .categorie_table{
     width: 100%;
 }
 
+.premium{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.219);
+}
 
 .premium_header{
     position: relative;
-    background-color: var(--bleu-principal);
     border-radius:20px 20px 0px 0px;
 }
 
@@ -688,7 +722,7 @@ table .categorie_table{
     position:absolute;
     border-style: solid;
     border-width: 20px 20px 0 20px;
-    border-color: var(--bleu-principal) transparent transparent transparent;
+    border-color: var(--rouge-principal) transparent transparent transparent;
 }
 
 .card-premium{
@@ -698,7 +732,6 @@ table .categorie_table{
 
 
 .premium-footer{
-    background-color: var(--bleu-principal);
     padding: 20px 0;
     border-radius: 0 0 20px 20px;
 }
@@ -717,7 +750,7 @@ table .categorie_table{
 }
 
 .top_margin{
-    margin-top: 50px;
+    margin-top: 50px!important;
 }
 
 
@@ -762,19 +795,30 @@ table .categorie_table{
     display: none;
 }
 
+.nav_link a:hover{
+    color: var(--bleu-principal)!important;
+}
+
+.premium > h1{
+    position: relative;
+    height: 110px;
+
+}
+
+
 @media screen and (max-width: 995px){
 
     .nav_link{
        flex-direction: column;
        position: fixed;
-       top: 100px;
+       top: 70px;
        background-color: white;
        bottom: 0;
        right: 0;
-       width: 50%;
-       padding: 0 20px;
+       width: 60%;
+       padding: 10px 20px;
        box-shadow: 0 10px 10px;
-       transform: translateX(250px);
+       transform: translateX(500px);
     }
 
     .open{

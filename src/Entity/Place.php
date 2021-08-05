@@ -19,8 +19,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 
 /**
  * @ORM\Entity(repositoryClass=PlaceRepository::class)
- * @Vich\Uploadable
- * @Fresh\VichSerializableClass
  * @ApiResource(
  *  normalizationContext={"groups"={"place:read"}},
  *  collectionOperations={"get"},

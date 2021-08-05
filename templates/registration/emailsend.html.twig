@@ -6,16 +6,24 @@
 
 {% block body %}
 
-<section class="container">
-    <div class="card text-white fw-bold p-3" style="background-color: rgb(180, 180, 252); width: 800px; max-width: 100%; margin: auto;">
-        <p>
-            <span class="fs-2"> Héhé ! Bienvenue dans la communauté de ...</span> <br>
-            Nous sommes ravis de t'avoir enfin parmis nous, afin de valider ton inscription, un email t'as été envoyer. <br>
-            Si tu vois se mail n'oublie pas de cliquer sur le lien pour activer ton compte. <br>
-            <span class="fs-3">A tout de suite. </span>
+<section class="container template_email" style="width: 700px; max-width: 100%; margin: auto;">
+    <div class="shadow">
+        <div class="template_top bg_bleu text-white text-center top_margin py-3">
+            <h3>Confirme ton email</h3>
+        </div>
+    <div class="template_center my-3">
+        <div class="text-center my-3">
+            <img width="250"  src="{{ asset('logo.png') }}" alt="">
+        </div>
+        <p class="p-2">
+            Nous sommes ravis de t'avoir parmis nous, afin de valider ton inscription, un email t'as été envoyer. <br>
+            Si tu vois se mail n'oublie pas de cliquer sur le lien pour activer ton compte
         </p>
-        <a class="text-dark" href="{{ path('home') }}">Revenir à l'accueil</a>
     </div>
+    <div class="template_footer p-2">
+        <a class="rouge" href="{{ path('home') }}">Revenir à l'accueil</a>
+    </div>
+</div>
 </section>
 
 

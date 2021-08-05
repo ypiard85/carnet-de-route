@@ -7,7 +7,7 @@
 {% block body %}
 
 
-    <div class="container mtop">
+    <div class="container mtop mb-5">
         <div class="card form rounded-0">
             <div class="card-header bg_bleu rounded-0 fs-3 text-white">
               Créer un compte
@@ -19,7 +19,8 @@
                 {{ form_start(registrationForm) }}
                     <div class="row g-2 align-items-center">
                         <div class="col-md-3">
-                            <label for="inputEmail">Pseudo</label>
+                            <label for="inputEmail">Pseudo</label><br>
+                            <small class="text-success">Attention le pseudo ne peut être modifier</small>
                         </div>
                         <div class="col-md-9">
                             {{ form_row(registrationForm.pseudo) }}

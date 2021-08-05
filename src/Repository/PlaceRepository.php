@@ -42,30 +42,32 @@ class PlaceRepository extends ServiceEntityRepository
      */
     public function findSearch(SearchData $search): PaginationInterface
     {
+
         $query = $this->createQueryBuilder('p')
-                    ->select('p')
-                    ->join('p.city', 'c' )
-                    ->join('p.categorie', 't' )
-                    ;
+                ->select('p')
+                ->join('p.city', 'c' )
+                ->join('p.categorie', 't' )
+                ;
 
-                    if(!empty($search->q)){
-                        $query = $query
-                        ->andWhere('p.title LIKE :q')
-                        //->orWhere('c.name LIKE :q')
-                        ->setParameter('q', "%{$search->q}%" );
-                    }
+                if(!empty($search->q)){
+                    $query = $query
+                    ->andWhere('p.title LIKE :q')
+                    //->orWhere('c.name LIKE :q')
+                    ->setParameter('q', "%{$search->q}%" );
+                }
 
-                    if(!empty($search->city)){
-                        $query = $query
-                        ->andWhere('c.name  LIKE :city')
-                        ->setParameter('city', $search->city );
-                    }
+                if(!empty($search->city)){
+                    $query = $query
+                    ->andWhere('c.name  LIKE :city')
+                    ->setParameter('city', $search->city );
+                }
 
-                    if(!empty($search->categorie)){
-                        $query = $query
-                            ->andWhere('t.nom LIKE :categorie')
-                            ->setParameter('categorie', "%{$search->categorie}%");
-                    }
+                if(!empty($search->categorie)){
+                    $query = $query
+                    ->andWhere('t.nom LIKE :categorie')
+                    ->setParameter('categorie', "%{$search->categorie}%");
+                }
+
 
                     if(!empty($search->filter)){
                         switch ($search->filter) {
@@ -75,16 +77,15 @@ class PlaceRepository extends ServiceEntityRepository
                             case 'za':
                                 $query = $query->orderBy('p.title', 'DESC');
                                 break;
-                            case 'aimes':
-                                $query = $query->orderBy('l.place', 'DESC');
-                                break;
                             default:
-                                $query = $query->orderBy('p.name', 'ASC');
+                            $query = $query->orderBy('p.title', 'ASC');
                                 break;
                         }
                     }else{
                         $query = $query->orderBy('p.id', 'DESC');
                     }
+
+
 
           $query = $query->getQuery();
           return  $this->paginator->paginate($query, $search->page, 20);

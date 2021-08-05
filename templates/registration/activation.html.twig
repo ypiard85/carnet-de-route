@@ -1,10 +1,16 @@
-<section class="container">
 
-    <h1>Hey !</h1>
-
-    <p>
-        Veuillez confirmer votre adresse e-mail en cliquant sur le lien suivant: <br><br>
-        <a href="{{ absolute_url(path('activation', {'token' : token } )) }}">Je confirme mon email</a>.
-        Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-    </p>
+<section style="width: 700px; max-width: 100%; margin: auto;">
+            <div style="padding: 15px; background-color: #064899;">
+                <h3 style="text-align: center; color: white;">Confirme ton email</h3>
+            </div>
+        <div class="template_center my-3" style="margin: 20px 0">
+            <div style="margin: 20px 0; text-align: center">
+                <img width="250"  src="http://127.0.0.1:8000/logo.png" alt="">
+            </div>
+            <p style="padding: 20px;">
+                Veuillez confirmer votre adresse e-mail en cliquant sur le lien suivant: <br><br>
+                <a style="color: blue;" href="{{ absolute_url(path('activation', {'token' : token } )) }}">Je confirme mon email</a>.
+                Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+            </p>
+        </div>
 </section>

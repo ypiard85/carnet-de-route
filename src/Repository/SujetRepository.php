@@ -31,6 +31,7 @@ class SujetRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->where('s.categorie = :val ' )
             ->setParameter('val', $value)
+            ->orderBy('s.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
@@ -43,7 +44,7 @@ class SujetRepository extends ServiceEntityRepository
 
         $query = $this->createQueryBuilder('s')
                 ->select('s')
-                ->orderBy('s.createdAt', 'DESC');
+                ->orderBy('s.createdAt', 'ASC');
 
                 if(!empty($search->sujet)){
                     $query = $query
