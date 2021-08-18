@@ -21,9 +21,6 @@ class SujetResponseCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
-
-
-
         $fields = [
             TextField::new('content'),
             AssociationField::new('user', 'utilisateur'),

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ActualiteController!{% endblock %}
+
+{% block body %}
+
+<section class="container top_margin">
+    <h1 class="text-center bleu">{{ evenement.titre }}</h1>
+    <h2 class="text-center"><i class="fas fa-users"></i> {{ evenement.user.pseudo }} </h2>
+    <h5 class="text-muted mt-5"><i class="far fa-calendar-alt"></i> {{ evenement.date }} </h5>
+    <div class="mt-3">
+        {{ evenement.content | raw }}
+    </div>
+
+    <!--Boutton pour contactez l'annonceur-->
+    <p class="mt-5">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#event" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Je contact l'annonceur
+        </a>
+      </p>
+      <div class="collapse" id="event">
+        <div>
+          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        </div>
+      </div>
+
+</section>
+
+{% endblock %}

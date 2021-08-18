@@ -26,14 +26,11 @@ class SujetCrudController extends AbstractCrudController
             TextField::new('title'),
             TextField::new('user', 'utilisateur')->hideOnForm(),
             DateTimeField::new('created_at', 'Publier le')->hideOnForm(),
-            AssociationField::new('categorie')
+            AssociationField::new('categorie'),
+            TextEditorField::new('content')
         ];
 
-        if($pageName == Crud::PAGE_INDEX){
-            $fields[]  =  TextField::new('content');
-        }else if($pageName == Crud::PAGE_EDIT){
-            $fields[] = TextEditorField::new('content');
-         }
+
 
         return $fields;
     }

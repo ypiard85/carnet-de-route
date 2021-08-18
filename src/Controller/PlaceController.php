@@ -80,10 +80,9 @@ class PlaceController extends AbstractController
 
         $place = new Place();
 
-
-
         $form = $this->createForm(PlaceType::class, $place);
         $form->handleRequest($request);
+
 
 
         if($form->isSubmitted() && $form->isValid()) {

@@ -2,27 +2,30 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Comment;
+use App\Entity\Actualites;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class CommentCrudController extends AbstractCrudController
+class ActualitesCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Comment::class;
+        return Actualites::class;
     }
 
 
     public function configureFields(string $pageName): iterable
     {
         return [
-
+            TextField::new('title'),
+            AssociationField::new('actuImages'),
             TextEditorField::new('content'),
-            TextField::new('user', 'utilisateur')->hideOnForm(),
         ];
+
+        
     }
 
 }

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ActualiteController!{% endblock %}
+
+{% block body %}
+
+<section class="container-fluid top_margin">
+    <div class="actu_header" style="background-image: linear-gradient(90deg, rgba(188,68,69,0.49933476808692223) 20%, rgba(34,126,188,0.5441526952577906) 73%), url('{{ asset('/actualite/' ~ actualites.actuImages[0].name) }}') ">
+        <h1 class="text-center text-white">{{ actualites.title }}</h1>
+    </div>
+    <div class="actu_single_content mt-3">
+        <p class="fw-bold bleu"><i class="far fa-clock fw-bold"></i> {{ actualites.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y') }}</p>
+        {{ actualites.content | raw }}
+    </div>
+</section>
+
+{% endblock %}

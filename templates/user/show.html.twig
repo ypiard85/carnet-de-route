@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Utilisateur - {{ user.pseudo }}{% endblock %}
 {% block body %}
 
 <section class="profil container top_margin">
     <div class="profil_header">
 
       <h1 class="bleu">{{ user.pseudo }}</h1>
-      {% if  user.roles == 'ROLE_ADMIN' %}
+
+      {% if user.roles[0] == "ROLE_ADMIN" %}
         <h6 class="fw-bold">ADMINISTRATEUR</h6>
       {% endif %}
 
-      {% if user.roles != 'ROLE_ADMIN'  %}
+      {% if user.roles[0] == "ROLE_ENTREPRISE" %}
+        <h6 class="fw-bold">Entreprise</h6>
+      {% endif %}
+
+      {% if user.roles[0] == "ROLE_USER"  %}
       <div class="palmares  mb-2">
         {% if places|length < 50 %}
         <p><small>Voyaeur novice</small> <br> <i class="fas fa-star text-warning"></i></p>
@@ -27,13 +32,16 @@
         {% endif %}
       </div>
       {% endif %}
-      <div class="description">
-        {{ user.description | raw }}
-        {% if user.pseudo == app.user.pseudo %}
-        <a class="text-center d-block" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit text-black"></i> Editer</a>
-      {% endif %}
-      </div>
 
+      <div class="description p-2">
+        {% if user.description == "" %}
+          <p>Aucune description</p>
+        {% endif %}
+        {{ user.description | raw }}
+      </div>
+      {% if user.pseudo == app.user.pseudo %}
+      <a class="text-center d-block mt-3" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit text-black"></i> Editer</a>
+      {% endif %}
   </div>
   </section>
 

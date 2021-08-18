@@ -28,6 +28,8 @@ class StripeController extends AbstractController
     {
         //https://stripe.com/docs/billing/subscriptions/checkout
 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         \Stripe\Stripe::setApiKey('sk_test_51E5Eq1AbBq4Fu4eUVvkqA3kOkfiON7FRpTdRfpblsB2LZ1nZehTjnAYdiAhWvDYxTJPuVsF7ytBu8bL2Dn77O0PR00PRLZSTrW');
 
         // The price ID passed from the front end.
@@ -58,6 +60,8 @@ class StripeController extends AbstractController
     {
         //https://stripe.com/docs/billing/subscriptions/checkout
 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         \Stripe\Stripe::setApiKey('sk_test_51E5Eq1AbBq4Fu4eUVvkqA3kOkfiON7FRpTdRfpblsB2LZ1nZehTjnAYdiAhWvDYxTJPuVsF7ytBu8bL2Dn77O0PR00PRLZSTrW');
 
         // The price ID passed from the front end.
@@ -81,20 +85,27 @@ class StripeController extends AbstractController
     }
 
     /**
-     * @Route("/success", name="success")
+     * @Route("/success/{token}", name="success",  methods={"POST", "GET"} )
      */
-    public function success(UserRepository $userrepo, Request $request){
+    public function success(UserRepository $userrepo, Request $request, User $user){
+
+      $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
-            $getuser = $userrepo->find(['id' => $this->getUser()->getId()]);
 
-            $getuser->setRoles(['ROLE_PREMIUM']);
+        if($this->getUser()->getToken() != $user->getToken()){
+          return $this->redirectToRoute('home');
+        }
+
+        
+
+            $user->setRoles(['ROLE_PREMIUM']);
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
             return $this->render('stripe/success.html.twig', [
-                'controller_name' => 'StripeController',
+                'user' => $user
             ]);
 
     }
@@ -109,19 +120,24 @@ class StripeController extends AbstractController
     }
 
     /**
-     * @Route("/successentreprise", name="success_entreprise")
+     * @Route("/successentreprise/{token}", name="success_entreprise")
      */
-    public function successentreprise(UserRepository $userrepo){
+    public function successentreprise(UserRepository $userrepo, User $user){
 
-        $getuser = $userrepo->find(['id' => $this->getUser()->getId()]);
+      $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $getuser->setRoles(['ROLE_ENTREPRISE']);
+      if($this->getUser()->getToken() != $user->getToken()){
+        return $this->redirectToRoute('home');
+      }
+
+
+        $user->setRoles(['ROLE_PREMIUM']);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
         return $this->render('stripe/successentreprise.html.twig', [
-            'controller_name' => 'StripeController',
+          'user' => $user
         ]);
     }
 }

@@ -138,7 +138,7 @@ class ForumController extends AbstractController
                 ->from('contact@lacoree.fr')
                 ->to($userpostemail)
                 ->subject('Time for Symfony Mailer!')
-                ->htmlTemplate('forum/email.html.twig')
+                ->htmlTemplate('email/email_forum_response.html.twig')
                 ->context([
                     'id' => $sujet->getId(),
                     'title' => $sujet->getTitle(),

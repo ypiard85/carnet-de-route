@@ -6,4 +6,4 @@ twig:
 fos_ck_editor:
     configs:
         main_config:
-                 toolbar: [ ["Link", "Bold", "Italic", "center", "Underline", "TextColor" ], ['JustifyLeft', 'JustifyCenter', 'JustifyRight',]]
+                 toolbar: [ ["Link", "Bold", "Italic", "BulletedList", "NumberedList", "center", "Underline", "TextColor" ], ['JustifyLeft', 'JustifyCenter', 'JustifyRight',]]

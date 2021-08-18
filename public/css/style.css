@@ -423,15 +423,39 @@ CAROUSEL
     height: 300px;
     max-height: 300px;
     max-width: 100%;
+    overflow: hidden;
 }
 
 .actualite_header img{
     width: 300px;
     max-width: 100%;
+
     height: 100%;
     object-fit: cover;
     object-position: center;
 }
+
+.actualite_option:hover .actualite_header img {
+    transform: scale(1.2);
+}
+
+.actu_header{
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.actu_single_content{
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+}
+
 
 .banner_actu{
     height: 200px;
@@ -440,9 +464,18 @@ CAROUSEL
     background-position: center center;
 }
 
+.banner_evenement{
+    height: 200px;
+    background-image: url('../evenement.jpg');
+    background-size: cover;
+    background-position: bottom center;
+}
+
 .banner_actu h1{
     text-shadow: 3px 3px 3px var(--bleu-principal);
 }
+
+
 
 @media screen and (min-width: 300px) AND (max-width: 710px)
 {
@@ -645,6 +678,10 @@ table .categorie_table{
     margin: auto;
 }
 
+.description li{
+    list-style: initial;
+}
+
 .profil .profil_header{
     text-align: center;
 }
@@ -806,7 +843,7 @@ table .categorie_table{
 }
 
 
-@media screen and (max-width: 995px){
+@media screen and (max-width: 1200px){
 
     .nav_link{
        flex-direction: column;
@@ -818,7 +855,7 @@ table .categorie_table{
        width: 60%;
        padding: 10px 20px;
        box-shadow: 0 10px 10px;
-       transform: translateX(500px);
+       transform: translateX(1000px);
     }
 
     .open{

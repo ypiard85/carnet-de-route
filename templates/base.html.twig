@@ -25,7 +25,7 @@
         <div class="container d-flex align-items-center justify-content-between flex-wrap">
           <div class="nav_left">
             <a class="navbar-brand" href="{{ path('home') }}">
-              <img width="200" style="max-width: 100%;" src="{{ asset('logo.png') }}" alt="">
+              <img width="200" style="max-width: 100%;" src="https://zupimages.net/up/21/33/7bs1.png" alt="">
             </a>
           </div>
           <div class="nav_right">
@@ -53,14 +53,18 @@
                 </ul>
               </li>
               <li>
-                <a class="nav-link" href="{{ path('actualite') }}">Actualités</a>
+                <a class="nav-link" href="{{ path('actualites') }}">Actualités</a>
               </li>
               <li>
                 <a class="nav-link" href=" {{ path('forum_accueil') }} ">Forum</a>
               </li>
-              {% if (is_granted('ROLE_PREMIUM') == true or is_granted('ROLE_ENTREPRISE') == true ) %}
+              {% if (is_granted('ROLE_PREMIUM') == true or is_granted('ROLE_ENTREPRISE') == true or is_granted('ROLE_ADMIN') == true ) %}
               <li>
-                <a class="nav-link" href="#">Événement</a>
+                <a class="nav-link" href="{{ path('evenement') }}">Événement</a>
+              </li>
+              {% else %}
+              <li>
+                <a class="nav-link" href="#premium">Événement <i class="fas fa-lock text-warning"></i></a>
               </li>
                {% endif %}
               {% if app.user %}

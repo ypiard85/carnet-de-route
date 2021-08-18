@@ -7,7 +7,6 @@ use App\Data\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryJoinParser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**

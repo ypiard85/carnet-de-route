@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ActualiteController!{% endblock %}
+
+{% block body %}
+
+<div class="banner_actu top_margin d-flex justify-content-center align-items-center">
+    <h1 class="text-white text-center">ACTUALITES</h1>
+</div>
+
+<section class="container">
+    {% for message in app.flashes('messages') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if is_granted("ROLE_ADMIN") %}
+    <div class="d-flex justify-content-center">
+        <a href="{{ path('actualites_new') }}" class="text-center btn btn-success">Ajouter</a>
+    </div>
+    {% endif %}
+    <div class="row">
+        {% for actualite in actualites %}
+        <div class="actualite_option mb-4 col-md-4 col-12">
+            <div class="actualite_header">
+                <img src="{{ asset('actualite/') }}{{ actualite.actuImages[0].name }}" class="w-100" alt="">
+            </div>
+            <div class="actu_content">
+                <p class="bleu mt-2">{{ actualite.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y') }}</p>
+
+                <h3>{{ actualite.title }}</h3>
+                <p>
+                    {{ actualite.content[:150] | raw }}
+                </p>
+
+                <a class="btn btn-primary" href="{{ path('actualites_show', {'title' : actualite.title }) }}">Lire plus</a>
+                {% if is_granted("ROLE_ADMIN") %}
+                <a class="btn btn-success" href="{{ path('actualites_edit', {'id' : actualite.id }) }}">Modifier</a>
+                <a class="btn btn-danger" href="{{ path('actualites_delete', {'id' : actualite.id }) }}" onclick="confirm('Voulez vous supprimer cette actualité ?')" >Supprimer</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </section>
+
+
+{% endblock %}

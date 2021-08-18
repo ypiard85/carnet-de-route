@@ -35,7 +35,7 @@ class Comment
     private $place;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;

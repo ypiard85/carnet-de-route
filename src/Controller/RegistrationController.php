@@ -50,6 +50,7 @@ class RegistrationController extends AbstractController
             $email = $form['email']->getData();
 
             $user->setRoles(['ROLE_USER']);
+            $user->setToken(md5(uniqid()));
 
 
             //on génère le token d'activation
@@ -67,7 +68,7 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Confirmation de votre email')
                     ->context(['token' => $user->getActivationToken()])
-                    ->htmlTemplate('registration/activation.html.twig')
+                    ->htmlTemplate('email/email_registration.html.twig')
             );
             // do anything else you need here, like send an email
 

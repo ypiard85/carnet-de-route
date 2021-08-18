@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -168,8 +167,7 @@ class UserController extends AbstractController
             $entityManager->remove($place);
             $entityManager->flush();
 
-
-        return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home');
     }
 
      /**
