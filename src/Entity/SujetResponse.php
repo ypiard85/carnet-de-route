@@ -18,7 +18,8 @@ class SujetResponse
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sujetResponses")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sujetResponses", cascade={"remove"} )
+     *
      */
     private $user;
 

@@ -58,9 +58,19 @@
               <li>
                 <a class="nav-link" href=" {{ path('forum_accueil') }} ">Forum</a>
               </li>
-              {% if (is_granted('ROLE_PREMIUM') == true or is_granted('ROLE_ENTREPRISE') == true or is_granted('ROLE_ADMIN') == true ) %}
+              {% if is_granted('ROLE_PREMIUM') == true %}
               <li>
                 <a class="nav-link" href="{{ path('evenement') }}">Événement</a>
+              </li>
+              {% elseif (is_granted('ROLE_ENTREPRISE') == true or is_granted('ROLE_ADMIN') == true) %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Événement
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{ path('evenement') }}">Voir tout</a></li>
+                  <li><a class="dropdown-item" href="{{ path('evenement_add') }}">Ajouter</a></li>
+                </ul>
               </li>
               {% else %}
               <li>
@@ -73,8 +83,9 @@
                   <i class="fas fa-user"></i> {{ app.user.pseudo }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% if is_granted('ROLE_ADMIN') == true %}
+                  {% if is_granted('ROLE_ADMIN') %}
                   <li><a class="dropdown-item" href="/admin">Dashboard Admin</a></li>
+                  <li><a class="dropdown-item" href="{{ path('users_list') }}">Liste des users</a></li>
                   {% endif %}
                   <li><a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a></li>
                   <li><a class="dropdown-item" href=" {{ path('maliste', {id: app.user.id} ) }} ">Ma liste</a></li>

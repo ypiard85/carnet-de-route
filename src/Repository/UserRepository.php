@@ -42,13 +42,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     */
     public function findUserComment(){
         return $this->createQueryBuilder('u')
-                ->select('u')
+                ->select('*')
                 ->innerJoin(Comment::class, 'c')
                 ->where('u.id = c.user ')
                 ->getQuery()
                 ->getResult()
             ;
         }
+
+    public function findUserPremium()
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u')
+        ->where('u.roles LIKE :role')
+        ->orWhere('u.roles LIKE :roletwo')
+        ->setParameter('role', '%"'.'ROLE_PREMIUM'.'"%')
+        ->setParameter('roletwo', '%"'.'ROLE_ENTREPRISE'.'"%')
+        ->getQuery()
+        ->getResult();
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects

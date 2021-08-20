@@ -6,9 +6,12 @@ use App\Data\SearchData;
 use App\Entity\ActuImage;
 use App\Entity\Actualites;
 use App\Form\ActualitesType;
-use App\Repository\ActualitesRepository;
 use App\Repository\ActuImageRepository;
+use App\Repository\ActualitesRepository;
+use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,17 +43,18 @@ class ActualitesController extends AbstractController
      * @Route("/new", name="actualites_new", methods={"GET","POST"} )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer, UserRepository $userrepo): Response
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
 
 
         $actualites = new Actualites();
 
         $form = $this->createForm(ActualitesType::class, $actualites);
         $form->handleRequest($request);
+
+        $uses = $userrepo->findAll();
 
         if($form->isSubmitted() && $form->isValid()){
 
@@ -68,6 +72,7 @@ class ActualitesController extends AbstractController
             $actualites->addActuImage($img);
 
 
+
             $em = $this->getDoctrine()->getManager();
             $actualites->setCreatedAt(new DateTime());
 
@@ -75,7 +80,23 @@ class ActualitesController extends AbstractController
             $em->persist($img);
             $em->flush();
 
+            foreach($uses as $use){
+                if($use->getEmail() != $this->getUser()->getEmail() ){
 
+                    //send email
+                    $email = (new TemplatedEmail())
+                    ->from('yoann.piard@gmail.com')
+                    ->to($use->getEmail())
+                    ->subject($actualites->getTitle())
+                    ->htmlTemplate('email/email_actu_publish.html.twig')
+                    ->context([
+                        'titre' => $actualites->getTitle(),
+                        'id' => $actualites->getId()
+                    ]);
+                    $mailer->send($email);
+
+                }
+            }
 
             return $this->redirectToRoute('actualites');
 
@@ -91,14 +112,13 @@ class ActualitesController extends AbstractController
      * @Route("/edit/{id}", name="actualites_edit", methods={"GET","POST"} )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Actualites $actualites, ActuImageRepository $actuimgrepo)
+    public function edit(Request $request, Actualites $actualites)
     {
 
         $form = $this->createForm(ActualitesType::class, $actualites);
 
         $form->handleRequest($request);
 
-        $getrepo = $actuimgrepo->findOneBy(['actualite' => $actualites ]);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -133,7 +153,9 @@ class ActualitesController extends AbstractController
     public function delete(Actualites $actualites): Response
     {
 
-        $this->addFlash('messages', 'Actualite supprimer' );
+
+
+
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($actualites);

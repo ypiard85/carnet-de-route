@@ -18,6 +18,23 @@
     --rouge-principal: #CF2C3A;
 }
 
+.nav-item, footer li{
+    list-style: none!important;
+}
+
+u{
+    text-decoration: underline!important;
+}
+
+nav li{
+    list-style: none!important;
+}
+
+li{
+
+    list-style: initial!important;
+}
+
 
 .red{
     color: var(--rouge-principal)!important;
@@ -73,6 +90,7 @@ footer ul{
     padding: 0;
     margin-right: 30px;
 }
+
 
 body{
     font-family: 'Tahoma', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -451,9 +469,13 @@ CAROUSEL
 }
 
 .actu_single_content{
-    width: 600px;
+    width: 800px;
     max-width: 100%;
     margin: auto;
+}
+
+.actu_single_content img{
+    width: 100%;
 }
 
 
@@ -746,6 +768,7 @@ table .categorie_table{
     border-radius:20px 20px 0px 0px;
 }
 
+
 .premium_header::after{
     content: '';
     width: 0px;
@@ -776,6 +799,7 @@ table .categorie_table{
 .premium_content{
     padding: 20px 10px;
     background: white;
+    border-radius: 0 0 20px 20px;
 }
 
 .premium_content div{

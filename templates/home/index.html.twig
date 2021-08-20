@@ -115,24 +115,24 @@
         <p class="text-end">Participer aux evennements premium </p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
-        <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p class="text-end">Participation aux jeux concours </p>
-      </div>
-      <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-times fs-3 me-3" style="color: red"></i>
         <p class="text-end">Mise en avant des lieux</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
-        <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
+        <i class="fas fa-times fs-3 me-3" style="color: red"></i>
         <p class="text-end">Modification du pseudo</p>
       </div>
     </div>
     <div class="premium-footer text-center">
-      <form action="{{ path('stripe_basic') }}" method="POST">
+      {% if (app.user and app.user.roles[0] != "ROLE_USER" )  %}
+        <button disabled class="btn">Vous êtes déjà premium</button>
+    {% else %}
+      <form action="{{ path('stripe_basic') }}" method="GET">
         <!-- Note: If using PHP set the action to /create-checkout-session.php -->
         <input type="hidden" name="priceId" value="price_1JHaI5AbBq4Fu4eUZlEMvEM3" />
         <button class="btn btn-danger">J'en profite</button>
       </form>
+      {% endif %}
     </div>
   </div>
 
@@ -157,10 +157,6 @@
       </div>
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p class="text-end">Participation aux jeux concours </p>
-      </div>
-      <div class="d-flex  align-content-center justify-content-between">
-        <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
         <p class="text-end">Mise en avant des lieux</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
@@ -169,11 +165,15 @@
       </div>
     </div>
     <div class="premium-footer text-center">
+      {% if app.user and app.user.roles[0] != "ROLE_USER"  %}
+        <button disabled class="btn">Vous êtes déjà premium</button>
+      {% else %}
       <form action="{{ path('stripe_entreprise') }}" method="POST">
         <!-- Note: If using PHP set the action to /create-checkout-session.php -->
         <input type="hidden" name="priceId" value="price_1JHaJVAbBq4Fu4eUorTAgJtP" />
         <button class="btn btn-danger">J'en profite</button>
       </form>
+      {% endif %}
     </div>
   </div>
 

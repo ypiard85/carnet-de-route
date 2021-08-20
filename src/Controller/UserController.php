@@ -6,15 +6,17 @@ use App\Entity\User;
 use App\Entity\Place;
 use App\Form\UserType;
 use App\Entity\RouteLike;
+use App\Form\UserEditType;
+use App\Repository\LikeRepository;
 use App\Repository\UserRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\CommentRepository;
-use App\Repository\LikeRepository;
 use App\Repository\RouteLikeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -34,25 +36,14 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/userslist", name="users_list")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request): Response
+    public function userlist(UserRepository $userrepo)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_index');
-        }
-
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
+        return $this->render('user/userslist.html.twig', [
+            'users' => $userrepo->findAll()
         ]);
     }
 
@@ -74,37 +65,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{pseudo}/edit", name="user_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, User $user, UserRepository $userrepo): Response
-    {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-                //ajour d'un message flash
-                $this->addFlash(
-                    'notice',
-                    'Profil mis a jour'
-                );
-
-                $this->getDoctrine()->getManager()->flush();
-
-
-                return $this->redirectToRoute('user_show', [ 'id' => $user->getId()] );
-            }
-
-
-
-            return $this->render('user/edit.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="user_delete", methods={"POST"})
      */
     public function delete(Request $request, User $user): Response
@@ -117,6 +77,7 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
 
     /**
      * @Route("/carnet/{id}", methods={"GET", "POST"}, name="carnet_route" )
@@ -161,7 +122,7 @@ class UserController extends AbstractController
      */
     public function deletePlace(Place $place): Response
     {
-
+            
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($place);
@@ -185,6 +146,56 @@ class UserController extends AbstractController
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
 
+    }
+
+    /**
+     * @Route("/{pseudo}/edit", name="user_edit", methods={"GET","POST"} )
+     */
+    public function edit(User $user, Request $request)
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush($user);
+
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/editprofil/{id}", name="userprofil_edit", methods={"GET", "POST"} )
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function editUser(User $user, UserEditType $useredittype, Request $request)
+    {
+
+        $form = $this->createForm(UserEditType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $this->addFlash('message', 'Utilisateur modifier');
+
+            return $this->redirectToRoute('users_list');
+
+        }
+
+        return $this->render('user/profiledit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView()
+        ]);
     }
 
 }

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter | Evénement{% endblock %}
+
+{% block body %}
+    <section class="container top_margin">
+            <h3 class="bleu mb-4 text-center">Ajouter un événement</h3>
+           {{ form_start(form) }}
+            <div class="row">
+                <div class="mb-3 col-md-8">
+                    <label for="" class=" mb-1">Titre de l'événement</label>
+                    {{ form_row(form.titre) }}
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="" class="mb-1">Date de l'événement</label>
+                    {{ form_row(form.date) }}
+                </div>
+                <label for="" class="mb-1">Description de l'événement</label>
+                {{ form_row(form.content) }}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Créer mon événement</button>
+
+           {{ form_end(form) }}
+    </section>
+{% endblock %}

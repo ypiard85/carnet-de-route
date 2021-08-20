@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\City;
+use App\Entity\User;
 use App\Entity\Place;
 use App\Entity\Sujet;
 use App\Entity\Comment;
@@ -38,7 +39,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Sujets', 'fas fa-align-justify', Sujet::class);
         yield MenuItem::linkToCrud('Commentaires sujets', 'fas fa-comment-dots', SujetResponse::class);
         yield MenuItem::linkToCrud('Categories sujets', 'fas fa-book', ForumCategorie::class);
-        yield MenuItem::linkToCrud('Actualites', 'fas fa-book', Actualites::class);
+        yield MenuItem::linkToCrud('Actualites', 'far fa-newspaper', Actualites::class);
+        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
     }
 
 

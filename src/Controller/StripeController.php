@@ -87,7 +87,7 @@ class StripeController extends AbstractController
     /**
      * @Route("/success/{token}", name="success",  methods={"POST", "GET"} )
      */
-    public function success(UserRepository $userrepo, Request $request, User $user){
+    public function success(Request $request, User $user){
 
       $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -96,8 +96,6 @@ class StripeController extends AbstractController
         if($this->getUser()->getToken() != $user->getToken()){
           return $this->redirectToRoute('home');
         }
-
-        
 
             $user->setRoles(['ROLE_PREMIUM']);
 
@@ -130,8 +128,7 @@ class StripeController extends AbstractController
         return $this->redirectToRoute('home');
       }
 
-
-        $user->setRoles(['ROLE_PREMIUM']);
+        $user->setRoles(['ROLE_ENTREPRISE']);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

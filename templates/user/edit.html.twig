@@ -7,10 +7,10 @@
         <div class="form container">
             <h1 class="text-center mb-4 bleu">Editer votre description</h1>
             {{ form_start(form) }}
-            {{ form_row(form.description, {'label' : false} ) }}
-            {{ form_row(form.pseudo, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
-            {{ form_row(form.email, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
-            <button class="btn btn-success mt-3">{{ button_label|default('Sauvegarder') }}</button>
+                {{ form_row(form.description, {'label' : false} ) }}
+                {{ form_row(form.pseudo, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
+                {{ form_row(form.email, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
+                <button class="btn btn-success mt-3">{{ button_label|default('Sauvegarder') }}</button>
             {{ form_end(form) }}
         </div>
     </section>

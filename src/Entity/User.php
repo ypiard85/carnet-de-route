@@ -33,8 +33,6 @@ class User implements UserInterface
      */
     private $id;
 
-    private $user;
-
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      *
@@ -67,7 +65,7 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", cascade={"remove"})
      */
     private $comments;
 
@@ -77,27 +75,27 @@ class User implements UserInterface
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=RouteLike::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=RouteLike::class, mappedBy="user", cascade={"remove"})
      */
     private $routeLikes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user", cascade={"remove"})
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Place::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Place::class, mappedBy="user", cascade={"remove"})
      */
     private $places;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sujet::class, mappedBy="User")
+     * @ORM\OneToMany(targetEntity=Sujet::class, mappedBy="User", cascade={"remove"})
      */
     private $sujets;
 
     /**
-     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="user", cascade={"remove"})
      */
     private $sujetResponses;
 
@@ -112,7 +110,7 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="user", cascade={"persist"})
      */
     private $evenements;
 

@@ -35,6 +35,9 @@ class Like
         return $this->id;
     }
 
+    /**
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
     public function getUser(): ?User
     {
         return $this->user;

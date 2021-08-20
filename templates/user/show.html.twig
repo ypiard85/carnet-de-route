@@ -40,7 +40,7 @@
         {{ user.description | raw }}
       </div>
       {% if user.pseudo == app.user.pseudo %}
-      <a class="text-center d-block mt-3" href="/user/{{ user.pseudo }}/edit"><i class="far fa-edit text-black"></i> Editer</a>
+      <a class="text-center d-block mt-3" href="{{ path('user_edit', {'pseudo' : user.pseudo } ) }}"><i class="far fa-edit text-black"></i> Editer</a>
       {% endif %}
   </div>
   </section>

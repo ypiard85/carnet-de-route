@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ActuImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass=ActuImageRepository::class)
+ * @Vich\Uploadable
  */
 class ActuImage
 {
@@ -19,8 +23,11 @@ class ActuImage
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $name;
+
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Actualites::class, inversedBy="actuImages", cascade={"all"})
@@ -31,6 +38,9 @@ class ActuImage
     {
         return $this->id;
     }
+
+
+
 
     public function getName(): ?string
     {

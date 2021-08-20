@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
 
 
@@ -31,8 +31,32 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('pseudo')
-            ->add('description', CKEditorType::class)
+            ->add('token')
+            ->add('roles', ChoiceType::class, [
+                'required' => true,
+                'multiple' => false,
+                'expanded' => false,
+                'choices'  => [
+                  'User' => 'ROLE_USER',
+                  'Admin' => 'ROLE_ADMIN',
+                  'Premium' => 'ROLE_PREMIUM',
+                  'Entreprise' => 'ROLE_ENTREPRISE',
+                ],
+            ]);
             ;
+
+                    // Data transformer
+        $builder->get('roles')
+        ->addModelTransformer(new CallbackTransformer(
+            function ($rolesArray) {
+                 // transform the array to a string
+                 return count($rolesArray)? $rolesArray[0]: null;
+            },
+            function ($rolesString) {
+                 // transform the string back to an array
+                 return [$rolesString];
+            }
+    ));
 
     }
 
