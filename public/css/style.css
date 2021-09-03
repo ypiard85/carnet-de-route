@@ -74,7 +74,7 @@ a{
 }
 
 li{
-    list-style: none;
+    list-style: none!important;
 }
 
 h4, label{
@@ -150,6 +150,7 @@ section{
 .show-place .swiper-container{
     width: 100%;
     max-width: 100%;
+    overflow: hidden;
 }
 
 .show-place .swiper-slide {

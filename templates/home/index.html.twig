@@ -55,7 +55,7 @@
   <a href="{{ path('carnet_de_route') }}?filtre=aime" class="btn btn-warning d-block">Découvrez nos coups de coeurs</a>
 </div>
 
-<div class="container d-block type_voyageur mt-5">
+<div class="container d-block type_voyageur my-5">
   <h1 class="text-center position-relative bleu">Quel type de voyageur êtes-vous ?</h1>
   <div class="d-flex justify-content-around mt-5 flex-wrap align-items-center">
     <div class="type_option shadow text-center">
@@ -85,7 +85,7 @@
 </div>
 
 
-<!--Devenir premium-->
+<!--Devenir premium
 
 <div id="premium" class="premium py-5 mt-5" >
   <h1 class="text-primary text-center mb-2 bleu">
@@ -120,7 +120,7 @@
         <button disabled class="btn">Vous êtes déjà premium</button>
     {% else %}
       <form action="{{ path('stripe_basic') }}" method="POST">
-        <!-- Note: If using PHP set the action to /create-checkout-session.php -->
+
         <input type="hidden" name="priceId" value="price_1JHaI5AbBq4Fu4eUZlEMvEM3" />
         <button class="btn btn-danger">J'en profite</button>
       </form>
@@ -161,7 +161,7 @@
         <button disabled class="btn">Vous êtes déjà premium</button>
       {% else %}
       <form action="{{ path('stripe_entreprise') }}" method="POST">
-        <!-- Note: If using PHP set the action to /create-checkout-session.php -->
+
         <input type="hidden" name="priceId" value="price_1JHaJVAbBq4Fu4eUorTAgJtP" />
         <button class="btn btn-danger">J'en profite</button>
       </form>
@@ -170,6 +170,7 @@
   </div>
 
 </div>
+-->
 </div>
 
 
