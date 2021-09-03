@@ -147,21 +147,20 @@ class ActualitesController extends AbstractController
     }
 
       /**
-     * @Route("/delete/{id}", name="actualites_delete", methods={"GET","POST"} )
+     * @Route("/delete/{id}", name="actualite_delete", methods={"GET","POST"} )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Actualites $actualites): Response
+    public function delete(Actualites $actualites, Request $request): Response
     {
 
 
+        if($this->isCsrfTokenValid('delete'. $actualites->getId(), $request->request->get('_token'))){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($actualites);
+            $entityManager->flush();
+            return $this->redirectToRoute('actualites');
+        }
 
 
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($actualites);
-        $entityManager->flush();
-
-
-        return $this->redirectToRoute('actualites');
     }
 }

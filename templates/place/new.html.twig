@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Place{% endblock %}
+{% block title %}COREEGO | Ajouter un lieu{% endblock %}
 
 
 {% block stylesheets %}
@@ -98,6 +98,7 @@ var mapContainer2 = document.getElementById('kakaomap'), // 지도를 표시할 
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer2, mapOption);
 
+document.querySelector('#find-me').addEventListener('click', geoFindMe);
 
 
  function geoFindMe() {
@@ -123,8 +124,6 @@ if (!navigator.geolocation) {
 }
 
 }
-
-document.querySelector('#find-me').addEventListener('click', geoFindMe);
 </script>
 
 {% endblock %}

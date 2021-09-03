@@ -302,10 +302,17 @@ CAROUSEL
 
 .explor_swiper{
     height: 300px;
+    position: relative;
+    overflow: hidden;
 }
 
 .explor_swiper img{
     height: 250px;
+}
+
+.theme_next{
+    position:absolute;
+    top:0;
 }
 
 .homeswiper{
@@ -321,7 +328,7 @@ CAROUSEL
 }
 
 .explor_swiper .swiper-button-prev:after, .explor_swiper .swiper-button-next:after, .theme .swiper-button-prev:after, .theme .swiper-button-next:after{
-    font-size: 20px!important;
+    font-size: 10px!important;
     background-color: white;
     color: black;
     font-weight: bold;
@@ -334,6 +341,16 @@ CAROUSEL
     color: black;
 }
 
+.theme .swiper-button-prev, .explor_swiper .swiper-button-prev{
+    position: absolute;
+    top: 50%;
+}
+
+.theme .swiper-button-next{
+    position: absolute;
+    top: 50%;
+}
+
 .theme img{
     height: 250px;
     width: 100%;
@@ -342,7 +359,10 @@ CAROUSEL
 
 .theme{
     height: 300px;
+    position: relative;
+    overflow: hidden;
 }
+
 
 .theme a{
     height: 200px!important;
@@ -497,6 +517,29 @@ CAROUSEL
     text-shadow: 3px 3px 3px var(--bleu-principal);
 }
 
+/*CONTACT*/
+
+.contact .image_section{
+    width: 500px;
+    max-width: 100%;
+}
+
+.image_section img{
+    width: 100%;
+}
+
+.contact .image_section{
+    position: relative;
+}
+
+.contact .image_description{
+    background-color: #064899dc;
+    width: 400px;
+    height: 250px;
+    max-width: 100%;
+    margin-left: -100px;
+    z-index: 100;
+}
 
 
 @media screen and (min-width: 300px) AND (max-width: 710px)
@@ -520,7 +563,15 @@ CAROUSEL
     }
 }
 
+@media screen and (max-width: 980px){
+
+}
+
 @media screen and (max-width: 500px){
+    .contact .image_description{
+        margin-left:0;
+        width: 100%;
+    }
     .explor_swiper img, .theme img{
         height: 150px;
     }
@@ -615,7 +666,6 @@ table .left{
 
 table .right{
     min-width: 100px;
-    border-left: 2px solid var(--color-table-border);
 }
 
 table .middle{

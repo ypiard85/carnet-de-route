@@ -29,8 +29,6 @@ document.getElementById('place_title').value = local.title
 document.getElementById('place_description').value = local.description
 document.getElementById('place_city').value = local.city
 
-
-
     let loc = window.location.search
     let getparams = new URLSearchParams(loc)
     let getLocation = getparams.get('location')

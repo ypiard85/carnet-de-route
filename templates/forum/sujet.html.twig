@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ForumController!{% endblock %}
+{% block title %}COREEGO | Forum - {{ sujet.title }} {% endblock %}
 
 {% block body %}
 
@@ -17,12 +17,14 @@
         <div class="sujet_table w-100 position-relative">
            <div class="left bg-light">
             <i class="fas fa-crown fs-1 position-absolute start-0" style="transform: rotate(-35deg);margin-left: -20px; margin-top: -0.5em; color: rgb(175, 175, 17)"></i>
-               <a href="{{ path('user_show', {'id' : sujet.user.id }) }}" class="fw-bold p-3 mt-4 d-block">{{ sujet.user.pseudo }}</a>
+               <a href="{{ path('user_show', {'id' : sujet.user.id }) }}" class="fw-bold p-3 mt-4 d-block">
+                <i class="fas fa-user"></i><br>
+                {{ sujet.user.pseudo }}</a>
            </div>
            <div class="center">
                 <p style="line-height: 1em;">{{ sujet.content | nl2br }}</p>
             </div>
-            <small class="position-absolute end-0 fw-bold" style="margin: 10px;">Il y a {{ sujet.createdAt | ago  }}</small>
+            <small class="position-absolute end-0 fw-bold" style="margin: 10px;">{{ sujet.createdAt | ago  }}</small>
         </div>
 
         <h4 class="my-3">{{ res | length }} Réponses</h4>
@@ -31,7 +33,9 @@
 
          <div class="mt-5 sujet_table w-100 position-relative">
             <div class="left bg-light">
-                <a href="{{ path('user_show', {'id' : re.user.id }) }}" class="p-3 mt-4 d-block">{{ re.user.pseudo }}</a>
+                <a href="{{ path('user_show', {'id' : re.user.id }) }}" class="p-3 mt-4 d-block">
+                  <i class="fas fa-user"></i><br>
+                  {{ re.user.pseudo }}</a>
             </div>
             <div class="center">
                  <p style="line-height: 1em;">{{ re.content | nl2br }}</p>

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}COREEGO - voyager, partager{% endblock %}
 
 {% block body %}
 
@@ -38,7 +38,7 @@
     <div class="swiper-container theme mt-3">
       <div class="swiper-wrapper">
         <a href="{{ path('carnet_de_route') }}?categorie=Lieu insolite" class="swiper-slide"><img  src="{{ asset('./accueil/theme/insolite.jpg') }}" alt=""><p class="fs-5">Lieux Insolites</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Temple" class="swiper-slide"><img  src="{{ asset('./accueil/theme/temple.jpg') }}" alt=""><p class="fs-5">Temple</p></a>
+        <a href="{{ path('carnet_de_route') }}?categorie=Temple" class="swiper-slide"><img  src="{{ asset('./accueil/theme/temple.jpg') }}" alt=""><p class="fs-5">Palais</p></a>
         <a href="{{ path('carnet_de_route') }}?categorie=Forêt" class="swiper-slide"><img  src="{{ asset('./accueil/theme/foret.jpg') }}" alt=""><p class="fs-5">Forêts</p></a>
         <a href="{{ path('carnet_de_route') }}?categorie=Montagne" class="swiper-slide"><img  src="{{ asset('./accueil/theme/montagne.jpg') }}" alt=""><p class="fs-5">Montagnes</p></a>
         <a href="{{ path('carnet_de_route') }}?categorie=Architectures" class="swiper-slide"><img  src="{{ asset('./accueil/theme/architecture.jpg') }}" alt=""><p class="fs-5">Architectures</p></a>
@@ -99,7 +99,7 @@
     <div class="premium_header bg_rouge py-3 text-center">
       <h1 class="fw-bold text-white">Basic</h1>
       <i class="mb-4">Aidez-nous à nous développer</i>
-      <p class="fs-1 text-white fw-bold"> 2,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >/mois</span> </p>
+      <p class="fs-1 text-white fw-bold"> 2,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >TTC/mois</span> </p>
     </div>
     <div class="premium_content shadow">
       <div class="d-flex  align-content-center justify-content-between">
@@ -107,27 +107,19 @@
         <p>Accès à la page évènement</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
-        <i class="fas fa-times fs-3 me-3" style="color: red"></i>
-        <p>Implémanter la page évènement</p>
+        <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
+        <p>Participation au événements privés</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p class="text-end">Participer aux evennements premium </p>
-      </div>
-      <div class="d-flex  align-content-center justify-content-between">
-        <i class="fas fa-times fs-3 me-3" style="color: red"></i>
-        <p class="text-end">Mise en avant des lieux</p>
-      </div>
-      <div class="d-flex  align-content-center justify-content-between">
-        <i class="fas fa-times fs-3 me-3" style="color: red"></i>
-        <p class="text-end">Modification du pseudo</p>
+        <p class="text-end">Gratuité ou réduction aux événements payants</p>
       </div>
     </div>
     <div class="premium-footer text-center">
       {% if (app.user and app.user.roles[0] != "ROLE_USER" )  %}
         <button disabled class="btn">Vous êtes déjà premium</button>
     {% else %}
-      <form action="{{ path('stripe_basic') }}" method="GET">
+      <form action="{{ path('stripe_basic') }}" method="POST">
         <!-- Note: If using PHP set the action to /create-checkout-session.php -->
         <input type="hidden" name="priceId" value="price_1JHaI5AbBq4Fu4eUZlEMvEM3" />
         <button class="btn btn-danger">J'en profite</button>
@@ -136,11 +128,11 @@
     </div>
   </div>
 
-  <div class="card-premium" style="width: 350px; max-width: 100%">
+  <div class="card-premium" style="width: 350px; max-width: 100%;">
     <div class="premium_header bg_rouge py-3 text-center">
       <h1 class="fw-bold text-white">Entreprise</h1>
       <i class="mb-4">Réserver aux entreprises</i>
-      <p class="fs-1 text-white fw-bold"> 59,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >/mois</span> </p>
+      <p class="fs-1 text-white fw-bold"> 59,90 <span class="fs-4">€</span> <span class="fs-6 align-top" >TTC/mois</span> </p>
     </div>
     <div class="premium_content shadow">
       <div class="d-flex  align-content-center justify-content-between">
@@ -149,19 +141,19 @@
       </div>
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p>Implémanter la page évènement</p>
+        <p>Ajouter un événement</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p class="text-end">Participer aux evennements premium </p>
+        <p>Participation au événements privés</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p class="text-end">Mise en avant des lieux</p>
+        <p class="text-end">Gratuité aux événements</p>
       </div>
       <div class="d-flex  align-content-center justify-content-between">
         <i class="fas fa-check fs-3 me-3" style="color: rgb(65, 218, 134)"></i>
-        <p class="text-end">Modification du pseudo</p>
+        <p class="text-end">Page privilégier entreprise</p>
       </div>
     </div>
     <div class="premium-footer text-center">
@@ -184,7 +176,7 @@
 
 {% block javascrips %}
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-
+<script src="https://js.stripe.com/v3/"></script>
   <script>
        var swiper = new Swiper(".homeswiper", {
         spaceBetween: 30,

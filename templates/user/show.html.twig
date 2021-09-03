@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilisateur - {{ user.pseudo }}{% endblock %}
+{% block title %}COREEGO | {{ user.pseudo }}{% endblock %}
 {% block body %}
 
 <section class="profil container top_margin">
@@ -84,7 +84,7 @@
               </li>
               <li>
                 {% if place.user.id == app.user.id %}
-                <a href=" {{ path('place_delete', {'id': place.id} ) }} " onclick="return confirm('Voulez vous supprimer cette place ?')" class="btn btn-danger btn-sm dropdown-item"><i class="fas fa-trash-alt"></i> supprimer</a>
+                <a href=" {{ path('place_delete', {'id': place.id} ) }} " onclick="return confirm('Voulez vous supprimer ce lieu ?')" class="btn btn-danger btn-sm dropdown-item"><i class="fas fa-trash-alt"></i> supprimer</a>
                 {% endif %}
               </ul>
           </div>

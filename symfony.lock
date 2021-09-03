@@ -163,6 +163,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v5.5.1"
     },
+    "knplabs/knp-snappy": {
+        "version": "v1.2.1"
+    },
     "knplabs/knp-time-bundle": {
         "version": "v1.16.0"
     },

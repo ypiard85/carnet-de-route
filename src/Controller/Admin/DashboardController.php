@@ -11,6 +11,7 @@ use App\Entity\Actualites;
 use App\Entity\SujetResponse;
 use App\Entity\ForumCategorie;
 use App\Controller\Admin\PlaceCrudController;
+use App\Entity\Categorie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -34,6 +35,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::section('Important');
         yield MenuItem::linkToCrud('Lieux', 'fas fa-location-arrow', Place::class);
+        yield MenuItem::linkToCrud('Thêmes', 'fas fa-location-arrow', Categorie::class);
         yield MenuItem::linkToCrud('Villes', 'fas fa-city', City::class);
         yield MenuItem::linkToCrud('Commentaires places', 'fas fa-comments', Comment::class);
         yield MenuItem::linkToCrud('Sujets', 'fas fa-align-justify', Sujet::class);

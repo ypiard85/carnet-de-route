@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ActualiteController!{% endblock %}
+{% block title %}COREEGO | Actualites {% endblock %}
 
 {% block body %}
 
@@ -9,6 +9,7 @@
 </div>
 
 <section class="container">
+    <h4 class="mb-4 bleu">Actualités</h4>
     {% for message in app.flashes('messages') %}
         <div class="alert alert-success">
                 {{ message }}
@@ -37,7 +38,10 @@
                 <a class="btn btn-primary" href="{{ path('actualites_show', {'title' : actualite.title }) }}">Lire plus</a>
                 {% if is_granted("ROLE_ADMIN") %}
                 <a class="btn btn-success" href="{{ path('actualites_edit', {'id' : actualite.id }) }}">Modifier</a>
-                <a class="btn btn-danger" href="{{ path('actualites_delete', {'id' : actualite.id }) }}" onclick="confirm('Voulez vous supprimer cette actualité ?')" >Supprimer</a>
+                <form method="post" action="{{ path('actualite_delete', { 'id' : actualite.id } ) }}" onclick="return confirm('Voulez vous supprimer cette actualité ?')" >
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ actualite.id) }}">
+                    <button  class="btn btn-danger" >Supprimer</button>
+                </form>
                 {% endif %}
             </div>
         </div>

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 
-use Webmozart\Assert\Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -12,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -48,6 +48,12 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     *
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre mot de passe doit contenir au moin 4 caracteres"
+     * )
      */
     private $password;
 
@@ -110,7 +116,7 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="user", cascade={"remove"})
      */
     private $evenements;
 

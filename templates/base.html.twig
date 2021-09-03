@@ -74,7 +74,7 @@
               </li>
               {% else %}
               <li>
-                <a class="nav-link" href="#premium">Événement <i class="fas fa-lock text-warning"></i></a>
+                <a class="nav-link" href="/#premium">Événement <i class="fas fa-lock text-warning"></i></a>
               </li>
                {% endif %}
               {% if app.user %}
@@ -151,7 +151,7 @@
         <li><a href="{{ path('forum_accueil') }}">Forum</a></li>
         <li><a href="{{ path('app_login') }}">Connexion</a></li>
         <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
-        <li><a href="#contact">Contactez-nous</a></li>
+        <li><a href="{{ path('contact') }}">Contactez-nous</a></li>
       </ul>
   </div>
   <div class="footer_bottom border-top py-3 ">

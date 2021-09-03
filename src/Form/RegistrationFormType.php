@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,6 +20,7 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
             ->add('pseudo', TextType::class, [
                 'label' => false,
@@ -38,7 +40,7 @@ class RegistrationFormType extends AbstractType
 
             ->add('plainPassword',RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Votre mot de passe n\est pas identique ',
+                'invalid_message' => "Votre mot de passe n\'est pas identique",
                 'required' => true,
                 'first_options'  => ['label' => false],
                 'second_options' => ['label' => false],
@@ -51,7 +53,7 @@ class RegistrationFormType extends AbstractType
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit avoir au moins {{ limit }} caractères  ',
                         // max length allowed by Symfony for security reasons
-                        'max' => 50,
+                        'max' => 15,
                     ]),
                 ],
             ])

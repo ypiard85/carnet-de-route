@@ -84,8 +84,6 @@ class PlaceRepository extends ServiceEntityRepository
                         $query = $query->orderBy('p.id', 'DESC');
                     }
 
-
-
           $query = $query->getQuery();
           return  $this->paginator->paginate($query, $search->page, 20);
 

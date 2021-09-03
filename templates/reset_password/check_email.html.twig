@@ -3,13 +3,27 @@
 {% block title %}Password Reset Email Sent{% endblock %}
 
 {% block body %}
-<section class="container">
 
-    <p>
-        Un e-mail a été envoyé qui contient un lien sur lequel vous pouvez cliquer pour réinitialiser.
-        Ce lien expirera dans
-        {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou <a href="{{ path('app_forgot_password_request') }}">réessayer</a>.</p>
+<section class="container template_email" style="width: 700px; max-width: 100%; margin: auto;">
+    <div class="shadow">
+        <div class="template_top bg_bleu text-white text-center top_margin py-3">
+            <h3>Confirme ton email</h3>
+        </div>
+    <div class="template_center my-3">
+        <div class="text-center my-3">
+            <img width="250"  src="{{ asset('logo.png') }}" alt="">
+        </div>
+        <p class="p-2">
+            Un e-mail a été envoyé qui contient un lien sur lequel vous pouvez cliquer pour réinitialiser.
+            Ce lien expirera dans
+            {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+        </p>
+        <p class="p-2">Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou <a href="{{ path('app_forgot_password_request') }}">réessayer</a>.</p>
+    </div>
+    <div class="template_footer p-2">
+        <a class="rouge" href="{{ path('home') }}">Revenir à l'accueil</a>
+    </div>
+</div>
 </section>
+
 {% endblock %}

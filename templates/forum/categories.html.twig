@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ForumController!{% endblock %}
+{% block title %}COREEGO | Forum - {{ cats }} {% endblock %}
 
 {% block body %}
 
@@ -45,8 +45,10 @@
         <table>
         {% for sujet in sujets %}
                 <tr class="categorie_table">
-                    <td class="left text-center">
-                        <a href="{{ path('user_show', {'id' : sujet.user.id }) }}" class="fw-bold  d-block">{{ sujet.user.pseudo }}</a>
+                    <td class="left text-center p-2">
+                        <a href="{{ path('user_show', {'id' : sujet.user.id }) }}" class="fw-bold  d-block">
+                            <i class="fas fa-user"></i><br>
+                            {{ sujet.user.pseudo }}</a>
                     </td>
                     <td class="middle">
                         <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title }) }}">
@@ -54,7 +56,7 @@
                         </a>
                         <p>{{ sujet.createdAt | ago }}</p>
                     </td>
-                    <td class="right text-center ">
+                    <td class="right text-center py-2">
                         <i class="far fa-comment fs-3"></i>
                         <p>{{ sujet.sujetResponses | length }}</p>
                     </td>

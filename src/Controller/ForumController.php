@@ -85,7 +85,7 @@ class ForumController extends AbstractController
                 'Sujet ajouter avec succes'
             );
 
-           return $this->redirect($_SERVER['HTTP_REFERER']);
+           return $this->redirectToRoute('forum_accueil');
         }
 
 

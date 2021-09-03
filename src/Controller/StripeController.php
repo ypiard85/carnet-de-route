@@ -3,14 +3,13 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use Knp\Snappy\Pdf;
 use App\Entity\User;
-use Nette\Application\Responses\JsonResponse;
-
+use App\Repository\UserRepository;
+use Knp\Bundle\TimeBundle\KnpTimeBundle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ApiPlatform\Core\Api\UrlGeneratorInterface;
-use App\Repository\UserRepository;
-use Nette\Utils\Json;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -21,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StripeController extends AbstractController
 {
     /**
-     * @Route("/basic/create-checkout-session", name="stripe_basic", methods={"POST"} )
+     * @Route("/basic/create-checkout-session", name="stripe_basic", methods={"GET", "POST"} )
      *
      */
     public function basic(Request $request)
@@ -38,13 +37,13 @@ class StripeController extends AbstractController
         $priceId = $request->request->get('priceId');
 
         $session = \Stripe\Checkout\Session::create([
-          'success_url' => $this->generateUrl('success', [], UrlGeneratorInterface::ABS_URL ),
+          'success_url' => $this->generateUrl('success', [] , UrlGeneratorInterface::ABS_URL ),
           'cancel_url' => $this->generateUrl('erreur', [], UrlGeneratorInterface::ABS_URL ),
           'payment_method_types' => ['card'],
           'mode' => 'subscription',
-          'line_items' => [[
+          'line_items' => [
+            [
             'price' => $priceId,
-            // For metered billing, do not pass quantity
             'quantity' => 1,
           ]],
         ]);
@@ -53,7 +52,7 @@ class StripeController extends AbstractController
     }
 
     /**
-     * @Route("/entreprise/create-checkout-session", name="stripe_entreprise", methods={"POST"} )
+     * @Route("/entreprise/create-checkout-session", name="stripe_entreprise", methods={"POST", "GET"} )
      *
      */
     public function entreprise(Request $request)
@@ -85,27 +84,21 @@ class StripeController extends AbstractController
     }
 
     /**
-     * @Route("/success/{token}", name="success",  methods={"POST", "GET"} )
+     * @Route("/success/115871fezdi584778", name="success",  methods={"POST", "GET"} )
      */
-    public function success(Request $request, User $user){
+    public function success( Request $request ){
 
       $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
 
-        if($this->getUser()->getToken() != $user->getToken()){
-          return $this->redirectToRoute('home');
-        }
+            $this->getUser()->setRoles(['ROLE_PREMIUM']);
 
-            $user->setRoles(['ROLE_PREMIUM']);
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->render('stripe/success.html.twig', [
-                'user' => $user
-            ]);
-
+            return $this->redirectToRoute('sucessbasic_html', ['token' => $this->getUSer()->getToken()]);
     }
 
     /**
@@ -118,23 +111,42 @@ class StripeController extends AbstractController
     }
 
     /**
-     * @Route("/successentreprise/{token}", name="success_entreprise")
+     * @Route("/successentreprise/115871574768apoev877iez", name="success_entreprise", methods={"POST", "GET"})
      */
     public function successentreprise(UserRepository $userrepo, User $user){
 
       $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-      if($this->getUser()->getToken() != $user->getToken()){
+      /*if($this->getUser()->getToken() != $user->getToken()){
         return $this->redirectToRoute('home');
-      }
+      }*/
 
-        $user->setRoles(['ROLE_ENTREPRISE']);
+        $this->getUser()->setRoles(['ROLE_ENTREPRISE']);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->render('stripe/successentreprise.html.twig', [
-          'user' => $user
-        ]);
+        return $this->redirectToRoute('sucessentreprise_html', ['token' => $this->getUSer()->getToken()]);
+    }
+
+    /**
+     * @Route("/success/basic/{token}", name="sucessbasic_html", methods={"GET", "POST"} ): Response
+     */
+    public function successbasichtml()
+    {
+
+      return $this->render('stripe/success.html.twig');
+
+    }
+
+    /**
+     * @Route("/success/entreprise/{token}", name="sucessentreprise_html", methods={"GET", "POST"}  )
+     */
+    public function successentreprisehtml(User $user): Response
+    {
+
+      return $this->render('stripe/successentreprise.html.twig', [
+        'user' => $user
+      ]);
     }
 }

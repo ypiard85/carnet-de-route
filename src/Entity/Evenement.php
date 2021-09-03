@@ -33,7 +33,7 @@ class Evenement
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="evenements")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="evenements", cascade={"remove"} )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;

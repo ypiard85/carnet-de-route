@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ForumController!{% endblock %}
+{% block title %}COREEGO | Forum {% endblock %}
 
 {% block body %}
 
@@ -29,7 +29,12 @@
         {% for categorie in categories %}
         <tr class="categorie_table">
             <td class="text-center left p-3">
-                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">
+
+                {% if categorie.sujets | length > 0 %}
+                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }} ">
+                {% else %}
+                <a href="{{  path('sujet_new') }}">
+                    {% endif %}
                     {% if categorie.categorie == 'logement' %}
                     <h5 class="badge badge-small bg-secondary">{{ categorie.categorie }}</h5>
                     {% elseif categorie.categorie == 'visa' %}
@@ -40,12 +45,13 @@
                     <h5 class="badge bg-danger">{{ categorie.categorie }}</h5>
                     {% endif%}
                 </a>
+
             </td>
             <td class="center text-left p-3">
                 {% if categorie.sujets | length > 0 %}
-                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.description }}</a>
+                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.description |  raw }}</a>
                 {% else %}
-                <a href="{{ path('sujet_new') }}">{{ categorie.description }}  </a>
+                <a href="{{ path('sujet_new') }}">{{ categorie.description | raw }}  </a>
                 <h6><span class="badge bg-warning">Soyer le premier à vous exprimer</span></h6>
                 {% endif %}
             </td>
