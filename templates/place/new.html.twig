@@ -48,6 +48,9 @@
             {{ form_row(form.description, {'attr': {'rows' : '7' } })}}
         </div>
         {{ form_row(form.images) }}
+        <div class="d-none">
+            {{ form_row(form.statut) }}
+        </div>
         <button  type="submit" class="btn btn-success mb-5">{{ button_label|default('Enregistrer') }}</button>
     </div>
     {{ form_end(form) }}
@@ -55,7 +58,10 @@
 </div>
 
 <div id="kakaomap" style="width: 100vw; height: 100vh; z-index: 100; overflow-y: none;"></div>
-<div id="map" style="width: 100vw; height: 100vh; z-index: 100; " ></div>
+<div id="maphidden">
+    <div id="map" style="width: 100vw; height: 50vh; z-index: 100; " ></div>
+    <div id="roadview" style="width:100%;height:50vh"></div>
+</div>
 
 
 

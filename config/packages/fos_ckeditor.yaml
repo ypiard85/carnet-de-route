@@ -4,6 +4,8 @@ twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 fos_ck_editor:
+    auto_inline: false
     configs:
         main_config:
-                 toolbar: [ ["Link", "Bold", "Italic", "BulletedList", "NumberedList", "center", "Underline", "TextColor" ], ['JustifyLeft', 'JustifyCenter', 'JustifyRight',]]
+                language: fr
+                toolbar: [ ["Link", "Bold", "Italic", "BulletedList", "NumberedList", "center", "Underline", "TextColor" ], ['JustifyLeft', 'JustifyCenter', 'JustifyRight',]]

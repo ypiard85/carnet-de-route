@@ -32,7 +32,9 @@
         {% endif %}
       </div>
       {% endif %}
-
+      {% for message in app.flashes('message') %}
+      <div class="alert alert-success text-start">{{ message }}</div>
+      {% endfor %}
       <div class="description p-2">
         {% if user.description == "" %}
           <p>Aucune description</p>

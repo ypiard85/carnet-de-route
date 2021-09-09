@@ -25,7 +25,7 @@ class Sujet
     private $User;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ForumCategorie::class, inversedBy="sujets")
+     * @ORM\ManyToOne(targetEntity=ForumCategorie::class, inversedBy="sujets", cascade={"remove"})
      */
     public $categorie;
 
@@ -45,7 +45,7 @@ class Sujet
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="sujet")
+     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="sujet", cascade={"remove"})
      */
     private $sujetResponses;
 

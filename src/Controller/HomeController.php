@@ -88,7 +88,16 @@ class HomeController extends AbstractController
 
         return $this->render('home/contact.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
 
+    /**
+     * @Route("/fonctionnement", name="fonctionnement")
+     */
+    public function fonctionnement()
+    {
+        return $this->render('home/fonctionnement.html.twig', [
+            'test' => 'test'
         ]);
     }
 }

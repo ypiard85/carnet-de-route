@@ -86,7 +86,6 @@ class Place
 
     /**
      * @ORM\ManyToOne(targetEntity=user::class, inversedBy="places")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 
@@ -94,6 +93,11 @@ class Place
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="places")
      */
     private $categorie;
+
+    /**
+     * @ORM\Column(type="string", length=24)
+     */
+    private $statut;
 
 
     public function __construct()
@@ -309,6 +313,18 @@ class Place
 
     public function __toString(){
         return $this->categorie;
+    }
+
+    public function getStatut(): ?string
+    {
+        return  $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
     }
 
 

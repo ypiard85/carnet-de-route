@@ -122,7 +122,7 @@ class UserController extends AbstractController
      */
     public function deletePlace(Place $place): Response
     {
-            
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($place);
@@ -159,10 +159,12 @@ class UserController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+
             $em->flush($user);
 
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
+            $this->addFlash('message', 'Votre profil à été mis à jour');
+
+            return $this->redirectToRoute('user_show', [ 'id' => $this->getUser()->getId() ] );
         }
 
         return $this->render('user/edit.html.twig', [

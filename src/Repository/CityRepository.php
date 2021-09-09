@@ -23,7 +23,7 @@ class CityRepository extends ServiceEntityRepository
     public function CityByName()
     {
         return $this->createQueryBuilder('c')
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;

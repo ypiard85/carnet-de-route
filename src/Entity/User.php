@@ -49,11 +49,6 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      *
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Votre mot de passe doit contenir au moin 4 caracteres"
-     * )
      */
     private $password;
 

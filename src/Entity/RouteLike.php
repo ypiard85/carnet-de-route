@@ -33,7 +33,7 @@ class RouteLike
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="routeLikes")
      * @Groups({"routes:read"})
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     *
      */
     private $user;
 

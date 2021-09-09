@@ -66,7 +66,7 @@ class PlaceController extends AbstractController
             'places' => $places,
             'villes' => $villes,
             'form' => $form->createView(),
-            'filter' => $filter
+            'filter' => $filter     
         ]);
     }
 
@@ -104,6 +104,7 @@ class PlaceController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $place->setUser($this->getUser());
+            $place->setStatut('brouillon');
             $em->persist($place);
             $em->flush();
             return $this->redirectToRoute('carnet_de_route');

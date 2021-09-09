@@ -21,7 +21,7 @@
         <a href="{{ path('user_show', {'id' : place.user.id }) }}" class="fw-bold"><i class="fas fa-user"></i> {{ place.user.pseudo }}</a>
       </div>
 
-      <p class="mt-3">{{ place.description | nl2br }}</p>
+      <p class="mt-3">{{ place.description | raw }}</p>
 
       <div class="d-flex justify-content-center align-content-center">
         <div>
@@ -269,8 +269,6 @@
 
     let place = await getPlace();
 
-    console.log(place);
-
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapCenter = new kakao.maps.LatLng(place.lat, place.longs), // 지도의 중심 좌표
     mapOption = {
@@ -289,7 +287,6 @@
       position: myPosition, // 지도의 중심좌표에 올립니다.
       map: map // 생성하면서 지도에 올립니다.
     });
-    console.log(mMarker);
 
 var rvContainer = document.getElementById('roadview'); // 로드뷰를 표시할 div
 

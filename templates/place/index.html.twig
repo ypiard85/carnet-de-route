@@ -22,6 +22,7 @@
           <div class="row">
           {% if places | length > 0 %}
           {% for place in places %}
+            {% if place.statut == 'publié' %}
           <div class="col-md-3 col-12 mb-3">
             <a href="/place/{{ place.id }}"
             class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
@@ -42,6 +43,7 @@
 
             </a>
         </div>
+        {% endif %}
         {% endfor %}
         {% else %}
         <p>Aucun résultat trouvé</p>
