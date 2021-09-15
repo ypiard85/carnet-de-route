@@ -23,7 +23,7 @@
           {% if places | length > 0 %}
           {% for place in places %}
             {% if place.statut == 'publié' %}
-          <div class="col-md-3 col-12 mb-3">
+          <div class="col-md-3 col-6 mb-3">
             <a href="/place/{{ place.id }}"
             class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
             style="width: 500px; max-width: 100%;">
@@ -32,7 +32,7 @@
                 <i class="fas fa-heart"></i> <span>{{ place.likes | length }}</span>
               </div>
               <div class="card-head">
-                <img src="{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
+                <img  src="{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
               </div>
 
               <div class="card-body p-0 mt-4" style="line-height: 1em;">

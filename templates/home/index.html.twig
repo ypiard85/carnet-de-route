@@ -4,10 +4,7 @@
 {% block body %}
 
 
-
-
-<div class="swiper-container homeswiper mt-5">
-    {% include 'place/_search.html.twig' %}
+<div class="swiper-container homeswiper position-relative mt-5 w-100">
     <div class="swiper-wrapper" style="z-index: -1;">
       <div class="swiper-slide w-100" style="background-image: url(' {{ asset("./accueil/carousel/temple_boudisme.jpg") }} '); "></div>
       <div class="swiper-slide w-100" style="background-image: url(' {{ asset("./accueil/carousel/image.jpg") }} '); "></div>
@@ -15,40 +12,68 @@
     <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/Jeju-Cascade-Cheonjeyeon.jpg") }}'); "></div>
     <div class="swiper-slide w-100" style="background-image: url('{{ asset("./accueil/carousel/sunset-3664096_1280.jpg") }}'); "></div>
   </div>
+  <div class="text_banner position-absolute text-center  text-white">
+    <p class="fw-bold h1">VOYAGEZ, PARTAGEZ</p>
+    <p class="h1">En 1 clic</p>
+    <a href="" style="font-size: 5rem" ><i class="fas fa-sort-down"></i></a>
+  </div>
 </div>
 
-<div class="container  mt-5">
-  <h4 class="bleu">Explorer les environs</h4>
-  <div class="swiper-container explor_swiper mt-3">
+<!--NOS RECOMMANDATIONS-->
+
+<div class="container  mt-4">
+  <h4 class="">Nos recommandations</h4>
+  <a href="">Voir tout</a>
+  <div class="swiper-container bigimg my-3">
   <div class="swiper-wrapper">
-    <a href="{{ path('carnet_de_route') }}?city=Seoul" class="swiper-slide" ><img src="{{ asset('./accueil/explorer/seoul.jpg') }}" alt=""><p class="fs-5">Seoul</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Busan" class="swiper-slide"><img src="{{ asset('./accueil/explorer/busan.jpg') }}" alt=""><p class="fs-5">Busan</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Jeju" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/jeju.jpg') }}" alt=""><p class="fs-5">L'île de Jeju</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Sokcho" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/sokcho.jpg') }}" alt=""><p class="fs-5">Sokcho</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Chuncheon" class="swiper-slide"><img src="{{ asset('./accueil/explorer/Chuncheon.jpg') }}" alt=""><p class="fs-5">Chuncheon</p></a>
-    <a href="{{ path('carnet_de_route') }}?city=Incheon" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/incheon.jpg') }}" alt=""><p class="fs-5">Incheon</p></a>
+    {% for premium in premiums %}
+    <a href="{{ path('place_show', {'id' : premium.id } ) }}" class="swiper-slide" >
+      <img class="shadow" src="{{ asset('./place/') }}{{ premium.images[0].name }}" alt="{{ premium.images[0].name }}">
+      <p>{{ premium.title }} </p>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="swiper-button-next explor_next"></div>
+  <div class="swiper-button-prev explor_prev"></div>
+</div>
+</div>
+
+<div class="border-bottom container" style="max-width: 90%;"></div>
+
+<div class="container  my-2">
+  <h4 class="">Explorer des villes</h4>
+  <div class="swiper-container explor_swiper my-3">
+  <div class="swiper-wrapper">
+    <a href="{{ path('carnet_de_route') }}?city=Seoul" class="swiper-slide" ><img class="shadow" src="{{ asset('./accueil/explorer/seoul.jpg') }}" alt=""><p >Seoul</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Busan" class="swiper-slide"><img src="{{ asset('./accueil/explorer/busan.jpg') }}" alt=""><p >Busan</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Jeju" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/jeju.jpg') }}" alt=""><p >L'île de Jeju</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Sokcho" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/sokcho.jpg') }}" alt=""><p >Sokcho</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Chuncheon" class="swiper-slide"><img src="{{ asset('./accueil/explorer/Chuncheon.jpg') }}" alt=""><p >Chuncheon</p></a>
+    <a href="{{ path('carnet_de_route') }}?city=Incheon" class="swiper-slide"><img  src="{{ asset('./accueil/explorer/incheon.jpg') }}" alt=""><p >Incheon</p></a>
   </div>
   <div class="swiper-button-next explor_next "></div>
   <div class="swiper-button-prev explor_prev "></div>
 </div>
 </div>
 
-<div class="container mt-5">
-  <h4 class="bleu">Un thème particulier ?</h4>
-    <div class="swiper-container theme mt-3">
-      <div class="swiper-wrapper">
-        <a href="{{ path('carnet_de_route') }}?categorie=Lieu insolite" class="swiper-slide"><img  src="{{ asset('./accueil/theme/insolite.jpg') }}" alt=""><p class="fs-5">Lieux Insolites</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Temple" class="swiper-slide"><img  src="{{ asset('./accueil/theme/temple.jpg') }}" alt=""><p class="fs-5">Palais</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Forêt" class="swiper-slide"><img  src="{{ asset('./accueil/theme/foret.jpg') }}" alt=""><p class="fs-5">Forêts</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Montagne" class="swiper-slide"><img  src="{{ asset('./accueil/theme/montagne.jpg') }}" alt=""><p class="fs-5">Montagnes</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Architectures" class="swiper-slide"><img  src="{{ asset('./accueil/theme/architecture.jpg') }}" alt=""><p class="fs-5">Architectures</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Campagne" class="swiper-slide"><img  src="{{ asset('./accueil/theme/campagne.jpg') }}" alt=""><p class="fs-5">Campagnes</p></a>
-        <a href="{{ path('carnet_de_route') }}?categorie=Plage" class="swiper-slide"><img src="{{ asset('./accueil/theme/plage.jpg') }}" alt=""><p class="fs-5">Plages</p></a>
-      </div>
-      <div class="swiper-button-next theme_next "></div>
-      <div class="swiper-button-prev theme_prev "></div>
+<div class="border-bottom container" style="max-width: 90%;"></div>
+
+<div class="container  my-4">
+  <h4 class="">Lieux insolites</h4>
+  <div class="swiper-container explor_swiper mt-3">
+  <div class="swiper-wrapper">
+    {% for lieuxinsolite in lieuxinsolites %}
+    <a href="{{ path('place_show', {'id' : lieuxinsolite.id} ) }} " class="swiper-slide" >
+      <img class="shadow" src="{{ asset('./place/') }}{{ lieuxinsolite.images[0].name }}" alt=""><p >{{ lieuxinsolite.title }}</p></a>
+      {% endfor %}
+  </div>
+  <div class="swiper-button-next explor_next "></div>
+  <div class="swiper-button-prev explor_prev "></div>
 </div>
 </div>
+
+<div class="border-bottom container" style="max-width: 90%;"></div>
+
 
 
 <div class="container mt-5 coup_de_coeur rounded d-flex align-items-center border" style="background-image: url('{{ asset("./accueil/theme/coup_de_coeur.jpg") }}') ;">
@@ -189,6 +214,32 @@
         },
 
       });
+
+      var explorswiper = new Swiper(".bigimg", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".explor_next",
+          prevEl: ".explor_prev",
+        },
+        breakpoints: {
+          500: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+        },
+
+      });
+
       var explorswiper = new Swiper(".explor_swiper", {
         slidesPerView: 2,
         spaceBetween: 20,
@@ -207,7 +258,7 @@
           },
 
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 4,
             spaceBetween: 50,
           },
         },

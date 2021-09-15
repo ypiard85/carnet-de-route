@@ -13,6 +13,7 @@ use App\Form\SujetResponseType;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\SujetRepository;
+use Symfony\Component\Mime\Address;
 use App\Repository\SujetResponseRepository;
 use App\Repository\ForumCategorieRepository;
 use Knp\Bundle\TimeBundle\DateTimeFormatter;
@@ -135,7 +136,7 @@ class ForumController extends AbstractController
             {
                 //send email
                 $email = (new TemplatedEmail())
-                ->from('contact@lacoree.fr')
+                ->from(new Address('contact.coreego@gmail.com', 'COREEGO'))
                 ->to($userpostemail)
                 ->subject('Time for Symfony Mailer!')
                 ->htmlTemplate('email/email_forum_response.html.twig')

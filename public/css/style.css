@@ -302,13 +302,34 @@ CAROUSEL
 */
 
 .explor_swiper{
-    height: 300px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.explor_swiper p, .theme p, .bigimg p{
+    font-family: var( --font_roboto);
+    font-size: 1.2em!important;
+    margin-top: 10px;
+}
+
+.bigimg{
+    height: auto;
     position: relative;
     overflow: hidden;
 }
 
 .explor_swiper img{
-    height: 250px;
+    height: 150px!important;
+    width: 300px;
+    border-radius: 10px;
+}
+
+
+.bigimg img{
+    height: 200px!important;
+    width: 350px;
+    border-radius: 10px;
 }
 
 .theme_next{
@@ -318,7 +339,8 @@ CAROUSEL
 
 .homeswiper{
     width: 100%;
-    height: 600px;
+    height: 90vh;
+    min-height: 90vh;
     max-width: 100%;
   }
 
@@ -328,7 +350,14 @@ CAROUSEL
     background-position: center;
 }
 
-.explor_swiper .swiper-button-prev:after, .explor_swiper .swiper-button-next:after, .theme .swiper-button-prev:after, .theme .swiper-button-next:after{
+.text_banner{
+    bottom: 30px;
+    left: 0;
+    right: 0;
+}
+
+
+.bigimg .swiper-button-prev:after, .bigimg .swiper-button-next:after,  .explor_swiper .swiper-button-prev:after, .explor_swiper .swiper-button-next:after, .theme .swiper-button-prev:after, .theme .swiper-button-next:after{
     font-size: 10px!important;
     background-color: white;
     color: black;
@@ -338,38 +367,9 @@ CAROUSEL
     box-shadow: 0 0 5px black;
 }
 
-.explor_swiper a{
+.explor_swiper a, .bigimg a{
     color: black;
 }
-
-.theme .swiper-button-prev, .explor_swiper .swiper-button-prev{
-    position: absolute;
-    top: 50%;
-}
-
-.theme .swiper-button-next{
-    position: absolute;
-    top: 50%;
-}
-
-.theme img{
-    height: 250px;
-    width: 100%;
-    object-fit: cover;
-}
-
-.theme{
-    height: 300px;
-    position: relative;
-    overflow: hidden;
-}
-
-
-.theme a{
-    height: 200px!important;
-    color: black;
-}
-
 
 .form_search{
     background-color: white;
@@ -759,10 +759,6 @@ table .categorie_table{
     text-align: center;
 }
 
-.explor_swiper p, .theme p{
-    font-family: var(--font_amatic);
-    font-size: 2em!important;
-}
 
 .profil .profil_header h1{
     font-family: var(--font_roboto);
@@ -917,6 +913,10 @@ table .categorie_table{
 
 }
 
+.mySwiper2 img{
+    object-fit: contain;
+}
+
 
 @media screen and (max-width: 1200px){
 
@@ -938,6 +938,7 @@ table .categorie_table{
     }
 }
 
+
 @media screen and (max-width: 700px){
     .mapdiv{
         display: none;
@@ -946,5 +947,11 @@ table .categorie_table{
     .m{
         display: block;
         width: 80%;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .street_view{
+        top: 570px!important;
     }
 }

@@ -5,7 +5,9 @@
 
 <section class="profil container top_margin">
     <div class="profil_header">
-
+      {% for message in app.flashes('message') %}
+      <div class="alert alert-success">{{ message }}</div>
+      {% endfor %}
       <h1 class="bleu">{{ user.pseudo }}</h1>
 
       {% if user.roles[0] == "ROLE_ADMIN" %}

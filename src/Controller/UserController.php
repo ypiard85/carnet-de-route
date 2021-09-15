@@ -11,6 +11,7 @@ use App\Repository\LikeRepository;
 use App\Repository\UserRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\CommentRepository;
+use App\Repository\ImageRepository;
 use App\Repository\RouteLikeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -120,9 +121,13 @@ class UserController extends AbstractController
     /**
      * @Route("/deleteplace/{id}", name="place_delete", methods={"POST", "GET"})
      */
-    public function deletePlace(Place $place): Response
+    public function deletePlace(Place $place, ImageRepository $imgrepo): Response
     {
+        $noms = $imgrepo->findBy(['place' => $place]);
 
+        for($i = 0; $i < count($noms); $i++ ){
+            unlink($this->getParameter('image_place'). '/' .$noms[$i]->getName());
+        }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($place);

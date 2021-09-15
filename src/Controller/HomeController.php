@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Form\ContactType;
 use App\Repository\CityRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\PlaceRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -21,31 +22,25 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, cityRepository $city, CategorieRepository $catrepo): Response
+    public function index(Request $request, cityRepository $city, CategorieRepository $catrepo, PlaceRepository $placerepo): Response
     {
 
-        $tomorrow = Carbon::now('Asia/Seoul');
-        $h = $tomorrow->isoFormat('h');
-        $m = $tomorrow->isoFormat('mm');
-
-        if($request){
-            $filter = [
-                $request->get('q'),
-                $request->get('city'),
-                $request->get('aime'),
-                $request->get('categorie'),
-            ];
-        }
 
         $villes = $city->CityByName();
         $categories = $catrepo->categoriebynom();
 
+        $lieuxinsolites = $placerepo->findBy(['categorie' => 6], ['id' => 'DESC'], 10);
+        $premiums = $placerepo->findBy(['premium' => 1], ['id' => 'DESC'], 10 );
+
+        $likes = $placerepo->placeMoreLikes();
+
+        //dd($likes);
+
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'h' => $h, 'm' => $m,
-            'filter' => $filter,
             'villes' => $villes,
-            'categories' => $categories
+            'categories' => $categories,
+            'lieuxinsolites' => $lieuxinsolites,
+            'premiums' => $premiums
         ]);
     }
 
@@ -68,7 +63,7 @@ class HomeController extends AbstractController
              //send email
              $email = (new TemplatedEmail())
              ->from($emailuser)
-             ->to('yoann.piard@gmail.com')
+             ->to('contact.coreego@gmail.com')
              ->subject($objet)
              ->htmlTemplate('email/email_contact.html.twig')
              ->context([

@@ -6,9 +6,10 @@ use App\Data\SearchData;
 use App\Entity\ActuImage;
 use App\Entity\Actualites;
 use App\Form\ActualitesType;
+use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use App\Repository\ActuImageRepository;
 use App\Repository\ActualitesRepository;
-use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -85,7 +86,7 @@ class ActualitesController extends AbstractController
 
                     //send email
                     $email = (new TemplatedEmail())
-                    ->from('yoann.piard@gmail.com')
+                    ->from(new Address('contact.coreego@gmail.com', 'COREEGO'))
                     ->to($use->getEmail())
                     ->subject($actualites->getTitle())
                     ->htmlTemplate('email/email_actu_publish.html.twig')

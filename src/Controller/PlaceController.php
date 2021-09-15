@@ -66,7 +66,7 @@ class PlaceController extends AbstractController
             'places' => $places,
             'villes' => $villes,
             'form' => $form->createView(),
-            'filter' => $filter     
+            'filter' => $filter
         ]);
     }
 
@@ -105,9 +105,15 @@ class PlaceController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $place->setUser($this->getUser());
             $place->setStatut('brouillon');
+            if($this->getUser()->getRoles()[0] != 'ROLE_ADMIN' ){
+                $place->setPremium(0);
+            }
             $em->persist($place);
             $em->flush();
-            return $this->redirectToRoute('carnet_de_route');
+
+            $this->addFlash('message', 'Votre publication à été mis en brouillon afin de faire les dernières modifications' );
+
+            return $this->redirectToRoute('user_show', ['id' => $this->getUser()->getId() ]);
         }
 
         return $this->render('place/new.html.twig', [
@@ -300,10 +306,9 @@ class PlaceController extends AbstractController
                 $em->flush();
             }
 
-
-
             $referer = $request->headers->get('referer');
             return $this->redirect($referer);
+
 
         }
 
@@ -341,7 +346,7 @@ class PlaceController extends AbstractController
 
                 $this->addFlash('lieu_edit_success', 'Image editer avec success' );
 
-                return $this->redirectToRoute('carnet_de_route');
+                return $this->redirectToRoute('user_show', ['id' => $this->getUser()->getId() ] );
 
 
             }

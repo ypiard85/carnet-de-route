@@ -15,20 +15,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class PlaceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('title')
+            ->add('premium', ChoiceType::class, [
+                    'choices' => [
+                        '0' => 'Non',
+                        '1' => 'Oui'
+                ]
+            ])
+
             ->add('statut', ChoiceType::class, [
                 'choices' => [
                     'brouillon' => 'brouillon',
                     'publié' => 'publié'
                 ]
             ])
-            ->add('description', CKEditorType::class)
+            ->add('description', TextareaType::class)
             ->add('images', FileType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Images',

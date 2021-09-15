@@ -99,6 +99,11 @@ class Place
      */
     private $statut;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $premium;
+
 
     public function __construct()
     {
@@ -323,6 +328,18 @@ class Place
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getPremium(): ?bool
+    {
+        return $this->premium;
+    }
+
+    public function setPremium(?bool $premium): self
+    {
+        $this->premium = $premium;
 
         return $this;
     }

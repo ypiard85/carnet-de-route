@@ -27,16 +27,30 @@ class PlaceRepository extends ServiceEntityRepository
     public function findPlaceByUser(){
 
              $this->createQueryBuilder('p')
-
                 ->getQuery()
                 ->getResult()
                 ;
     }
 
+    public function findByVille(){
+        $this->createQueryBuilder('p')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function placeMoreLikes(){
+        $this->createQueryBuilder('p')
+        ->join('p.routeLikes', 'l')
+        ->getQuery()
+        ->getResult()->count()
+        ;
+    }
+
     /**
      * @return PaginationInterface
      *
-     * Watch get aime for probleme
+     *
      *
      */
     public function findSearch(SearchData $search): PaginationInterface
