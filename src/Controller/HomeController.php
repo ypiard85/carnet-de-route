@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Number;
 use Carbon\Carbon;
 use App\Form\ContactType;
 use App\Repository\CityRepository;
-use App\Repository\CategorieRepository;
+use App\Repository\LikeRepository;
 use App\Repository\PlaceRepository;
+use App\Repository\CategorieRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -22,25 +24,26 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, cityRepository $city, CategorieRepository $catrepo, PlaceRepository $placerepo): Response
+    public function index(Request $request, cityRepository $city, CategorieRepository $catrepo, LikeRepository $likerepo , PlaceRepository $placerepo): Response
     {
 
 
         $villes = $city->CityByName();
         $categories = $catrepo->categoriebynom();
 
+        $panoramas = $placerepo->findBy(['categorie' => 27], ['id' => 'DESC'], 10);
         $lieuxinsolites = $placerepo->findBy(['categorie' => 6], ['id' => 'DESC'], 10);
-        $premiums = $placerepo->findBy(['premium' => 1], ['id' => 'DESC'], 10 );
-
-        $likes = $placerepo->placeMoreLikes();
-
-        //dd($likes);
+        $natures = $placerepo->findBy(['categorie' => 28, 'statut' => 'publié'], ['id' => 'DESC'], 10 );
+        $premiums = $placerepo->findBy(['premium' => 'OUI', 'statut' => 'publié'], ['id' => 'DESC'], 10 );
 
         return $this->render('home/index.html.twig', [
+            'places' => $placerepo->findAll(),
             'villes' => $villes,
             'categories' => $categories,
             'lieuxinsolites' => $lieuxinsolites,
-            'premiums' => $premiums
+            'premiums' => $premiums,
+            'panoramas' => $panoramas,
+            'natures' => $natures
         ]);
     }
 

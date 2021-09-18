@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+
+<style>
+  .hidden{
+    display: none;
+  }
+</style>
+{% endblock %}
 
 
 {% block title %}COREEGO | {{ place.title }}{% endblock %}
@@ -98,12 +105,29 @@
 
     {% for fd in findComment %}
 
-    <div class="commentaire border  border-bottom border-top-0 border-start-0 border-end-0 p-3 mb-3">
+    <div class="commentaire border position-relative border-bottom border-top-0 border-start-0 border-end-0 p-3 mb-3">
       <div>
+        {% for message in app.flashes('message') %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+          <form method="post" class="position-absolute" style="right: 10px; bottom: 10px;">
+            <input type="hidden" name="deletecomment" value="{{ fd.id }}" >
+            <button onclick="return confirm('etes vous sûr de vouloir supprimer ce commentaire ?')" class="bg-transparent border-0"><i class="fas fa-trash-alt text-danger"></i></button>
+          </form>
             <a class="fw-bold" href="{{ path('user_show', {'id': fd.user.id}) }}"><i class="fas fa-user"></i> {{ fd.user.pseudo }} </a><br>
             <small class="text-decoration-underline">{{  fd.date }}</small>
         </div>
       <p class="py-2">{{ fd.content | raw | nl2br }}</p>
+      {% if app.user %}
+      {% if app.user.pseudo == fd.user.pseudo %}
+      <button class="btn btn-sm btn-success modif">Modifier</button>
+      <form class="form_edit mt-2 hidden" method="post">
+        <textarea name="messagecomment" cols="10" class="form-control" rows="5">{{ fd.content | raw | nl2br }}</textarea>
+        <input type="hidden" name="comment" value="{{ fd.id }}">
+        <button class="mt-2 btn btn-primary">Modifier</button>
+      </form>
+      {% endif %}
+      {% endif %}
     </div>
     {% endfor %}
 
@@ -113,13 +137,13 @@
   <div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Ecrire un commentaire</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{ form_start(form) }}
         {{ form_widget(form) }}
-          <button type="submit" onclick="submitform" class="btn btn-outline-success my-3"><i class="fas fa-paper-plane"></i></button>
+          <button type="submit" class="btn btn-outline-success my-3"><i class="fas fa-paper-plane"></i></button>
         </div>
         {{ form_end(form) }}
     </div>
@@ -161,6 +185,16 @@
   </script>
 
 <script>
+
+  var modif = document.querySelectorAll('.modif')
+
+  document.querySelectorAll('.modif').forEach(m => {
+    m.addEventListener('click', function(){
+      document.querySelectorAll('.form_edit').forEach(f => {
+        f.classList.toggle('hidden');
+      })
+    })
+  })
 
   function onClickBtn(event){
       event.preventDefault();

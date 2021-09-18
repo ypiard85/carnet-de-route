@@ -39,13 +39,7 @@ class PlaceRepository extends ServiceEntityRepository
         ;
     }
 
-    public function placeMoreLikes(){
-        $this->createQueryBuilder('p')
-        ->join('p.routeLikes', 'l')
-        ->getQuery()
-        ->getResult()->count()
-        ;
-    }
+
 
     /**
      * @return PaginationInterface

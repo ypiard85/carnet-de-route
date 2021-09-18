@@ -105,9 +105,7 @@ class PlaceController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $place->setUser($this->getUser());
             $place->setStatut('brouillon');
-            if($this->getUser()->getRoles()[0] != 'ROLE_ADMIN' ){
-                $place->setPremium(0);
-            }
+            $place->setPremium(0);
             $em->persist($place);
             $em->flush();
 
@@ -171,6 +169,24 @@ class PlaceController extends AbstractController
             );
         }
 
+        if($request->get('comment')){
+            $comment = $cr->findOneBy(['id' => $request->get('comment') ]);
+            $em = $this->getDoctrine()->getManager();
+            if($request->get('messagecomment') != ''){
+                $comment->setContent($request->get('messagecomment'));
+                $em->persist($comment);
+                $this->addFlash('message', 'Commentaire modifier avec succès');
+
+            }
+        }
+
+        if($request->get('deletecomment')){
+            $comment = $cr->findOneBy(['id' => $request->get('deletecomment') ]);
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($comment);
+            $em->flush();
+        }
+
 
         return $this->render('place/show.html.twig', [
             'place' => $place,
@@ -207,7 +223,6 @@ class PlaceController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
         }
-
 
         return $this->render('place/edit.html.twig', [
             'place' => $place,

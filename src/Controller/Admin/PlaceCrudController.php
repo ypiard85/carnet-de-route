@@ -31,7 +31,7 @@ class PlaceCrudController extends AbstractCrudController
             TextEditorField::new('description'),
             AssociationField::new('categorie'),
             AssociationField::new('images'),
-            AssociationField::new('user')->hideOnForm()
+            AssociationField::new('user')
         ];
 
 

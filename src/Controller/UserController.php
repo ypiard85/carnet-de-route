@@ -133,7 +133,7 @@ class UserController extends AbstractController
             $entityManager->remove($place);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('user_show', ['id' => $this->getUser()->getId() ]);
     }
 
      /**

@@ -27,8 +27,8 @@ class PlaceType extends AbstractType
             ->add('title')
             ->add('premium', ChoiceType::class, [
                     'choices' => [
-                        '0' => 'Non',
-                        '1' => 'Oui'
+                        'NON' => 'Non',
+                        'OUI' => 'Oui'
                 ]
             ])
 

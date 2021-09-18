@@ -63,11 +63,13 @@
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active mt-3" id="home" role="tabpanel" aria-labelledby="home-tab">
     {% if places|length > 0 %}
-    <table class="table table-responsive">
+    <table class="table table-responsive user_table">
       {% for place in places %}
-      <tr class="align-midle">
+      <tr class="align-midle ">
         <td>
-          <img src="{{ asset('./place/') }}{{ place.images[0].name }}" class="img-fuild mx-auto" width="100" alt=""><br>
+          <div class="img_content" style="width: 100px; height: 100px;">
+            <img src="{{ asset('./place/') }}{{ place.images[0].name }}" class="img-fuild mx-auto" alt=""><br>
+          </div>
           <small class="bg-info d-inline-block text-white px-1 rounded mt-2">{{ place.categorie.nom }}</small>
           <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mt-2 d-block"> <i class="fas fa-map-marker-alt"></i>  {{ place.city.name }}</a>
         </td>
@@ -103,13 +105,15 @@
     </div>
 
     {% if user.pseudo == app.user.pseudo %}
-    <div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="tab-pane fade mt-3 w-100" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         {% if likes|length > 0 %}
-        <table class="table table-responsive">
+        <table class="table table-responsive user_table">
       {% for like in likes %}
       <tr class="align-midle">
         <td>
-          <img src="{{ asset('./place/') }}{{ like.place.images[0].name }}"  width="100"   alt="{{ like.place.images[0].name }}"><br>
+          <div class="img_content" style="width: 100px; height: 100px;">
+            <img src="{{ asset('./place/') }}{{ like.place.images[0].name }}" class="img-fuild mx-auto" alt=""><br>
+          </div>
           <small class="bg-info d-inline-block text-white px-1 rounded mt-2">{{ like.place.categorie.nom }}</small>
           <a href="{{ path('carnet_de_route') }}?city={{ like.place.city.name }}" class="mt-2 d-block"> <i class="fas fa-map-marker-alt"></i>  {{ like.place.city.name }}</a>
         </td>

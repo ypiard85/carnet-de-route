@@ -100,7 +100,7 @@ class Place
     private $statut;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", length=24, nullable=true)
      */
     private $premium;
 
@@ -332,12 +332,12 @@ class Place
         return $this;
     }
 
-    public function getPremium(): ?bool
+    public function getPremium(): ?string
     {
         return $this->premium;
     }
 
-    public function setPremium(?bool $premium): self
+    public function setPremium(string $premium): self
     {
         $this->premium = $premium;
 
