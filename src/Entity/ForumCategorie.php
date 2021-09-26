@@ -30,9 +30,10 @@ class ForumCategorie
     private $sujets;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=15)
      */
-    private $description;
+    private $color;
+
 
     public function __construct()
     {
@@ -86,20 +87,20 @@ class ForumCategorie
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->categorie;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
     }
 }

@@ -188,9 +188,22 @@ class ForumController extends AbstractController
      */
     public function deletesujet(SujetRepository $sujetrepo, Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
         $sujet = $sujetrepo->find($id);
 
-        dd($sujet);
+        if($sujet->getUser()->getId() != $this->getUser()->getID() ){
+            return $this->redirectToRoute('home');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($sujet);
+        $em->flush();
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+
     }
 
 }

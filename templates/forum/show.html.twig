@@ -9,16 +9,7 @@
     <div class="sujet_head">
       <h3>{{ sujet.title }}</h3>
       <span><i class="fas fa-user"></i> {{ sujet.user.pseudo }}, {{ sujet.createdAt | ago }}
-        {% if sujet.categorie.categorie == 'vie quotidienne' %}
-        <a class="badge badge-small bg-success" href="{{ path('sujet_categorie', {'categorie' : sujet.categorie.id } ) }}" class="badge badge-small bg-success">{{ sujet.categorie.categorie }}</a>
-
-        {% elseif sujet.categorie.categorie == 'visa' %}
-            <a class="badge badge-small bg-warning" href="{{ path('sujet_categorie', {'categorie' : sujet.categorie.id } ) }}">{{ sujet.categorie.categorie }}</a>
-        {% elseif sujet.categorie.categorie == 'transport' %}
-            <a class="badge badge-small bg-danger" href="{{ path('sujet_categorie', {'categorie' : sujet.categorie.id } ) }}" class="badge badge-small bg-danger">{{ sujet.categorie.categorie }}</a>
-        {% elseif sujet.categorie.categorie == 'logement' %}
-            <a class="badge badge-small bg-secondary" href="{{ path('sujet_categorie', {'categorie' : sujet.categorie.id } ) }}" class="badge badge-small bg-secondary">{{ sujet.categorie.categorie }}</a>
-        {% endif %}
+        <a class="badge badge-small bg-{{ sujet.categorie.color }}" href="{{ path('sujet_categorie', {'categorie' : sujet.categorie.id } ) }}" class="badge badge-small bg-success">{{ sujet.categorie.categorie }}</a>
       </span>
     </div>
   </div>

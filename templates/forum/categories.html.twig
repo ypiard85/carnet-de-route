@@ -13,15 +13,7 @@
                 <span><i class="fas fa-user"></i> {{ sujet.user.pseudo }}, {{ sujet.createdAt | ago }} </span>
             </div>
             <div class="d-flex">
-                {% if sujet.categorie.categorie == 'vie quotidienne' %}
-                    <p class="badge badge-small bg-success" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
-                {% elseif sujet.categorie.categorie == 'visa' %}
-                    <p class="badge badge-small bg-warning" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
-                {% elseif sujet.categorie.categorie == 'transport' %}
-                    <p class="badge badge-small bg-danger" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
-                {% elseif sujet.categorie.categorie == 'logement' %}
-                    <p class="badge badge-small bg-secondary" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
-                {% endif %}
+                    <p class="badge badge-small bg-{{ sujet.categorie.color }}" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
                 <p class="comment_count"><i class="fas fa-comments ms-3"></i> {{ sujet.sujetResponses | length }}</p>
             </div>
         </div>

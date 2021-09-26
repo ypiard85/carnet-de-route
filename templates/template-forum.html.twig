@@ -21,19 +21,8 @@
                 <div class="list-categorie col-md-2">
                     <a href="{{ path('forum_accueil') }}" class="mb-2 d-inline-block">Tous les sujets</a><br>
                     {% for categorie in categories %}
-                        {% if categorie.categorie == 'logement' %}
-                        <a class="badge badge-small bg-secondary" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}" >{{ categorie.categorie }}</a>
+                        <a class="badge badge-small bg-{{ categorie.color }}" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}" >{{ categorie.categorie }}</a>
                         <br>
-                        {% elseif categorie.categorie == 'visa' %}
-                        <a class="badge badge-small bg-warning" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.categorie }}</a>
-                        <br>
-                        {% elseif categorie.categorie == 'vie quotidienne' %}
-                        <a class="badge badge-small bg-success" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}" >{{ categorie.categorie }}</a>
-                        <br>
-                        {% elseif categorie.categorie == 'transport' %}
-                        <a class="badge badge-small bg-danger" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.categorie }}</a>
-                        <br>
-                        {% endif %}
                     {% endfor %}
                 </div>
                 {% block body2 %}{% endblock %}
