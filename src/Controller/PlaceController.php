@@ -111,7 +111,7 @@ class PlaceController extends AbstractController
 
             $this->addFlash('message', 'Votre publication à été mis en brouillon afin de faire les dernières modifications' );
 
-            return $this->redirectToRoute('user_show', ['id' => $this->getUser()->getId() ]);
+            return $this->redirectToRoute('user_show', ['pseudo' => $this->getUser()->getPseudo() ]);
         }
 
         return $this->render('place/new.html.twig', [
@@ -176,7 +176,7 @@ class PlaceController extends AbstractController
                 $comment->setContent($request->get('messagecomment'));
                 $em->persist($comment);
                 $this->addFlash('message', 'Commentaire modifier avec succès');
-
+                
             }
         }
 
@@ -359,9 +359,9 @@ class PlaceController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
 
-                $this->addFlash('lieu_edit_success', 'Image editer avec success' );
+                $this->addFlash('lieu_edit_success', 'Image ajouter avec success' );
 
-                return $this->redirectToRoute('user_show', ['id' => $this->getUser()->getId() ] );
+                return $this->redirectToRoute('place_edit', ['id' => $place->getId() ] );
 
 
             }

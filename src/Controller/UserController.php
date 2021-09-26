@@ -49,14 +49,13 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/{pseudo}", name="user_show", methods={"GET"})
      */
-    public function show(User $user, PlaceRepository $placerepo, LikeRepository $likerepo, Request $request, $id ): Response
+    public function show(User $user, PlaceRepository $placerepo, LikeRepository $likerepo, Request $request, $pseudo ): Response
     {
 
-        $places = $placerepo->findBy(['user' => $id]);
-
-        $likes = $likerepo->findLikeByUser($id);
+        $places = $placerepo->findBy(['user' => $user->getId() ]);
+        $likes = $likerepo->findLikeByUser($user->getId());
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -81,7 +80,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/carnet/{id}", methods={"GET", "POST"}, name="carnet_route" )
+     * @Route("/carnet/{pseudo}", methods={"GET", "POST"}, name="carnet_route" )
      */
     public function carnet(User $user) : Response
     {
@@ -93,7 +92,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/ma-liste/{id}", methods={"GET", "POST"}, name="maliste" )
+     * @Route("/ma-liste/{pseudo}", methods={"GET", "POST"}, name="maliste" )
      */
     public function maliste(User $user, RouteLikeRepository $rlrepo)
     {
@@ -133,9 +132,9 @@ class UserController extends AbstractController
             $entityManager->remove($place);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_show', ['id' => $this->getUser()->getId() ]);
+            return $this->redirectToRoute('user_show', ['pseudo' => $this->getUser()->getPseudo() ]);
     }
-
+    
      /**
      * @Route("/deleteplacelike/{id}", name="placelike_delete", methods={"POST", "GET"})
      */
@@ -169,7 +168,7 @@ class UserController extends AbstractController
 
             $this->addFlash('message', 'Votre profil à été mis à jour');
 
-            return $this->redirectToRoute('user_show', [ 'id' => $this->getUser()->getId() ] );
+            return $this->redirectToRoute('user_show', [ 'pseudo' => $this->getUser()->getPseudo() ] );
         }
 
         return $this->render('user/edit.html.twig', [
@@ -179,7 +178,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/editprofil/{id}", name="userprofil_edit", methods={"GET", "POST"} )
+     * @Route("/editprofil/{pseudo}", name="userprofil_edit", methods={"GET", "POST"} )
      * @IsGranted("ROLE_ADMIN")
      */
     public function editUser(User $user, UserEditType $useredittype, Request $request)

@@ -24,7 +24,7 @@ class SujetResponse
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Sujet::class, inversedBy="sujetResponses", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity=Sujet::class, inversedBy="sujetResponses")
      */
     private $sujet;
 

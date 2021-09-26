@@ -8,7 +8,7 @@
     <h1 class="text-center bleu">Editer votre lieu</h1>
     {% for messages in app.flashes('lieu_edit_success') %}
 
-    <div class="alert alert-success">{{ messages }} <a href="{{ path('user_show',  {'id': app.user.id} ) }}">retourner au porfil</a> </div>
+    <div class="alert alert-success">{{ messages }} <a href="{{ path('user_show',  {'pseudo': app.user.pseudo} ) }}">retourner au porfil</a> </div>
     {% endfor %}
     <div class="  my-3 rounded shadow">
         <h3 class="bg-primary text-white text-center py-2">
@@ -20,7 +20,9 @@
         <div class="d-flex flex-wrap">
             {% for image in place.images %}
             <div class="d-flex flex-column me-3 mb-3 p-3">
-                <img width="100" height="100" src="{{ asset('/place/' ~ image.name) }}" alt="name">
+                <a href="{{ asset('/place/' ~ image.name) }}">
+                    <img width="100" height="100" src="{{ asset('/place/' ~ image.name) }}" alt="name">
+                </a>
                 {% if place.images | length  > 1 %}
                 <a href="{{ path('lieu_delte_img', {'id' : image.id } ) }}"
                 >Supprimer</a>

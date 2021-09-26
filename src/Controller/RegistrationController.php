@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('contact.coreego@gmail.com', 'COREEGO'))
+                    ->from(new Address('contact@coreego.fr', 'COREEGO'))
                     ->to($user->getEmail())
                     ->subject('Confirmation de votre email')
                     ->context(['token' => $user->getActivationToken()])

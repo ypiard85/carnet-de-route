@@ -1,69 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'template-forum.html.twig' %}
 
 {% block title %}COREEGO | Forum {% endblock %}
 
-{% block body %}
+{% block body2 %}
 
-<section class="container mb-5 ">
-    <div class="forum top_margin">
-        <div class="content mb-2">
-            <h1 class="mb-5 text-center bleu">Sujets par catégories</h1>
-            {% include 'forum/_search.html.twig' %}
-            <div class="content my-5">
-                <div class="btn-filtre clearfix">
-                    <div class="left float-start mb-3">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ path('forum_accueil') }}" type="button" class="btn btn-info border">Categorie</a>
-                            <a href="{{ path('forum_sujet') }}"  type="button" class="btn btn-info border">Derniers sujets</a>
-                          </div>
-                    </div>
-                    <div class="right float-end">
-                        <a href=" {{ path('sujet_new') }} " class="btn fw-bold" style="background-color: orange; color: white;">Nouveau sujet</a>
-                    </div>
-                </div>
+<div class="col-md-10">
+    {% for sujet in sujets %}
+    <div class="forum_sujets mb-4">
+        <div class="d-flex justify-content-between flex-wrap">
+            <div class="sujet_head">
+                <h6>{{ sujet.title }}</h6>
+                <span><i class="fas fa-user"></i> {{ sujet.user.pseudo }}, {{ sujet.createdAt | ago }} </span>
             </div>
-
-        </div>
-    </div>
-    <table>
-        {% for categorie in categories %}
-        <tr class="categorie_table">
-            <td class="text-center left p-3">
-
-                {% if categorie.sujets | length > 0 %}
-                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }} ">
-                {% else %}
-                <a href="{{  path('sujet_new') }}">
-                    {% endif %}
-                    {% if categorie.categorie == 'logement' %}
-                    <h5 class="badge badge-small bg-secondary">{{ categorie.categorie }}</h5>
-                    {% elseif categorie.categorie == 'visa' %}
-                    <h5 class="badge bg-warning">{{ categorie.categorie }}</h5>
-                    {% elseif categorie.categorie == 'vie quotidienne' %}
-                    <h5 class="badge bg-success">{{ categorie.categorie }}</h5>
-                    {% elseif categorie.categorie == 'transport' %}
-                    <h5 class="badge bg-danger">{{ categorie.categorie }}</h5>
-                    {% endif%}
-                </a>
-
-            </td>
-            <td class="center text-left p-3">
-                {% if categorie.sujets | length > 0 %}
-                <a href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}">{{ categorie.description |  raw }}</a>
-                {% else %}
-                <a href="{{ path('sujet_new') }}">{{ categorie.description | raw }}  </a>
-                <h6><span class="badge bg-warning">Soyer le premier à vous exprimer</span></h6>
+            <div class="d-flex">
+                {% if sujet.categorie.categorie == 'vie quotidienne' %}
+                    <p class="badge badge-small bg-success" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
+                {% elseif sujet.categorie.categorie == 'visa' %}
+                    <p class="badge badge-small bg-warning" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
+                {% elseif sujet.categorie.categorie == 'transport' %}
+                    <p class="badge badge-small bg-danger" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
+                {% elseif sujet.categorie.categorie == 'logement' %}
+                    <p class="badge badge-small bg-secondary" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
                 {% endif %}
-            </td>
-            <td class="right text-center pt-3 d-md-block d-none">
-                <p><i class="far fa-file-alt fs-3" title="Sujet"></i><br>
-                    {{ categorie.sujets | length }}
-                </p>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</section>
-
-
+                <p class="comment_count"><i class="fas fa-comments ms-3"></i> {{ sujet.sujetResponses | length }}</p>
+            </div>
+        </div>
+        <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title } ) }}"></a>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

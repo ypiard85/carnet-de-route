@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Coreego{% endblock %}</title>
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <script src="{{ asset('./js/carousel.js') }}"></script>
@@ -68,9 +68,9 @@
                   <li><a class="dropdown-item" href="/admin">Dashboard Admin</a></li>
                   <li><a class="dropdown-item" href="{{ path('users_list') }}">Liste des users</a></li>
                   {% endif %}
-                  <li><a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a></li>
-                  <li><a class="dropdown-item" href=" {{ path('maliste', {id: app.user.id} ) }} ">Ma liste</a></li>
-                  <li><a class="dropdown-item" href="{{ path('carnet_route', {id: app.user.id} ) }}">Mon carnet de route</a></li>
+                  <li><a class="dropdown-item" href="/user/{{ app.user.pseudo }}">Profil</a></li>
+                  <li><a class="dropdown-item" href=" {{ path('maliste', {pseudo: app.user.pseudo} ) }} ">Ma liste</a></li>
+                  <li><a class="dropdown-item" href="{{ path('carnet_route', {pseudo: app.user.pseudo} ) }}">Mon carnet de route</a></li>
                   <li><a class="dropdown-item" href=" {{ path('app_logout') }} ">Logout</a></li>
                 </ul>
               </li>

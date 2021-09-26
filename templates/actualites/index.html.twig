@@ -18,7 +18,7 @@
 
     {% if is_granted("ROLE_ADMIN") %}
     <div class="d-flex justify-content-center">
-        <a href="{{ path('actualites_new') }}" class="text-center btn btn-success">Ajouter</a>
+        <a href="{{ path('actualites_new') }}" class="text-center btn btn-success mb-3">Ajouter</a>
     </div>
     {% endif %}
     <div class="row">
@@ -35,13 +35,6 @@
                     {{ actualite.content[:180] | striptags | raw }}
                 </p>
                 <a class="btn btn-primary" href="{{ path('actualites_show', {'title' : actualite.title }) }}">Lire plus</a>
-                {% if is_granted("ROLE_ADMIN") %}
-                <a class="btn btn-success" href="{{ path('actualites_edit', {'id' : actualite.id }) }}">Modifier</a>
-                <form method="post" action="{{ path('actualite_delete', { 'id' : actualite.id } ) }}" onclick="return confirm('Voulez vous supprimer cette actualité ?')" >
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ actualite.id) }}">
-                    <button  class="btn btn-danger" >Supprimer</button>
-                </form>
-                {% endif %}
             </div>
         </div>
         {% endfor %}

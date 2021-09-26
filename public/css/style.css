@@ -16,6 +16,7 @@
     --bleu-principal: #064899;
     --gris-principal: #a6a6a634;
     --rouge-principal: #CF2C3A;
+    --backgroud-gray: #f7fafb;
 }
 
 .nav-item, footer li{
@@ -99,6 +100,7 @@ body{
 
 section{
     padding: var(--padding);
+    padding-bottom:0;
 }
 
 /* Home (page d'accueil) */
@@ -885,7 +887,7 @@ table .categorie_table{
 
 
 .mapdiv form{
-    margin-top: 100px;
+    margin-top: 120px;
 }
 
 .crochet{
@@ -928,6 +930,76 @@ table .categorie_table{
     object-fit: contain;
 }
 
+.header_forum{
+    padding: 30px 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_forum .input_search{
+    flex: auto;
+}
+
+.header_forum form{
+    width: 100%;
+}
+
+.header_forum h1{
+    font-size: 3em!important;
+    margin-right: 2em;
+    font-weight: 600;
+}
+
+.forum_content{
+    background-color: var(--backgroud-gray);
+    border: 1px solid rgb(228, 228, 228);
+}
+
+.sujet_head h6, .sujet_head h3{
+    font-weight: 700;
+}
+
+.sujet_head span, .comment_count {
+    color: gray;
+}
+
+.sujet_head a:hover{
+    text-decoration: underline!important;
+}
+
+.forum_sujets{
+    position: relative;
+    padding: 10px;
+}
+
+.forum_sujets:hover{
+    background-color: white;
+    transition: 0.2s;
+    box-shadow: -1px 2px 5px rgb(172, 172, 172);
+}
+
+.forum_sujets:hover h6{
+    color: var(--bleu-principal);
+}
+
+.forum_sujets > a{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.response_content{
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.116);
+    border-radius: 3px;
+}
+
+.response_head a{
+    text-decoration: underline!important;
+    color: gray!important;
+}
 
 @media screen and (max-width: 1200px){
 

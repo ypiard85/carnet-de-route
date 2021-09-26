@@ -24,6 +24,7 @@ class PlaceCrudController extends AbstractCrudController
     {
 
         $fileds = [
+            AssociationField::new('user'),
             TextField::new('title'),
             TextField::new('lat'),
             TextField::new('longs'),
@@ -31,7 +32,6 @@ class PlaceCrudController extends AbstractCrudController
             TextEditorField::new('description'),
             AssociationField::new('categorie'),
             AssociationField::new('images'),
-            AssociationField::new('user')
         ];
 
 

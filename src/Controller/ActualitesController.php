@@ -86,7 +86,7 @@ class ActualitesController extends AbstractController
 
                     //send email
                     $email = (new TemplatedEmail())
-                    ->from(new Address('contact.coreego@gmail.com', 'COREEGO'))
+                    ->from(new Address('contact@coreego.fr', 'COREEGO'))
                     ->to($use->getEmail())
                     ->subject($actualites->getTitle())
                     ->htmlTemplate('email/email_actu_publish.html.twig')

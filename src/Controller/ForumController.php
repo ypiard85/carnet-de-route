@@ -10,13 +10,16 @@ use App\Form\SearchType;
 use App\Entity\SujetResponse;
 use App\Entity\ForumCategorie;
 use App\Form\SujetResponseType;
+use App\Repository\CommentRepository;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\SujetRepository;
 use Symfony\Component\Mime\Address;
 use App\Repository\SujetResponseRepository;
 use App\Repository\ForumCategorieRepository;
+use App\Repository\PlaceRepository;
 use Knp\Bundle\TimeBundle\DateTimeFormatter;
+use Proxies\__CG__\App\Entity\Comment;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -30,21 +33,10 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum", name="forum_accueil")
      */
-    public function index(SujetRepository $sujetrepo, ForumCategorieRepository $forum): Response
+    public function index(SujetRepository $sujetrepo, ForumCategorieRepository $forum, Request $request): Response
     {
 
         $categories = $forum->findAll();
-
-        return $this->render('forum/index.html.twig', [
-            'categories' => $categories,
-        ]);
-    }
-
-    /**
-     * @Route("/forum/sujets" , name="forum_sujet", methods={"GET", "POST"} )
-     */
-    public function sujets(SujetRepository $sujetrepo, Request $request) : Response
-    {
 
         $data = new SearchData();
 
@@ -52,7 +44,8 @@ class ForumController extends AbstractController
         $form->handleRequest($request);
         $sujets = $sujetrepo->findAllSujet($data);
 
-        return $this->render('forum/sujetfilter.html.twig', [
+        return $this->render('forum/index.html.twig', [
+            'categories' => $categories,
             'sujets' => $sujets,
             'form' => $form->createView()
         ]);
@@ -96,18 +89,20 @@ class ForumController extends AbstractController
         ]);
     }
 
+
+
     /**
      * @Route("/sujet/categorie/{categorie}", name="sujet_categorie",  methods={"POST", "GET"} )
      */
-    public function forumCategorie(Sujet $sujet, SujetRepository $sujetrepo){
+    public function forumCategorie(Sujet $sujet,ForumCategorieRepository $forum, SujetRepository $sujetrepo){
 
         $sujets = $sujetrepo->findSujetByCategorie($sujet->getCategorie());
         $getcat = $sujets[0]->categorie->getCategorie();
-
+        $categories = $forum->findAll();
 
         return $this->render('forum/categories.html.twig', [
             'sujets' => $sujets,
-            'cats' => $getcat,
+            'categories' => $categories
         ]);
     }
 
@@ -136,9 +131,9 @@ class ForumController extends AbstractController
             {
                 //send email
                 $email = (new TemplatedEmail())
-                ->from(new Address('contact.coreego@gmail.com', 'COREEGO'))
+                ->from(new Address('contact@coreego.fr', 'COREEGO | Forum'))
                 ->to($userpostemail)
-                ->subject('Time for Symfony Mailer!')
+                ->subject('Un utilisateur à répondu à votre post')
                 ->htmlTemplate('email/email_forum_response.html.twig')
                 ->context([
                     'id' => $sujet->getId(),
@@ -165,10 +160,37 @@ class ForumController extends AbstractController
 
         }
 
-        return $this->render('forum/sujet.html.twig', [
+        return $this->render('forum/show.html.twig', [
             'sujet' => $sujet,
             'form' => $form->createView(),
             'res' => $res
         ]);
     }
+
+    /**
+     * @Route("/commentaire/delete/{id}", name="delete_commentaire", methods={"GET", "POST"} )
+     */
+    public function deletecommentaire(SujetResponseRepository $sujetresponserepo, $id, Request $request){
+
+        $commentaire = $sujetresponserepo->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($commentaire);
+        $em->flush();
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+
+    }
+
+    /**
+     * @Route("/delete/sujet/{id}", name="deletesujet", methods={"GET", "POST"} )
+     */
+    public function deletesujet(SujetRepository $sujetrepo, Request $request, $id)
+    {
+        $sujet = $sujetrepo->find($id);
+
+        dd($sujet);
+    }
+
 }

@@ -17,7 +17,7 @@
                             <p class="d-flex align-items-center"><i class="fas fa-briefcase me-2"></i> Développeur web <br>passioné par la corée du sud</p>
                         </div>
                         <div class="mt-2">
-                            <p><a href="mailto:contact.coreego@gmail.com" class="text-white"><i class="fas fa-envelope me-2"></i> contact.coreego@gmail.com</a></p>
+                            <p><a href="mailto:contact@coreego.fr" class="text-white"><i class="fas fa-envelope me-2"></i> contact@coreego.fr</a></p>
                             <p><a href="tel:0643670456" class="text-white"><i class="fas fa-phone-alt me-2"></i> 06 43 67 04 56</a></p>
                         </div>
                     </div>
@@ -55,6 +55,11 @@
             <button class="btn btn-success mb-5">Envoyer</button>
             {{ form_end(form) }}
         </div>
+        {% for message in app.flashes('message') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
     </div>
     </div>
 
