@@ -10,16 +10,17 @@ use App\Form\SearchType;
 use App\Entity\SujetResponse;
 use App\Entity\ForumCategorie;
 use App\Form\SujetResponseType;
-use App\Repository\CommentRepository;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
+use App\Repository\PlaceRepository;
 use App\Repository\SujetRepository;
 use Symfony\Component\Mime\Address;
-use App\Repository\SujetResponseRepository;
-use App\Repository\ForumCategorieRepository;
-use App\Repository\PlaceRepository;
-use Knp\Bundle\TimeBundle\DateTimeFormatter;
+use App\Repository\CommentRepository;
 use Proxies\__CG__\App\Entity\Comment;
+use App\Repository\SujetResponseRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\ForumCategorieRepository;
+use Knp\Bundle\TimeBundle\DateTimeFormatter;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -33,7 +34,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum", name="forum_accueil")
      */
-    public function index(SujetRepository $sujetrepo, ForumCategorieRepository $forum, Request $request): Response
+    public function index(PaginatorInterface $paginator, SujetRepository $sujetrepo, ForumCategorieRepository $forum, Request $request): Response
     {
 
         $categories = $forum->findAll();
@@ -42,7 +43,14 @@ class ForumController extends AbstractController
 
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $sujets = $sujetrepo->findAllSujet($data);
+        $sujetall = $sujetrepo->findAllSujet($data);
+
+
+        $sujets = $paginator->paginate(
+            $sujetall, // Requête contenant les données à paginer (ici nos articles)
+            $data->page = $request->get('page', 1),
+            10
+        );
 
         return $this->render('forum/index.html.twig', [
             'categories' => $categories,
@@ -94,10 +102,17 @@ class ForumController extends AbstractController
     /**
      * @Route("/sujet/categorie/{categorie}", name="sujet_categorie",  methods={"POST", "GET"} )
      */
-    public function forumCategorie(Sujet $sujet,ForumCategorieRepository $forum, SujetRepository $sujetrepo){
+    public function forumCategorie(PaginatorInterface $paginator, Request $request, Sujet $sujet,ForumCategorieRepository $forum, SujetRepository $sujetrepo){
+        $data = new SearchData();
 
-        $sujets = $sujetrepo->findSujetByCategorie($sujet->getCategorie());
-        $getcat = $sujets[0]->categorie->getCategorie();
+        $sujetall = $sujetrepo->findSujetByCategorie($sujet->getCategorie());
+
+        $sujets = $paginator->paginate(
+            $sujetall, // Requête contenant les données à paginer (ici nos articles)
+            $data->page = $request->get('page', 1),
+            10
+        );
+
         $categories = $forum->findAll();
 
         return $this->render('forum/categories.html.twig', [

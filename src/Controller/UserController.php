@@ -13,6 +13,7 @@ use App\Repository\PlaceRepository;
 use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
 use App\Repository\RouteLikeRepository;
+use App\Repository\SujetRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,16 +52,20 @@ class UserController extends AbstractController
     /**
      * @Route("/{pseudo}", name="user_show", methods={"GET"})
      */
-    public function show(User $user, PlaceRepository $placerepo, LikeRepository $likerepo, Request $request, $pseudo ): Response
+    public function show(User $user, PlaceRepository $placerepo, SujetRepository $sujetrepo, LikeRepository $likerepo, Request $request, $pseudo ): Response
     {
 
         $places = $placerepo->findBy(['user' => $user->getId() ]);
         $likes = $likerepo->findLikeByUser($user->getId());
 
+        $sujets = $sujetrepo->sujetByUser($pseudo);
+
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'places' => $places,
             'likes' => $likes,
+            'sujets' => $sujets
         ]);
     }
 
@@ -134,7 +139,7 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('user_show', ['pseudo' => $this->getUser()->getPseudo() ]);
     }
-    
+
      /**
      * @Route("/deleteplacelike/{id}", name="placelike_delete", methods={"POST", "GET"})
      */

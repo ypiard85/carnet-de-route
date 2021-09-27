@@ -23,7 +23,7 @@
           {% if places | length > 0 %}
           {% for place in places %}
             {% if place.statut == 'publié' %}
-          <div class="col-md-3 col-6 mb-3">
+          <div class="col-md-3 col-12 mb-3">
             <a href="/place/{{ place.id }}"
             class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
             style="width: 500px; max-width: 100%;">
@@ -37,6 +37,7 @@
 
               <div class="card-body p-0 mt-4" style="line-height: 1em;">
                 <p class="bg-info d-inline-block text-white p-1 rounded">{{ place.categorie.nom }}</p>
+                <span class="text-dark"><i class="fas fa-user"></i> {{ place.user.pseudo }}</span>
                 <p class="card-title text-dark fs-6">{{ place.title }}</p>
                 <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ place.city }}</h6>
               </div>
@@ -49,7 +50,13 @@
         <p>Aucun résultat trouvé</p>
         {% endif %}
         <div>
-          {{ knp_pagination_render(places) }}
+          {{ knp_pagination_render(places, null, {},
+              {
+              'align': 'left',
+              'size': 'small',
+              'rounded': true,
+              })
+          }}
         </div>
       </div>
 </div>

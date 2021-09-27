@@ -18,8 +18,19 @@
             </div>
         </div>
         <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title } ) }}"></a>
+        {% if (is_granted('IS_AUTHENTICATED_FULLY') and sujet.user.id == app.user.id ) %}
         <a onclick="return confirm('Un post est une source d\'information important pour les utilisateurs, êtes vous sûr de vouloir supprimer ce post ?  ') " href="{{ path('deletesujet', {'id' : sujet.id} ) }}" style="position: relative; z-index: 100; text-align: right;"><i class="fas fa-trash-alt text-danger"></i></a>
+        {% endif %}
     </div>
     {% endfor %}
+    <div>
+        {{ knp_pagination_render(sujets, null, {},
+            {
+            'align': 'left',
+            'size': 'small',
+            'rounded': true,
+            })
+        }}
+      </div>
 </div>
 {% endblock %}

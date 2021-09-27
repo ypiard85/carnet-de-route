@@ -59,6 +59,7 @@ class PlaceController extends AbstractController
 
         $places = $placeRepository->findSearch($data);
 
+
         $data->page = $request->get('page', 1);
 
         return $this->render('place/index.html.twig', [
@@ -176,7 +177,7 @@ class PlaceController extends AbstractController
                 $comment->setContent($request->get('messagecomment'));
                 $em->persist($comment);
                 $this->addFlash('message', 'Commentaire modifier avec succès');
-                
+
             }
         }
 

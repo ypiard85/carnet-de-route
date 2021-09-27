@@ -59,14 +59,28 @@ class SujetRepository extends ServiceEntityRepository
 
     public function countSujetByCategorie($value)
     {
-
-
         return $this->createQueryBuilder('c')
         ->where('c.categorie = :value'  )
         ->setParameter('val', $value)
         ->getQuery()
         ->getResult()
         ;
+    }
+    /**
+     *@return Sujet[] Return an array of Sujet Objects
+     */
+    public function sujetByUser($pseudo)
+    {
+        return $this->createQueryBuilder('s')
+        ->select('s')
+        ->join('s.User', 'u')
+        ->andWhere('u.pseudo = :pseudo ')
+        ->setParameter('pseudo', $pseudo)
+        ->orderBy('s.createdAt', 'DESC')
+        ->getQuery()
+        ->getResult()
+        ;
+
     }
 
 

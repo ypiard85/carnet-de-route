@@ -115,6 +115,12 @@ class User implements UserInterface
      */
     private $evenements;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -382,7 +388,7 @@ class User implements UserInterface
     {
         if (!$this->sujets->contains($sujet)) {
             $this->sujets[] = $sujet;
-            $sujet->set($this);
+            $sujet->setUser($this);
         }
 
         return $this;
@@ -487,5 +493,20 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->setCreatedAt(new \DateTime('now'));
+        if ($this->getCreatedAt() === null) {
+           return $this->setCreatedAt(new \DateTime('now'));
+        }
+
     }
 }

@@ -640,6 +640,10 @@ END CAROUSEL
     position: relative;
 }
 
+.presentation{
+    width: 500px;
+}
+
 .commentaire img{
     width: 30px;
     height: 30px;
@@ -761,7 +765,6 @@ table .categorie_table{
     text-align: left;
     width: 500px;
     max-width: 100%;
-    margin: auto;
 }
 
 .description li{
@@ -986,6 +989,8 @@ table .categorie_table{
     position: absolute;
     top: 0;
     bottom: 0;
+    left:0;
+    right: 0;
     width: 100%;
 }
 
