@@ -3,7 +3,7 @@
 {% block title %}COREEGO | Editer {{ place.title }} {% endblock %}
 
 {% block body %}
-<section class="container top_margin">
+<section class="container top_margin mb-5 place_edit">
 
     <h1 class="text-center bleu">Editer votre lieu</h1>
     {% for messages in app.flashes('lieu_edit_success') %}
@@ -56,6 +56,14 @@
             <div class="col-md-4 mb-3">
                 {{ form_row(form.city, {'label' : 'Ville'} ) }}
             </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    {{ form_row(form.lat) }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    {{ form_row(form.longs) }}
+                </div>
+            </div>
             <div class="col-md-4 mb-3">
                 {{ form_row(form.categorie) }}
             </div>
@@ -65,14 +73,6 @@
         </div>
         <div class="d-none">
             {{ form_row(form.images) }}
-        </div>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                {{ form_row(form.lat) }}
-            </div>
-            <div class="col-md-6 mb-3">
-                {{ form_row(form.longs) }}
-            </div>
         </div>
         <div class="col-md-2">
 

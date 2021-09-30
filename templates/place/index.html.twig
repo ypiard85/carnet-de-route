@@ -32,7 +32,7 @@
                 <i class="fas fa-heart"></i> <span>{{ place.likes | length }}</span>
               </div>
               <div class="card-head">
-                <img  src="{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
+                <img  src="{{ asset('/place/') }}{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
               </div>
 
               <div class="card-body p-0 mt-4" style="line-height: 1em;">

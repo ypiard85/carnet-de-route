@@ -55,8 +55,11 @@ class UserController extends AbstractController
     public function show(User $user, PlaceRepository $placerepo, SujetRepository $sujetrepo, LikeRepository $likerepo, Request $request, $pseudo ): Response
     {
 
-        $places = $placerepo->findBy(['user' => $user->getId() ]);
+        $places = $placerepo->findBy(['user' => $user->getId()], ['id' => 'DESC']);
+
         $likes = $likerepo->findLikeByUser($user->getId());
+
+
 
         $sujets = $sujetrepo->sujetByUser($pseudo);
 
@@ -127,6 +130,10 @@ class UserController extends AbstractController
      */
     public function deletePlace(Place $place, ImageRepository $imgrepo): Response
     {
+        if($place->getUser()->getId() != $this->getUser()->getId() ){
+            return $this->redirectToRoute('home');
+        }
+
         $noms = $imgrepo->findBy(['place' => $place]);
 
         for($i = 0; $i < count($noms); $i++ ){

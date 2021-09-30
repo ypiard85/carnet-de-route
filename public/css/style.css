@@ -23,6 +23,10 @@
     list-style: none!important;
 }
 
+p{
+    margin: 0;
+}
+
 u{
     text-decoration: underline!important;
 }
@@ -214,7 +218,9 @@ section{
     object-fit: cover;
   }
 
-
+.place_edit form label{
+    margin-bottom: 10px;
+}
 
 /*
 
@@ -733,6 +739,14 @@ table .categorie_table{
 
 }
 
+.panel_user{
+    background-color: var(--backgroud-gray);
+}
+
+.panel_user .forum_sujets{
+    background-color: white;
+}
+
 .tabs_user{
     background-color: #444!important;
 }
@@ -771,17 +785,7 @@ table .categorie_table{
     list-style: initial;
 }
 
-.profil .profil_header{
-    text-align: center;
-}
 
-
-.profil .profil_header h1{
-    font-family: var(--font_roboto);
-    color: #008245;
-    font-weight: bold;
-    line-height: 40px;
-}
 
 .profil .profil_header small{
     color: gray;
@@ -1005,6 +1009,16 @@ table .categorie_table{
     text-decoration: underline!important;
     color: gray!important;
 }
+
+.medaille_option{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.medaille_option img{
+    width: 100px;
+}
+
 
 @media screen and (max-width: 1200px){
 

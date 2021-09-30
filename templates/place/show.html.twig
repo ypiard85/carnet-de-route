@@ -29,9 +29,9 @@
         <a href="{{ path('user_show', {'pseudo' : place.user.pseudo }) }}" class="fw-bold"><i class="fas fa-user"></i> {{ place.user.pseudo }}</a>
       </div>
 
-      <p class="mt-3">{{ place.description | nl2br  }}</p>
+      <p class="mt-5">{{ place.description | raw  }}</p>
 
-      <div class="d-flex justify-content-center align-content-center">
+      <div class="d-flex justify-content-center align-content-center mt-5">
         <div>
           {% if app.user and place.isRouteUser(app.user) %}
           <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-danger js_like">J'annule</a>

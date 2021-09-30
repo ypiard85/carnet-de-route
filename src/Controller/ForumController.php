@@ -166,8 +166,8 @@ class ForumController extends AbstractController
 
                 //ajour d'un message flash
                 $this->addFlash(
-                    'notice',
-                    'Votre commentaire à bien été ajouter'
+                    'message',
+                    'Merci pour votre commentaire'
                 );
 
                 $referer = $request->headers->get('referer');
@@ -188,6 +188,10 @@ class ForumController extends AbstractController
     public function deletecommentaire(SujetResponseRepository $sujetresponserepo, $id, Request $request){
 
         $commentaire = $sujetresponserepo->find($id);
+
+        if($commentaire->getUser()->getId() != $this->getUser()->getId() ){
+            return $this->redirectToRoute('home');
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($commentaire);

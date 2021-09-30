@@ -38,7 +38,9 @@ class PlaceType extends AbstractType
                     'publié' => 'publié'
                 ]
             ])
-            ->add('description', TextareaType::class)
+
+            ->add('description',  CKEditorType::class)
+
             ->add('images', FileType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Images',

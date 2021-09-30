@@ -34,7 +34,7 @@
                 <p>
                     {{ actualite.content[:180] | striptags | raw }}
                 </p>
-                <a class="btn btn-primary" href="{{ path('actualites_show', {'title' : actualite.title }) }}">Lire plus</a>
+                <a class="btn btn-primary mt-3" href="{{ path('actualites_show', {'title' : actualite.title }) }}">Lire plus</a>
             </div>
         </div>
         {% endfor %}

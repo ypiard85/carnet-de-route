@@ -22,7 +22,12 @@
         <div class="responses_head border-bottom">
           <h3 class="fw-bolder">{{ sujet.sujetresponses | length }} réponse{% if sujet.sujetresponses | length > 1  %}s{% endif %} </h3>
         </div>
-
+        {% for message in app.flashes('message') %}
+        <div class="alert alert-success alert-dismissible fade show">
+          <span>{{ message }}</span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
         {% for re in res %}
         <div class="response mt-3">
           <div class="response_head d-flex">
@@ -32,12 +37,13 @@
             </a>
             <p>, {{ re.createdAt | ago  }}</p>
           </div>
-          <div class="response_content">
-            <p style="line-height: 1em;">{{ re.content | nl2br }}</p>
+          <div class="response_content mt-3">
+            <p>{{ re.content | nl2br }}</p>
 
             {% if (is_granted('IS_AUTHENTICATED_FULLY') and re.user.id == app.user.id ) %}
               <a onclick="return confirm('Voulez vous supprimer votre commentaire ?')" href="{{ path('delete_commentaire', {'id' : re.id } ) }}"><i class="fas fa-trash-alt text-danger float-end clear-both"></i></a>
             {% endif %}
+
           </div>
         </div>
         {% endfor %}
