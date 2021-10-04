@@ -26,10 +26,13 @@ class PlaceCrudController extends AbstractCrudController
 
         $fileds = [
             AssociationField::new('user'),
+            TextField::new('title'),
             ChoiceField::new('statut')
                 ->setChoices(['brouillon' => 'brouillon', 'publié' => 'publié'])
             ,
-            TextField::new('title'),
+            ChoiceField::new('premium')
+                ->setChoices(['Oui' => 'Oui', 'Non' => 'Non'])
+            ,
             TextField::new('lat'),
             TextField::new('longs'),
             AssociationField::new('city'),

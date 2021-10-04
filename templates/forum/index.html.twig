@@ -1,6 +1,7 @@
 {% extends 'template-forum.html.twig' %}
 
-{% block title %}COREEGO | Forum {% endblock %}
+{% block title %}COREEGO - Forum Corée Du Sud  {% endblock %}
+
 
 {% block body2 %}
 
@@ -18,7 +19,7 @@
             </div>
         </div>
         <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title } ) }}"></a>
-    </div>          
+    </div>
     {% endfor %}
     <div>
         {{ knp_pagination_render(sujets, null, {},

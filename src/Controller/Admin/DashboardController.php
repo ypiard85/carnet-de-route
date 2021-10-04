@@ -12,6 +12,7 @@ use App\Entity\SujetResponse;
 use App\Entity\ForumCategorie;
 use App\Controller\Admin\PlaceCrudController;
 use App\Entity\Categorie;
+use App\Entity\PolitiqueConfidentialiteEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -43,6 +44,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories sujets', 'fas fa-book', ForumCategorie::class);
         yield MenuItem::linkToCrud('Actualites', 'far fa-newspaper', Actualites::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Politique', 'fas fa-book', PolitiqueConfidentialiteEntity::class);
     }
 
 

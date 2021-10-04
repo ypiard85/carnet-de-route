@@ -21,7 +21,11 @@
                 <div class="list-categorie col-md-2">
                     <a href="{{ path('forum_accueil') }}" class="mb-2 d-inline-block">Tous les sujets</a><br>
                     {% for categorie in categories %}
+                        {% if categorie.sujets | length > 0 %}
                         <a class="badge badge-small bg-{{ categorie.color }}" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}" >{{ categorie.categorie }}</a>
+                        {% else%}
+                        <a class="badge badge-small bg-{{ categorie.color }}" href="{{ path('sujet_new') }}" >{{ categorie.categorie }}</a>
+                        {% endif %}
                         <br>
                     {% endfor %}
                 </div>

@@ -144,6 +144,8 @@ class UserController extends AbstractController
             $entityManager->remove($place);
             $entityManager->flush();
 
+            $this->addFlash('message', 'Lieu supprimé avec succès');
+
             return $this->redirectToRoute('user_show', ['pseudo' => $this->getUser()->getPseudo() ]);
     }
 

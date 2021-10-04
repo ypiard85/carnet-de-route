@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}COREEGO | Lieux à visiter{% endblock %}
+{% block title %}COREEGO - Plus de {{ places | length }} de lieux recommandés en Corée Du Sud son disponibles pour vous faire réver{% endblock %}
+
+{% block metadescription %}
+<meta name="description" content="Découvrez plus de {{ places | length }} lieux disponible à visiter en corée du sud.">
+{% endblock%}
 
 {% block stylesheets %}
 

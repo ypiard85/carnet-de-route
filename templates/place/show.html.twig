@@ -10,13 +10,16 @@
 {% endblock %}
 
 
-{% block title %}COREEGO | {{ place.title }}{% endblock %}
+{% block title %}COREEGO - {{ place.title }}{% endblock %}
 
+{% block metadescription %}
+<meta name="description" content="{{ place.description[:180] | striptags | raw }}">
+{% endblock%}
 
 {% block body %}
-<div class="show-place top_margin">
+<div class="show-place">
   <!--Information du lieu-->
-<div class="container-fluid">
+<div class="container-fluid py-5">
 <div class="row flex-md-row flex-column-reverse">
   <div class="col-md-6">
     <div class="py-3 px-3">
@@ -24,7 +27,7 @@
         <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mb-3 bleu fw-bold text-primary d-flex  align-items-center"><i class="me-1 fas fa-map-marker-alt"></i> {{ place.city.name }}
           <span id="meteo-temp" class="d-flex align-items-center ms-3 text-black" style="z-index: 100;"></span>
         </a>
-        <p class="fs-4">{{ place.title }}</p>
+        <p class="fs-4 mb-3">{{ place.title }}</p>
         <a href="{{ path('carnet_de_route') }}?categorie={{ place.categorie.nom }}" class="bg-info d-inline-block text-white p-1 rounded">{{ place.categorie.nom }}</a>
         <a href="{{ path('user_show', {'pseudo' : place.user.pseudo }) }}" class="fw-bold"><i class="fas fa-user"></i> {{ place.user.pseudo }}</a>
       </div>

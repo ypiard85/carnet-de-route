@@ -388,12 +388,9 @@ CAROUSEL
 }
 
 .footer{
-    background-color: var(--footer);
+    background-color: var(--backgroud-gray);
 }
 
-.footer li{
-    line-height: 40px;
-}
 
 .footer a{
     color: black;

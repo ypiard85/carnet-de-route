@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Coreego{% endblock %}</title>
+        <link rel="icon" href="{{ asset('./favicon.png') }}" type="image/x-icon">
+        <title>{% block title %}{% endblock %}</title>
+        {% block metadescription %}
+        {% endblock %}
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <script src="{{ asset('./js/carousel.js') }}"></script>
@@ -15,7 +18,7 @@
 
         {% block stylesheets %}
         {#{{ encore_entry_link_tags('app') }}#}
-    {% endblock %}
+      {% endblock %}
 
     </head>
 
@@ -123,8 +126,9 @@
     {% block body %}{% endblock %}
 
 <footer class="footer border-top">
-  <div class="container py-5">
-    <h5>Navigation rapide</h5>
+  <div class="container py-5 d-flex flex-wrap">
+    <div class="me-5">
+      <h6 class="fw-bold">Navigation rapide</h6>
       <ul>
         <li><a href="{{ path('home') }}">Accueil</a></li>
         <li><a href="{{ path('carnet_de_route') }}">Lieux</a></li>
@@ -134,17 +138,22 @@
         <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
         <li><a href="{{ path('contact') }}">Contactez-nous</a></li>
       </ul>
+    </div>
+      <div style="width: 500px; max-width: 100%">
+        <h6 class="fw-bold">Coreego</h6>
+        <p>
+          Coreego est un site communautaire ayant pour but principal de partager vos coups de coeurs
+          et de créer votre propre carnet de voyage afin d'y découvrir les moindres recoins de la Corée Du Sud
+        </p>
+        <p>Un forum est mis à votre disposition pour toutes questions concernant La Corée Du Sud</p>
+      </div>
   </div>
-  <div class="footer_bottom border-top py-3 ">
-    <div class="container flex-column  flex-sm-row d-flex align-content-center align-items-center justify-content-between">
-      <ul class="d-flex flex-wrap ">
+  <div class="footer_bottom border-top border-3 py-3 ">
+    <div class="container">
+      <ul class="d-flex justify-content-center flex-wrap align-content-center align-items-center">
         <li>© 2021 La corée </li>
-        <li><a href="#">Confidentialité</a></li>
-        <li><a href="#">Conditions générales </a></li>
-        <li><a target="__blank" href="{{ path('fonctionnement') }}">Fonctionnement du site </a></li>
-      </ul>
-      <ul>
-        <a href="#" class="fs-3"><i class="fab fa-instagram"></i></a>
+        <li><a href="{{ path('politique_confidentalite') }}">Politique de confidentialité</a></li>
+        <li><a href="#" class="fs-3"><i class="fab fa-instagram text-primary fs-2"></i></a></li>
       </ul>
     </div>
   </div>

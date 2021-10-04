@@ -45,7 +45,7 @@ class Sujet
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="sujet")
+     * @ORM\OneToMany(targetEntity=SujetResponse::class, mappedBy="sujet", cascade={"all"} )
      */
     private $sujetResponses;
 

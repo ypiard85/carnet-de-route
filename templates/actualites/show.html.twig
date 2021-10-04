@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}COREEGO | {{ actualites.title }} {% endblock %}
+{% block title %}COREEGO - {{ actualites.title }} {% endblock %}
+
+{% block metadescription %}
+<meta name="description" content="COREEGO - {{ actualites.content[:180] | striptags | raw }} ">
+{% endblock%}
 
 {% block body %}
 

@@ -2,6 +2,10 @@
 
 {% block title %}COREEGO | Forum - {{ sujet.title }} {% endblock %}
 
+{% block metadescription %}
+<meta name="description" content="{{ sujet.content }}">
+{% endblock%}
+
 {% block body %}
 
 <section class="top_margin">

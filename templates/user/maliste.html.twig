@@ -4,9 +4,17 @@
 
 {% block body %}
 
+<section class="top_margin">
+    <div class="header_forum d-flex flex-wrap container">
+      <div class="sujet_head">
+        <h3>Mes lieux à visiter</h3>
+      </div>
+    </div>
+<div class="forum_content">
+    <div class="container">
+        <div class="sujet_content form">
 
-<section class="list top_margin">
-    <h3 class="text-center bleu mb-3">Mon carnet de route</h3>
+<div class="list py-5">
     <div class="container">
         <table class="table table-striped">
             {% for message in app.flashes('message') %}
@@ -25,7 +33,7 @@
                     {% for route in routes %}
                     <tr>
                         <td>{{ route.place.title }}</td>
-                        <td>{{ route.place.city.name }}</td>
+                        <td><h1 class="badge bg-primary">{{ route.place.city.name }}</h1></td>
                         <td>
                             <div class="btn-group">
                                 <button style="outline: none!important;" type="button" class="btn btn-secondary bg-transparent border-0 p-0" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,6 +53,12 @@
             </tbody>
             </table>
         </div>
-    </section>
+    </div>
+
+        </div>
+    </div>
+</div>
+</section>
+
 
     {% endblock %}

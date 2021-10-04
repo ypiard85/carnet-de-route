@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\PolitiqueConfidentialiteEntity;
 use Number;
 use Carbon\Carbon;
 use App\Form\ContactType;
@@ -9,6 +10,7 @@ use App\Repository\CityRepository;
 use App\Repository\LikeRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\PolitiqueConfidentialiteEntityRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -96,6 +98,18 @@ class HomeController extends AbstractController
     {
         return $this->render('home/fonctionnement.html.twig', [
             'test' => 'test'
+        ]);
+    }
+
+    /**
+     * @Route("/politique-de-confidentialite", name="politique_confidentalite")
+     */
+    public function politiquedeconfidentialite(PolitiqueConfidentialiteEntityRepository $politiquerepo)
+    {
+        $politiques = $politiquerepo->find(['id' => 1]);
+
+        return $this->render('home/politique.html.twig', [
+            'politiques' => $politiques
         ]);
     }
 }
