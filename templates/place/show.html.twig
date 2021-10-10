@@ -36,23 +36,27 @@
 
       <div class="d-flex justify-content-center align-content-center mt-5">
         <div>
-          {% if app.user and place.isRouteUser(app.user) %}
-          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-danger js_like">J'annule</a>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          {% if place.isRouteUser(app.user) %}
+          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-sm btn-outline-danger js_like">Supprimer de mon carnet de route</a>
           {% else %}
-          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-outline-primary js_like">Je veux visiter</a>
+          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-sm btn-outline-primary js_like">Ajouter à mon carnet de route</a>
           {% endif %}
           {% if app.user == place.user %}
-          <a class="btn btn-outline-success" href="{{ path('place_edit', {'id' : place.id } ) }}">Modifier</a>
+          <a class="btn btn-outline-success btn-sm" href="{{ path('place_edit', {'id' : place.id } ) }}">Modifier</a>
+          {% endif %}
           {% endif %}
         </div>
         <div class="align-items-center">
           <p class="align-items-center ms-3">
-            {% if app.user and place.isLike(app.user) %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if  place.isLike(app.user) %}
               <a href="{{ path('like_place', { 'id': place.id } ) }}" class="fas fa-heart fs-2 text-danger like"></a>
             {% else %}
               <a href="{{ path('like_place', { 'id': place.id } ) }}" class="far fa-heart fs-2 text-danger like"></a>
             {% endif %}
             <span id="is-like">{{ place.likes | length }}</span>
+            {% endif %}
           </p>
         </div>
       </div>
@@ -210,11 +214,11 @@
       axios.get(url).then(res => {
 
         if(btnlike.classList.contains('btn-outline-danger')){
-          btnlike.innerHTML = "Je veux visiter"
+          btnlike.innerHTML = "Ajouter à mon carnet de route"
           btnlike.classList.replace('btn-outline-danger', 'btn-outline-primary')
         }else{
           btnlike.classList.replace('btn-outline-primary','btn-outline-danger')
-          btnlike.textContent = "J'annule"
+          btnlike.textContent = "Supprimer de mon carnet de route"
         }
       })
   }

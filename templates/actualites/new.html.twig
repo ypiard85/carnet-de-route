@@ -3,14 +3,27 @@
 {% block title %}COREEGO | Ajouter un actualité{% endblock %}
 
 {% block body %}
-    <section class="container top_margin">
-           {{ form_start(form) }}
+    <section class="top_margin">
+        <div class="header_forum d-flex flex-wrap container">
+            <div class="sujet_head">
+              <h3>Ajouter une actualité</h3>
+            </div>
+          </div>
+          <div class="forum_content py-4">
+            <div class="container">
+                <div class="sujet_content mb-5">
+                {{ form_start(form) }}
                     {{ form_row(form.name) }}
-                <div class="mb-3">
-                    {{ form_row(form.title) }}
+                    <div class="mb-3">
+                        {{ form_row(form.title) }}
+                    </div>
+                    {{ form_row(form.content) }}
+                    <button class="btn btn-primary mt-3">Créer</button>
+                {{ form_end(form) }}
                 </div>
-                {{ form_row(form.content) }}
-                <button class="btn btn-primary mt-3">Créer</button>
-           {{ form_end(form) }}
+            </div>
+        </div>
+
+
     </section>
 {% endblock %}

@@ -503,10 +503,14 @@ class User implements UserInterface
 
     public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
-        $this->setCreatedAt(new \DateTime('now'));
+        /*$this->setCreatedAt(new \DateTime('now'));
         if ($this->getCreatedAt() === null) {
            return $this->setCreatedAt(new \DateTime('now'));
-        }
+        }*/
+
+        $this->createdAt = $createdAt;
+
+        return $this;
 
     }
 }

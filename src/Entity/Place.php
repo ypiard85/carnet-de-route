@@ -95,7 +95,7 @@ class Place
     private $categorie;
 
     /**
-     * @ORM\Column(type="string", length=24)
+     * @ORM\Column(type="string", length=24, nullable=true)
      */
     private $statut;
 

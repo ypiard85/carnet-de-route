@@ -1,7 +1,7 @@
 
 <div class="container emailpost">
     <p >Un utilisateur à répondu à votre post<br>
-        <a style="text-align: center;" href=" http://127.0.0.1:8000/sujet/{{ id }}/{{ title }}">Voir le post</a>
+        <a style="text-align: center;" href="http://127.0.0.1:8000/sujet/{{ id }}/{{ title }}">Voir le post</a>
     </p>
 </div>
 
@@ -13,7 +13,7 @@
     <div style="margin: 20px 0; text-align: center">
         <img width="250"  src="http://127.0.0.1:8000/logo.png" alt="">
     </div>
-    <p style="padding: 20px;">Vous avez recus une réponse à votre questionnement cliquer sur le lien pour voir le post</p>
+    <p style="padding: 20px;">Une personne à répondu à votre post, cliquez sur le lien pour voir le post</p>
     <a style="text-align: center;" href=" {{ absolute_url(path('sujet_view', {'id': id, 'title' : title} )) }}">Voir le post</a>
 </div>
 </section>

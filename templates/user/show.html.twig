@@ -10,7 +10,7 @@
 {% block title %}COREEGO | {{ user.pseudo }}{% endblock %}
 {% block body %}
 
-<section class="profil top_margin">
+<section class="  top_margin">
   <div class="header_forum container">
     <div class="sujet_head">
       {% for message in app.flashes('message') %}
@@ -48,7 +48,7 @@
 
     {% if (is_granted('IS_AUTHENTICATED_FULLY') and  user.id == app.user.id ) %}
     <li class="nav-item" role="presentation">
-      <button class="nav-link text-white fw-bold btn-sm" id="like-tab" data-bs-toggle="tab" data-bs-target="#like" type="button" role="tab" aria-controls="like" aria-selected="false"> Favories | {{ likes | length }} </button>
+      <button class="nav-link text-white fw-bold btn-sm" id="like-tab" data-bs-toggle="tab" data-bs-target="#like" type="button" role="tab" aria-controls="like" aria-selected="false"> Aimés | {{ likes | length }} </button>
     </li>
     {% endif %}
   </ul>
@@ -149,12 +149,13 @@
               <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ place.city }}</h6>
             </div>
           </a>
-      </div>
+        </div>
       {% endif %}
       {% endif %}
       {% endfor %}
       {% endif %}
     </div>
+
   </div>
 
 
@@ -168,7 +169,6 @@
             <a href="/place/{{ like.place.id }}"
             class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
             style="width: 500px; max-width: 100%;">
-
               <div class="position-absolute p-2 text-danger fs-5">
               <i class="fas fa-heart"></i> <span>{{ like.place.likes | length }}</span>
               </div>
@@ -189,7 +189,6 @@
       {% endif %}
     </div>
 </div>
-
-{% block javascripts %}{% endblock %}
+</div>
 
 {% endblock %}

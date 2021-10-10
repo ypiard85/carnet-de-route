@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Place;
 use App\Form\UserType;
+use App\Data\SearchData;
 use App\Entity\RouteLike;
 use App\Form\UserEditType;
 use App\Repository\LikeRepository;
 use App\Repository\UserRepository;
-use App\Repository\PlaceRepository;
-use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
-use App\Repository\RouteLikeRepository;
+use App\Repository\PlaceRepository;
 use App\Repository\SujetRepository;
+use App\Repository\CommentRepository;
+use App\Repository\RouteLikeRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,12 +54,15 @@ class UserController extends AbstractController
     /**
      * @Route("/{pseudo}", name="user_show", methods={"GET"})
      */
-    public function show(User $user, PlaceRepository $placerepo, SujetRepository $sujetrepo, LikeRepository $likerepo, Request $request, $pseudo ): Response
+    public function show(UserRepository $userrepo, User $user, PlaceRepository $placerepo, SujetRepository $sujetrepo, LikeRepository $likerepo, Request $request, $pseudo ): Response
     {
+
+       $userfind = $userrepo->findAll();
 
         $places = $placerepo->findBy(['user' => $user->getId()], ['id' => 'DESC']);
 
         $likes = $likerepo->findLikeByUser($user->getId());
+
 
 
 
@@ -66,6 +71,7 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'userfinds' => $userfind,
             'places' => $places,
             'likes' => $likes,
             'sujets' => $sujets

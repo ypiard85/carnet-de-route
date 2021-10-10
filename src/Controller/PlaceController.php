@@ -266,7 +266,7 @@ class PlaceController extends AbstractController
             $em->persist($like);
             $em->flush();
 
-        return $this->json(['code' => 200, 'message' => 'lieu ajouter avec succes'], 200);
+        return $this->json(['code' => 200, 'message' => 'lieu ajouter au carnet de route'], 200);
     }
 
     /**
@@ -300,6 +300,8 @@ class PlaceController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($like);
             $em->flush();
+
+            $this->addFlash('message', 'Lieu aimer');
 
         return $this->json(['code' => 200, 'message' => 'lieu aimer',
                             'like' => $likerepo->count(['place' => $place])

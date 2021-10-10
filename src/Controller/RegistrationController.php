@@ -11,6 +11,7 @@ use Symfony\Component\Mime\Address;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
@@ -30,7 +31,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function register(MailerInterface $mailer, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
 
 
@@ -48,10 +49,8 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $email = $form['email']->getData();
-
             $user->setRoles(['ROLE_USER']);
-            $user->setCreatedAt(new DateTime());
+            $user->setCreatedAt(new \DateTime('now'));
             $user->setToken(md5(uniqid()));
 
 
@@ -64,14 +63,13 @@ class RegistrationController extends AbstractController
 
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('contact@coreego.fr', 'COREEGO'))
+            $email = (new TemplatedEmail())
+                    ->from(new Address('contact.coreego@gmail.com', 'COREEGO'))
                     ->to($user->getEmail())
                     ->subject('Confirmation de votre email')
                     ->context(['token' => $user->getActivationToken()])
-                    ->htmlTemplate('email/email_registration.html.twig')
-            );
+                    ->htmlTemplate('email/email_registration.html.twig');
+            $mailer->send($email);
             // do anything else you need here, like send an email
 
             /*return $guardHandler->authenticateUserAndHandleSuccess(
