@@ -45,6 +45,10 @@ class SearchType extends AbstractType
                 'data' => '',
             ])
 
+            ->add('premium', HiddenType::class, [
+                'data' => '',
+            ])
+
             ->add('filter', HiddenType::class, [
                 'data' => '',
             ])

@@ -44,4 +44,9 @@ class SearchData{
       */
       public $likes = "";
 
+      /**
+      * @var string
+      */
+      public $premium = "";
+
 }

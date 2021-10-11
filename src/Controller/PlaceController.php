@@ -34,7 +34,7 @@ class PlaceController extends AbstractController
 
 
     /**
-     * @Route("/carnet-de-route", name="carnet_de_route", methods={"GET"})
+     * @Route("/lieux", name="carnet_de_route", methods={"GET"})
      */
     public function index(PlaceRepository $placeRepository, CategorieRepository $catrepo, cityRepository $city, Request $request): Response
     {

@@ -10,11 +10,11 @@
 
 <div class="swiper-container homeswiper position-relative mt-5 w-100">
     <div class="swiper-wrapper" style="z-index: -1;">
-      <div class="swiper-slide" style="background-image: url(' {{ asset("./accueil/carousel/temple_boudisme.jpg") }} '); "></div>
-      <div class="swiper-slide" style="background-image: url(' {{ asset("./accueil/carousel/image.jpg") }} '); "></div>
-    <div class="swiper-slide" style="background-image: url('{{ asset("./accueil/carousel/Seoul.jpg") }}'); "></div>
-    <div class="swiper-slide" style="background-image: url('{{ asset("./accueil/carousel/Jeju-Cascade-Cheonjeyeon.jpg") }}'); "></div>
-    <div class="swiper-slide" style="background-image: url('{{ asset("./accueil/carousel/sunset-3664096_1280.jpg") }}'); "></div>
+      <div class="swiper-slide" style="background-image: url(' {{ asset("./accueil/carousel/temple_boudisme.jpg") }} ') "></div>
+      <div class="swiper-slide" style="background-image: url(' {{ asset("./accueil/carousel/image.jpg") }} ') "></div>
+    <div class="swiper-slide" style="background-image: url('{{ asset("./accueil/carousel/Seoul.jpg") }}') "></div>
+    <div class="swiper-slide" style="background-image: url('{{ asset("./accueil/carousel/Jeju-Cascade-Cheonjeyeon.jpg") }}') "></div>
+    <div class="swiper-slide" style="background-image: url('{{ asset("./accueil/carousel/sunset-3664096_1280.jpg") }}') "></div>
   </div>
   <div class="text_banner position-absolute text-center  text-white">
     <p class="fw-bold h1">VOYAGEZ, PARTAGEZ</p>
@@ -27,8 +27,8 @@
 <!--NOS RECOMMANDATIONS-->
 {% if premiums | length > 0  %}
 <div class="container  mt-4">
-  <h4 class="">Nos recommandations</h4>
-  <a href="">Voir tout</a>
+  <h4 class="">Nos partenaires</h4>
+  <a href="{{ path('carnet_de_route') }}?premium=Oui">Voir tout</a>
   <div class="swiper-container bigimg my-3">
   <div class="swiper-wrapper">
     {% for premium in premiums %}

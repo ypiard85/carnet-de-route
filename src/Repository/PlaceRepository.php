@@ -75,6 +75,12 @@ class PlaceRepository extends ServiceEntityRepository
                     ->setParameter('categorie', "%{$search->categorie}%");
                 }
 
+                if(!empty($search->premium)){
+                    $query = $query
+                    ->andWhere('p.premium LIKE :premium')
+                    ->setParameter('premium', "%{$search->premium}%");
+                }
+
 
                     if(!empty($search->filter)){
                         switch ($search->filter) {
