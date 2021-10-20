@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tout les utilisateurs{% endblock %}
+
+
+{% block stylesheets %}
+  <style>
+
+  </style>
+{% endblock %}
+
+{% block body %}
+
+    <section class="top_margin container">
+      <h1 class="bleu text-center">Liste des utilisateurs</h1>
+      {% for message in app.flashes('message') %}
+        <div class="alert alert-success">{{ message }}</div>
+      {% endfor %}
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Pseudo</th>
+            <th scope="col">Email</th>
+            <th scope="col">Token</th>
+            <th scope="col">Role</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <th scope="row">{{ user.pseudo }}</th>
+            <td>{{ user.email }}</td>
+            <td>{{ user.token }}</td>
+            <td>{{ user.roles[0] }}</td>
+            <td><a href="{{ path('userprofil_edit', {'pseudo' : user.pseudo}) }}">Edit</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    {% endblock %}

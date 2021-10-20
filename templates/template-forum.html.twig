@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Forum {% endblock %}
+
+{% block body %}
+
+<section class="top_margin">
+    <div class="header_forum d-flex flex-wrap container">
+        <h1 class="bleu">Forum</h1>
+        <div class="input_search ">
+            <form action="{{ path('forum_accueil') }}" class="input-group input-group-lg"">
+                    <input type="text" class="form-control" placeholder="Rechercher un sujet" name="sujet" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <button class="btn btn-outline-primary" type="submit" id="button-addon1">Rechercher</button>
+              </form>
+        </div>
+    </div>
+
+    <div class="forum_content py-4">
+        <div class="container">
+            <div class="forum_main row flex-md-row flex-column-reverse">
+                <div class="list-categorie col-md-2">
+                    <a href="{{ path('sujet_new') }}" class="mb-2 btn btn-primary btn-sm">Ajouter un sujet</a><br>
+                    <a href="{{ path('forum_accueil') }}" class="mb-2 d-inline-block">Tous les sujets</a><br>
+                    {% for categorie in categories %}
+                        {% if categorie.sujets | length > 0 %}
+                        <a class="badge badge-small bg-{{ categorie.color }}" href="{{ path('sujet_categorie', {'categorie' : categorie.id }) }}" >{{ categorie.categorie }}</a>
+                        {% else%}
+                        <a class="badge badge-small bg-{{ categorie.color }}" href="{{ path('sujet_new') }}" >{{ categorie.categorie }}</a>
+                        {% endif %}
+                        <br>
+                    {% endfor %}
+                </div>
+                {% block body2 %}{% endblock %}
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

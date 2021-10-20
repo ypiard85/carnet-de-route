@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Ajouter un sujet {% endblock %}
+
+{% block body %}
+    <section class="container top_margin mb-5">
+        <div class="form-content">
+            <h1 class="mb-3 text-center bleu">Ecrire un sujet</h1>
+            {{ form_start(form) }}
+            <div class="mb-3">
+                <label for="title" class="mb-3">Title</label>
+                {{ form_row(form.title, {'label' : false } )}}
+            </div>
+            <div class="mb-3">
+                <label for="title" class="mb-3">Catégorie</label>
+                {{ form_row(form.categorie, {'label' : false })}}
+            </div>
+            <div class="mb-3">
+                <label for="title" class="mb-3">Message</label>
+                {{ form_row(form.content, {'attr' : {'rows' : '10'}, 'label' : false } ) }}
+            </div>
+            <button class="btn btn-warning">Créer mon sujet</button>
+            {{ form_end(form) }}
+            <div>
+    </section>
+
+{% endblock %}

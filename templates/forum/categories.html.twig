@@ -1,0 +1,25 @@
+{% extends 'template-forum.html.twig' %}
+
+{% block title %}COREEGO | Forum {% endblock %}
+
+{% block body2 %}
+
+<div class="col-md-10">
+    {% for sujet in sujets %}
+    <div class="forum_sujets mb-4">
+        <div class="d-flex justify-content-between flex-wrap">
+            <div class="sujet_head">
+                <h6>{{ sujet.title }}</h6>
+                <span><i class="fas fa-user"></i> {{ sujet.user.pseudo }}, {{ sujet.createdAt | ago }} </span>
+            </div>
+            <div class="d-flex">
+                    <p class="badge badge-small bg-{{ sujet.categorie.color }}" style="height: 20px;">{{ sujet.categorie.categorie }}</p>
+                <p class="comment_count"><i class="fas fa-comments ms-3"></i> {{ sujet.sujetResponses | length }}</p>
+            </div>
+        </div>
+        <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title } ) }}"></a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

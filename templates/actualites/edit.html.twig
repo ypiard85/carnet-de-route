@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Actualité edit {% endblock %}
+
+{% block body %}
+    <section class="container top_margin">
+           {{ form_start(form) }}
+                <div class="d-none">
+                    {{ form_row(form.name) }}
+                </div>
+                {{ form_row(form.title) }}
+                {{ form_row(form.content) }}
+                <button class="btn btn-primary mt-3">Modifier</button>
+           {{ form_end(form) }}
+    </section>
+{% endblock %}

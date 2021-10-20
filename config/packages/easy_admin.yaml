@@ -1,0 +1,12 @@
+easy_admin:
+    # ...
+    entities:
+        User:
+            # ...
+            form:
+                fields:
+                    - property: 'roles'
+                      type: 'choice'
+                      type_options:
+                        expanded: true
+                        choices: { 'ROLE_USER': 'Normal user', 'ROLE_ADMIN': 'Administrator' }

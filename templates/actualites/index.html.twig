@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Actualites {% endblock %}
+
+
+{% block metadescription %}
+<meta name="description" content="COREEGO - Toutes les informations utiles sur La Corée Du Sud, voyages, visas et vis quotidiennes">
+{% endblock%}
+
+
+{% block body %}
+
+<div class="banner_actu top_margin d-flex justify-content-center align-items-center">
+    <h1 class="text-white text-center">ACTUALITES</h1>
+</div>
+
+<section class="container">
+    <h4 class="mb-4 bleu">Actualités</h4>
+    {% for message in app.flashes('messages') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if is_granted("ROLE_ADMIN") %}
+    <div class="d-flex justify-content-center">
+        <a href="{{ path('actualites_new') }}" class="text-center btn btn-success mb-3">Ajouter</a>
+    </div>
+    {% endif %}
+    <div class="row">
+        {% for actualite in actualites %}
+        <div class="actualite_option mb-4 col-md-4 col-12">
+            <div class="actualite_header">
+                <img src="{{ asset('actualite/') }}{{ actualite.actuImages[0].name }}" class="w-100" alt="">
+            </div>
+            <div class="actu_content">
+                <p class="bleu mt-2">{{ actualite.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y') }}</p>
+
+                <h3>{{ actualite.title }}</h3>
+                <p>
+                    {{ actualite.content[:180] | striptags | raw }}
+                </p>
+                <a class="btn btn-primary mt-3" href="{{ path('actualites_show', {'title' : actualite.title }) }}">Lire plus</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </section>
+
+
+{% endblock %}

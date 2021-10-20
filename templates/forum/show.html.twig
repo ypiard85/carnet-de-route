@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Forum - {{ sujet.title }} {% endblock %}
+
+{% block metadescription %}
+<meta name="description" content="{{ sujet.content }}">
+{% endblock%}
+
+{% block body %}
+
+<section class="top_margin">
+  <div class="header_forum d-flex flex-wrap container">
+    <div class="sujet_head">
+      <h3>{{ sujet.title }}</h3>
+      <span><i class="fas fa-user"></i> {{ sujet.user.pseudo }}, {{ sujet.createdAt | ago }}
+        <a class="badge badge-small bg-{{ sujet.categorie.color }}" href="{{ path('sujet_categorie', {'categorie' : sujet.categorie.id } ) }}" class="badge badge-small bg-success">{{ sujet.categorie.categorie }}</a>
+      </span>
+    </div>
+  </div>
+
+  <div class="forum_content py-4">
+    <div class="container">
+        <div class="sujet_content mb-5">
+          <p>{{ sujet.content | nl2br }}</p>
+        </div>
+        <div class="responses_head border-bottom">
+          <h3 class="fw-bolder">{{ sujet.sujetresponses | length }} réponse{% if sujet.sujetresponses | length > 1  %}s{% endif %} </h3>
+        </div>
+        {% for message in app.flashes('message') %}
+        <div class="alert alert-success alert-dismissible fade show">
+          <span>{{ message }}</span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% for re in res %}
+        <div class="response mt-3">
+          <div class="response_head d-flex">
+            <a class="text-dark" href="{{ path('user_show', {'pseudo' : re.user.pseudo }) }}">
+              <i class="fas fa-user"></i>
+              {{ re.user.pseudo }}
+            </a>
+            <p>, {{ re.createdAt | ago  }}</p>
+          </div>
+          <div class="response_content mt-3">
+            <p>{{ re.content | nl2br }}</p>
+
+            {% if (is_granted('IS_AUTHENTICATED_FULLY') and re.user.id == app.user.id ) %}
+              <a onclick="return confirm('Voulez vous supprimer votre commentaire ?')" href="{{ path('delete_commentaire', {'id' : re.id } ) }}"><i class="fas fa-trash-alt text-danger float-end clear-both"></i></a>
+            {% endif %}
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-12 mt-5" align="center">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Répondre
+        </button>
+        {% endif %}
+    </div>
+</section>
+
+
+
+
+
+
+<!--MODAL-->
+
+<div class=" modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Répondre à {{ sujet.user.pseudo }} </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{ form_start(form) }}
+            {{ form_row(form.content) }}
+            <input type="submit" class="btn btn-success mt-3" value="Envoyer"></input>
+          {{ form_end(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

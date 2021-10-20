@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+{% endblock %}
+
+{% block title %}COREEGO | Politique de confidentialité {% endblock %}
+{% block body %}
+
+<section class="top_margin">
+    <div class="header_forum d-flex flex-wrap container">
+      <div class="sujet_head">
+        <h3>Politique de confidentialité</h3>
+      </div>
+    </div>
+    <div class="forum_content py-4">
+        <div class="container">
+            <div class="sujet_content mb-5">
+
+                {{ politiques.content | raw }}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

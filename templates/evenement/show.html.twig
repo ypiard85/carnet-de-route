@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | {{ evenement.titre }} {% endblock %}
+
+{% block body %}
+
+<section class="container top_margin">
+    <h1 class="text-center bleu">{{ evenement.titre }}</h1>
+    <p class="text-center">Publié le : {{ evenement.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y') }}</p>
+    <h5 class="text-muted mt-5"><i class="far fa-calendar-alt"></i> {{ evenement.date }} </h5>
+    <h5 class=""><i class="fas fa-users"></i> {{ evenement.user.pseudo }} </h5>
+    <div class="mt-3 evenement">
+        {{ evenement.content | raw }}
+    </div>
+    {% for message in app.flashes('message') %}
+    <div class="alert alert-success">{{ message }}</div>
+    {% endfor%}
+    <!--Boutton pour contactez l'annonceur-->
+    <p class="mt-5">
+        <a class="btn btn-success" data-bs-toggle="collapse" href="#event" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Je contact l'annonceur
+        </a>
+      </p>
+      <div class="collapse" id="event">
+        {{ form_start(form) }}
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            {{ form_row(form.messageevent) }}
+          </div>
+        </div>
+        <button class="btn btn-primary mt-3">Envoyer</button>
+          {{ form_end(form) }}
+      </div>
+
+</section>
+
+{% endblock %}

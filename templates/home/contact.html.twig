@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO - Contactez nous {%endblock %}
+
+{% block metadescription %}
+<meta name="description" content="COREEGO - contactez nous pour plus d'informations concernant la Corée Du Sud ou autre...">
+{% endblock%}
+
+{% block body %}
+
+    <section class="container top_margin contact">
+        <div class="d-flex justify-content-center flex-wrap align-items-center">
+                <div class="image_section">
+                    <img src="{{ asset('./yoann.jpg') }}" alt="">
+                </div>
+                <div class="image_description text-white d-flex align-items-center">
+                    <div class="p-3">
+                        <div class="border-bottom">
+                            <h6 class="fw-bold">Fondateur de COREEGO</h6>
+                            <p><i class="fas fa-user me-2"></i> Yoann Piard</p>
+                            <p class="d-flex align-items-center"><i class="fas fa-briefcase me-2"></i> Développeur web <br>passioné par la corée du sud</p>
+                        </div>
+                        <div class="mt-2">
+                            <p><a href="mailto:contact@coreego.fr" class="text-white"><i class="fas fa-envelope me-2"></i> contact@coreego.fr</a></p>
+                            <p><a href="tel:0643670456" class="text-white"><i class="fas fa-phone-alt me-2"></i> 06 43 67 04 56</a></p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+</section>
+
+    <div class="container-fluid py-2" style="background-color: rgba(147, 159, 160, 0.075);">
+        <div  style="width: 600px; max-width: 100%; margin: auto;">
+            <h1 class="text-center my-5 bleu">Contactez nous</h1>
+            <div>
+                {{ form_start(form) }}
+                <div class="row">
+                <div class="col-md-6 mb-2">
+                    <label for="" class="mb-2">Prenom</label>
+                    {{ form_row(form.prenom) }}
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="" class="mb-2">Nom</label>
+                    {{ form_row(form.nom) }}
+                </div>
+                <div class="mb-2">
+                    <label for="" class="mb-2">Email</label>
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="mb-2">
+                    <label for="" class="mb-3">Objet</label>
+                    {{ form_row(form.objet) }}
+                </div>
+                <div class="mb-2">
+                    <label for="" class="mb-2">Message</label>
+                    {{ form_row(form.message) }}
+                </div>
+            </div>
+            <button class="btn btn-success mb-5">Envoyer</button>
+            {{ form_end(form) }}
+        </div>
+        {% for message in app.flashes('message') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+
+
+
+    {% endblock %}

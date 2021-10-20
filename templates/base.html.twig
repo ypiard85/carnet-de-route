@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{{ asset('./favicon.png') }}" type="image/x-icon">
+        <title>{% block title %}{% endblock %}</title>
+        {% block metadescription %}
+        {% endblock %}
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="{{ asset('./js/carousel.js') }}"></script>
+        <script src="https://js.stripe.com/v3/"></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="{{ asset('./css/style.css') }}">
+
+        {% block stylesheets %}
+        {#{{ encore_entry_link_tags('app') }}#}
+      {% endblock %}
+
+    </head>
+
+  <body>
+
+      <nav class="position-fixed top-0 w-100 bg-white shadow py-4">
+        <div class="container align-items-center   d-flex justify-content-between">
+          <div class="nav_left">
+            <a class="navbar-brand" href="{{ path('home') }}">
+              <img width="200" style="max-width: 100%;" src="https://zupimages.net/up/21/33/7bs1.png" alt="">
+            </a>
+          </div>
+          <div class="nav_right">
+            <ul class="d-flex p-0 m-0">
+              <div class="nav_link d-flex">
+                <li>
+                  <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Lieux
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{{ path('carnet_de_route') }}">Voir tout</a></li>
+                  <li>
+                    <a class="dropdown-item" href="{{ path('place_new') }}">
+                      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                      Ajouter un lieu
+                      {% else %}
+                      Ajouter un lieu
+                      <i class="fas fa-lock"></i>
+                      {% endif %}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a class="nav-link" href="{{ path('actualites') }}">Actualités</a>
+              </li>
+              <li>
+                <a class="nav-link" href=" {{ path('forum_accueil') }} ">Forum</a>
+              </li>
+              {% if app.user %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-user"></i> {{ app.user.pseudo }}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% if is_granted('ROLE_ADMIN') %}
+                  <li><a class="dropdown-item" href="/admin">Dashboard Admin</a></li>
+                  <li><a class="dropdown-item" href="{{ path('users_list') }}">Liste des users</a></li>
+                  {% endif %}
+                  <li><a class="dropdown-item" href="/user/{{ app.user.pseudo }}">Profil</a></li>
+                  <li><a class="dropdown-item" href=" {{ path('maliste', {pseudo: app.user.pseudo} ) }} ">Ma liste</a></li>
+                  <li><a class="dropdown-item" href="{{ path('carnet_route', {pseudo: app.user.pseudo} ) }}">Mon carnet de route</a></li>
+                  <li><a class="dropdown-item" href=" {{ path('app_logout') }} ">Logout</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li >
+                <a class="nav-link mr-3" href="{{ path('app_register') }}">S'inscrire</a>
+              </li>
+              <li>
+                <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+              </li>
+              {% endif %}
+            </div>
+              <div class="nav_box d-flex align-items-center">
+                <li>
+                  <i style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="fas fa-search bleu fs-5"></i>
+                    </li>
+                    <li>
+                      <svg class="ham hamRotate ham1" viewBox="0 0 100 100"  onclick="this.classList.toggle('active')">
+                        <path
+                        class="line top"
+                        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+                        <path
+                        class="line middle"
+                        d="m 30,50 h 40" />
+                        <path
+                        class="line bottom"
+                        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+                      </svg>
+                    </li>
+                </div>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="{{ path('carnet_de_route') }}" method="get">
+                    <input type="text" name="q" class="form-control" placeholder="lac, foret, temple, montagne...">
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% block body %}{% endblock %}
+
+<footer class="footer border-top">
+  <div class="py-5 container d-flex flex-wrap">
+    <div class="me-5">
+      <h6 class="fw-bold">Navigation rapide</h6>
+      <ul>
+        <li><a href="{{ path('home') }}">Accueil</a></li>
+        <li><a href="{{ path('carnet_de_route') }}">Lieux</a></li>
+        <li><a href="{{ path('place_new') }}">Ajouter un lieu</a></li>
+        <li><a href="{{ path('forum_accueil') }}">Forum</a></li>
+        <li><a href="{{ path('app_login') }}">Connexion</a></li>
+        <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
+        <li><a href="{{ path('contact') }}">Contactez-nous</a></li>
+      </ul>
+    </div>
+      <div style="width: 500px; max-width: 100%">
+        <h6 class="fw-bold">Coreego</h6>
+        <p>
+          Coreego est un site communautaire ayant pour but principal de partager vos coups de coeurs
+          et de créer votre propre carnet de voyage afin d'y découvrir les moindres recoins de la Corée Du Sud
+        </p>
+        <p>Un forum est mis à votre disposition pour toutes questions concernant la Corée Du Sud</p>
+      </div>
+  </div>
+  <div class="footer_bottom border-top border-3 py-3 ">
+    <div class="container">
+      <ul class="d-flex justify-content-center flex-wrap align-content-center align-items-center">
+        <li>© 2021 La corée </li>
+        <li><a href="{{ path('politique_confidentalite') }}">Politique de confidentialité</a></li>
+        <li><a target="_blank" href="https://www.instagram.com/coreego_fr/" class="fs-3"><i class="fab fa-instagram text-primary fs-2"></i></a></li>
+        </ul>
+      </div>
+  </div>
+</footer>
+
+
+<!-- JavaScript Bundle with Popper -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="{{ asset('js/navbar.js') }}"></script>
+<!--<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>-->
+
+{% block javascripts %}{% endblock %}
+
+    </body>
+</html>

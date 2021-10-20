@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}Payement réusis{% endblock %}
+
+{% block body %}
+
+<section class="container my-5">
+    <div class="success_abonnement">
+        <div class="header py-3 text-center bg-primary">
+            <h5 class="text-white fw-bold">Votre abonnement [entreprise] à bien été pris en compte</h5>
+        </div>
+        <div class="content p-3">
+            <p>Bonjour,
+                COREEGO vous remercie pour votre abonnement.
+                Vous faites partie maintenant des membres premium entreprises,
+                vous pouvez dès à présent accéder aux accès réservés aux entreprises.
+                <ul>
+                    <li>Créer un événement</li>
+                    <li>Page entreprise</li>
+                </ul>
+                Vous y trouverez du contenu exclusive en avant première.
+            </p>
+        </div>
+        <div class="footer bg-info text-center p-4">
+            En cas de désabonnement, vous pouvez nous écrire <a href="{{ path('contact') }}" class="text-white">ici</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+{% endblock %}
+
+{% block title %}COREEGO | {{ user.pseudo }}{% endblock %}
+{% block body %}
+
+<section class="  top_margin">
+  <div class="header_forum container">
+    <div class="sujet_head">
+      {% for message in app.flashes('message') %}
+      <div class="alert alert-success alert-dismissible fade show">
+        <span>{{ message }}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      <h3>{{ user.pseudo }}</h3>
+      <p class="d-inline">
+        <span class="badge bg-info text-white">ADMIN</span>
+        {% if user.roles[0] != 'ROLE_ADMIN' %}
+        <small>Inscrit depuis {{ user.createdAt | ago | slice(6)  }}</small>
+        {% endif %}
+        {% if ( is_granted('IS_AUTHENTICATED_FULLY') and user.id == app.user.id) %}
+        <a class=" mt-3" href="{{ path('user_edit', {'pseudo' : user.pseudo } ) }}"><i class="far fa-edit text-black"></i>Editer</a>
+        {% endif %}
+      </p>
+    </div>
+    <div class="p-2 description mt-4">
+      {{ user.description | raw }}
+    </div>
+  </div>
+</section>
+
+<div class="panel_user" >
+  <ul class="nav nav-pills tabs_user p-2" id="myTabContent" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active text-white fw-bold btn-sm" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Posts | {{ sujets | length }} </button>
+    </li>
+
+    <li class="nav-item" role="presentation">
+      <button class="nav-link text-white fw-bold btn-sm" id="place-tab" data-bs-toggle="tab" data-bs-target="#place" type="button" role="tab" aria-controls="place" aria-selected="false"> Lieux partagés | {{ places | length }} </button>
+    </li>
+
+    {% if (is_granted('IS_AUTHENTICATED_FULLY') and  user.id == app.user.id ) %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link text-white fw-bold btn-sm" id="like-tab" data-bs-toggle="tab" data-bs-target="#like" type="button" role="tab" aria-controls="like" aria-selected="false"> Aimés | {{ likes | length }} </button>
+    </li>
+    {% endif %}
+  </ul>
+
+<div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active mt-3 p-4" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+  <h3 class="mb-4">Derniers sujets</h3>
+  {% for sujet in sujets %}
+      <div class="forum_sujets mb-4 shadow" style="width: 600px; max-width: 100%">
+        <div class="d-flex justify-content-between flex-wrap">
+          <div class="sujet_head">
+            <h6>{{ sujet.title }}</h6>
+            <span><i class="fas fa-user"></i> {{ sujet.user.pseudo }}, {{ sujet.createdAt | ago }} </span>
+          </div>
+          <div class="d-flex">
+            <p class="badge badge-small bg-{{ sujet.categorie.color }} " style="height: 20px;">{{ sujet.categorie.categorie }}</p>
+            <p class="comment_count"><i class="fas fa-comments ms-3"></i> {{ sujet.sujetResponses | length }}</p>
+          </div>
+        </div>
+        <a href="{{ path('sujet_view', {'id' : sujet.id, 'title' : sujet.title } ) }}"></a>
+        {% if (is_granted('IS_AUTHENTICATED_FULLY') and sujet.user.id == app.user.id ) %}
+        <a onclick="return confirm('Un post est une source d\'information important pour les utilisateurs, êtes vous sûr de vouloir supprimer ce post ?  ') " href="{{ path('deletesujet', {'id' : sujet.id} ) }}" style="position: relative; z-index: 100; text-align: right;"><i class="fas fa-trash-alt text-danger"></i></a>
+        {% endif %}
+      </div>
+      {% endfor %}
+  </div>
+
+    <div class="tab-pane fade mt-3 p-4 place" id="place" role="tabpanel" aria-labelledby="place-tab">
+        <div class="row">
+        {% if places | length > 0 %}
+        {% for place in places %}
+        {% if (is_granted('IS_AUTHENTICATED_FULLY') and  place.user.id == app.user.id ) %}
+        <div class="col-md-3 col-12 mb-3">
+          <a href="/place/{{ place.id }}"
+          class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
+          style="width: 500px; max-width: 100%;">
+
+          <div class="position-absolute p-2 text-danger fs-5">
+            <i class="fas fa-heart"></i> <span>{{ place.likes | length }}</span>
+          </div>
+          <div class="card-head">
+              <img  src="{{ asset('/place/') }}{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
+            </div>
+
+            <div class="card-body p-0 mt-4" style="line-height: 1em;">
+              <p class="bg-info d-inline-block text-white p-1 rounded">{{ place.categorie.nom }}</p>
+              {% if (is_granted('IS_AUTHENTICATED_FULLY') and  place.user.id == app.user.id ) %}
+              {% if place.statut == 'brouillon' %}
+              <p class="bg-danger d-inline-block text-white p-1 rounded">{{ place.statut }}</p>
+              {% else %}
+              <p class="bg-success d-inline-block text-white p-1 rounded">{{ place.statut }}</p>
+              {% endif %}
+              {% endif  %}
+              <span class="text-dark"><i class="fas fa-user"></i> {{ place.user.pseudo }}</span>
+              <p class="card-title text-dark fs-6">{{ place.title }}</p>
+              <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ place.city }}</h6>
+            </div>
+          </a>
+          {% if (is_granted('IS_AUTHENTICATED_FULLY') and  place.user.id == app.user.id ) %}
+          <div class="dropdown">
+            <a class="btn btn-transparent dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="true">
+              <i style="color: gray;" class="fas fa-cog"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="{{ path('place_edit', {'id' : place.id} ) }}">Modifier</a></li>
+              <li><a onclick="return confirm('Voulez vous supprimer ce lieu ? Attention ce choix est irréversible')" class="dropdown-item" href="{{ path('place_delete', {'id' : place.id} ) }}">Supprimé</a></li>
+            </ul>
+          </div>
+          {% endif %}
+      </div>
+      {%else %}
+        {% if place.statut == "publié" %}
+        <div class="col-md-3 col-12 mb-3">
+          <a href="/place/{{ place.id }}"
+          class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
+          style="width: 500px; max-width: 100%;">
+
+          <div class="position-absolute p-2 text-danger fs-5">
+            <i class="fas fa-heart"></i> <span>{{ place.likes | length }}</span>
+          </div>
+          <div class="card-head">
+              <img  src="{{ asset('/place/') }}{{ place.images[0].name }}" class="card-img-top card_img" alt="...">
+            </div>
+
+            <div class="card-body p-0 mt-4" style="line-height: 1em;">
+              <p class="bg-info d-inline-block text-white p-1 rounded">{{ place.categorie.nom }}</p>
+              {% if (is_granted('IS_AUTHENTICATED_FULLY') and  place.user.id == app.user.id ) %}
+              {% if place.statut == 'brouillon' %}
+              <p class="bg-danger d-inline-block text-white p-1 rounded">{{ place.statut }}</p>
+              {% else %}
+              <p class="bg-success d-inline-block text-white p-1 rounded">{{ place.statut }}</p>
+              {% endif %}
+              {% endif  %}
+              <span class="text-dark"><i class="fas fa-user"></i> {{ place.user.pseudo }}</span>
+              <p class="card-title text-dark fs-6">{{ place.title }}</p>
+              <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ place.city }}</h6>
+            </div>
+          </a>
+        </div>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>
+
+  </div>
+
+
+  <div class="tab-pane fade show mt-3 p-4" id="like" role="tabpanel" aria-labelledby="like-tab">
+
+    {% if (is_granted('IS_AUTHENTICATED_FULLY') and  user.id == app.user.id ) %}
+
+  <div class="row">
+    {% for like in likes %}
+          <div class="col-md-3 col-12 mb-3">
+            <a href="/place/{{ like.place.id }}"
+            class="card border border-top-0 border-bottom-0 border-left-0 border-right-0"
+            style="width: 500px; max-width: 100%;">
+              <div class="position-absolute p-2 text-danger fs-5">
+              <i class="fas fa-heart"></i> <span>{{ like.place.likes | length }}</span>
+              </div>
+              <div class="card-head">
+                <img  src="{{ asset('/place/') }}{{ like.place.images[0].name }}" class="card-img-top card_img" alt="...">
+              </div>
+
+              <div class="card-body p-0 mt-4" style="line-height: 1em;">
+                <p class="bg-info d-inline-block text-white p-1 rounded">{{ like.place.categorie.nom }}</p>
+                <span class="text-dark"><i class="fas fa-user"></i> {{ like.place.user.pseudo }}</span>
+                <p class="card-title text-dark fs-6">{{ like.place.title }}</p>
+                <h6 class="card-title"><i class="fas fa-map-marker-alt"></i>  {{ like.place.city }}</h6>
+              </div>
+            </a>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+# app/config/config.yml (or config/packages/knp_snappy.yaml if using Symfony4 and the Flex recipe)
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
+        options:    []
+        temporary_folder: '%kernel.project_dir%/public/pdf'

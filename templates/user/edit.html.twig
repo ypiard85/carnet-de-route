@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Edit du profil {% endblock %}
+
+{% block body %}
+
+        <section class="top_margin">
+            <div class="header_forum d-flex flex-wrap container">
+              <div class="sujet_head">
+                <h3>Editer votre description</h3>
+              </div>
+            </div>
+        <div class="forum_content py-4">
+            <div class="container">
+                <div class="sujet_content form">
+
+                    {{ form_start(form) }}
+                    {{ form_row(form.description, {'label' : false} ) }}
+                    {{ form_row(form.pseudo, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
+                    {{ form_row(form.email, {'attr' : {'class' : 'd-none'}, 'label' : false } ) }}
+                    <button class="btn btn-success mt-3">{{ button_label|default('Sauvegarder') }}</button>
+                {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

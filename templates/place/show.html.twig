@@ -1,0 +1,376 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+<style>
+  .hidden{
+    display: none;
+  }
+</style>
+{% endblock %}
+
+
+{% block title %}COREEGO - {{ place.title }}{% endblock %}
+
+{% block metadescription %}
+<meta name="description" content="{{ place.description[:180] | striptags | raw }}">
+{% endblock%}
+
+{% block body %}
+<div class="show-place">
+  <!--Information du lieu-->
+<div class="container-fluid py-5">
+<div class="row flex-md-row flex-column-reverse">
+  <div class="col-md-6">
+    <div class="py-3 px-3">
+      <div style="padding-bottom: 10px" class="title position-relative border border-top-0 border-start-0 border-end-0 border-dark">
+        <a href="{{ path('carnet_de_route') }}?city={{ place.city.name }}" class="mb-3 bleu fw-bold text-primary d-flex  align-items-center"><i class="me-1 fas fa-map-marker-alt"></i> {{ place.city.name }}
+          <span id="meteo-temp" class="d-flex align-items-center ms-3 text-black" style="z-index: 100;"></span>
+        </a>
+        <p class="fs-4 mb-3">{{ place.title }}</p>
+        <a href="{{ path('carnet_de_route') }}?categorie={{ place.categorie.nom }}" class="bg-info d-inline-block text-white p-1 rounded">{{ place.categorie.nom }}</a>
+        <a href="{{ path('user_show', {'pseudo' : place.user.pseudo }) }}" class="fw-bold"><i class="fas fa-user"></i> {{ place.user.pseudo }}</a>
+      </div>
+
+      <p class="mt-5">{{ place.description | raw  }}</p>
+
+      <div class="d-flex justify-content-center align-content-center mt-5">
+        <div>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          {% if place.isRouteUser(app.user) %}
+          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-sm btn-outline-danger js_like">Supprimer de mon carnet de route</a>
+          {% else %}
+          <a href="{{ path("place_like", {'id': place.id} ) }}" class="btn btn-sm btn-outline-primary js_like">Ajouter à mon carnet de route</a>
+          {% endif %}
+          {% if app.user == place.user %}
+          <a class="btn btn-outline-success btn-sm" href="{{ path('place_edit', {'id' : place.id } ) }}">Modifier</a>
+          {% endif %}
+          {% endif %}
+        </div>
+        <div class="align-items-center">
+          <p class="align-items-center ms-3">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if  place.isLike(app.user) %}
+              <a href="{{ path('like_place', { 'id': place.id } ) }}" class="fas fa-heart fs-2 text-danger like"></a>
+            {% else %}
+              <a href="{{ path('like_place', { 'id': place.id } ) }}" class="far fa-heart fs-2 text-danger like"></a>
+            {% endif %}
+            <span id="is-like">{{ place.likes | length }}</span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <div  class="swiper-container mySwiper2 position-relative" >
+      <div class="swiper-wrapper">
+        {% for rows in place.images %}
+      <div class="swiper-slide w-100">
+        <img src="{{ rows }}" />
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <div thumbsSlider="" class="swiper-container mySwiper">
+    <div class="swiper-wrapper">
+      {% for rows in place.images %}
+        <div class="swiper-slide">
+          <img src="{{ rows }}" />
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!--MAP DE LA PLACE-->
+<div class="container-fluid position-relative">
+  <div class="row flex-md-row flex-column-reverse">
+    <div id="roadview" class="col-md-8 col-sm-12 border border-5 border-white" style="height: 400px">
+    </div> <!-- 로드뷰를 표시할 div 입니다 -->
+    <div id="map" class="col-md-4 col-sm-12 position-relative" style="background-color: rgba(255, 255, 255, 0.808); min-height: 400px;" >
+      <div style="position: absolute; top: 0; bottom: 0; left:0; right: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); z-index: 10;"></div>
+    </div> <!-- 지도를 표시할 div 입니다 -->
+  </div>
+  <p class="bg_rouge p-2 rounded fw-bold text-white street_view" style="z-index: 100; position: absolute; left: -30px; top: 200px; transform: rotate(90deg);">Street view</p>
+
+</div>
+
+
+
+<div class="container mb-5 ">
+    <h4 class="py-3">Commentaires - {{ findComment | length  }} </h4>
+        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcomment">
+      <i class="far fa-comment"></i>
+      Commenter
+    </button>
+
+    {% for fd in findComment %}
+
+    <div class="commentaire border position-relative border-bottom border-top-0 border-start-0 border-end-0 p-3 mb-3">
+      <div>
+        {% for message in app.flashes('message') %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+          <form method="post" class="position-absolute" style="right: 10px; bottom: 10px;">
+            <input type="hidden" name="deletecomment" value="{{ fd.id }}" >
+            <button onclick="return confirm('etes vous sûr de vouloir supprimer ce commentaire ?')" class="bg-transparent border-0"><i class="fas fa-trash-alt text-danger"></i></button>
+          </form>
+            <a class="fw-bold" href="{{ path('user_show', {'id': fd.user.id}) }}"><i class="fas fa-user"></i> {{ fd.user.pseudo }} </a><br>
+            <small class="text-decoration-underline">{{  fd.date }}</small>
+        </div>
+      <p class="py-2">{{ fd.content | raw | nl2br }}</p>
+      {% if app.user %}
+      {% if app.user.pseudo == fd.user.pseudo %}
+      <button class="btn btn-sm btn-success modif">Modifier</button>
+      <form class="form_edit mt-2 hidden" method="post">
+        <textarea name="messagecomment" cols="10" class="form-control" rows="5">{{ fd.content | raw | nl2br }}</textarea>
+        <input type="hidden" name="comment" value="{{ fd.id }}">
+        <button class="mt-2 btn btn-primary">Modifier</button>
+      </form>
+      {% endif %}
+      {% endif %}
+    </div>
+    {% endfor %}
+
+
+<!-- Modal COMMENTAIRE-->
+<div class="modal fade" id="modalcomment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ecrire un commentaire</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+          <button type="submit" class="btn btn-outline-success my-3"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+</div>
+
+    {% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+
+
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 5,
+      slidesPerView: 4,
+      freeMode: true,
+      watchSlidesVisibility: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+
+  </script>
+
+<script>
+
+  var modif = document.querySelectorAll('.modif')
+
+  document.querySelectorAll('.modif').forEach(m => {
+    m.addEventListener('click', function(){
+      document.querySelectorAll('.form_edit').forEach(f => {
+        f.classList.toggle('hidden');
+      })
+    })
+  })
+
+  function onClickBtn(event){
+      event.preventDefault();
+
+      const url = this.href;
+
+      const btnlike = document.querySelector('.js_like');
+
+      axios.get(url).then(res => {
+
+        if(btnlike.classList.contains('btn-outline-danger')){
+          btnlike.innerHTML = "Ajouter à mon carnet de route"
+          btnlike.classList.replace('btn-outline-danger', 'btn-outline-primary')
+        }else{
+          btnlike.classList.replace('btn-outline-primary','btn-outline-danger')
+          btnlike.textContent = "Supprimer de mon carnet de route"
+        }
+      })
+  }
+
+  function isLiked(event){
+    event.preventDefault()
+
+    const spanCount = document.querySelector('#is-like');
+    const icon = document.querySelector('.like');
+
+    const url = this.href;
+
+    axios(url).then(res => {
+      const like = res.data.like
+      spanCount.textContent = like
+
+      if(icon.classList.contains('fas')){
+        icon.classList.replace('fas', 'far')
+      }else{
+        icon.classList.replace('far', 'fas')
+      }
+
+    }).catch(function(error){
+        console.log(error)
+    })
+  }
+
+
+  document.querySelectorAll('a.js_like').forEach(e => {
+    e.addEventListener('click', onClickBtn)
+  })
+
+
+  document.querySelector('.fa-heart').addEventListener('click', isLiked)
+
+
+  async function getPlace()
+  {
+
+    var urlname = window.location.pathname
+    var url = urlname.split('/place/')
+
+
+
+    let api = `http://127.0.0.1:8000/apip/places`
+
+    let index =  await axios.get(api).then(res => {
+        return res.data
+      })
+
+      var result =  index.filter(results => results['id'] == url[1] )
+
+      var result = result[0]
+
+      return result;
+
+    }
+
+    async function getMeteo(){
+      var result = await getPlace();
+      var apikey = "2b1ec7a5b325cfbf7c1bc18b936df3f3"
+      var urlmeteo = `http://api.openweathermap.org/data/2.5/weather?q=${result.city.name}&units=metric&appid=2b1ec7a5b325cfbf7c1bc18b936df3f3`
+
+      try {
+       await axios.get(urlmeteo).then(res => {
+           var index = res.data
+
+          var htmlContent =
+          `<img width="60" src="http://openweathermap.org/img/wn/${index.weather[0].icon}.png" alt="${result.city.name}">
+            <p class="fs-5">
+              <span class="text-dark">${ Math.ceil(index.main.temp)} °C</span>
+            </p>
+            `
+           document.getElementById('meteo-temp').innerHTML = htmlContent
+
+
+
+        })
+      } catch (error) {
+        console.log(error)
+      }
+
+      var intl = new Intl.DateTimeFormat("kr-KR", {weekday:"long"});
+      var dt= new Date()
+    }
+
+  getMeteo()
+
+  document.querySelector('.viewone .carousel-item').classList.add('active')
+
+</script>
+
+<script>
+
+  async function viewMap(){
+
+    let place = await getPlace();
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapCenter = new kakao.maps.LatLng(place.lat, place.longs), // 지도의 중심 좌표
+    mapOption = {
+        center: mapCenter, // 지도의 중심 좌표
+        level: 13 // 지도의 확대 레벨
+    };
+
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    var myPosition = new kakao.maps.LatLng(place.lat, place.longs);
+
+    // 지도에 올릴 마커를 생성합니다.
+    var mMarker = new kakao.maps.Marker({
+      position: myPosition, // 지도의 중심좌표에 올립니다.
+      map: map // 생성하면서 지도에 올립니다.
+    });
+
+var rvContainer = document.getElementById('roadview'); // 로드뷰를 표시할 div
+
+var rv = new kakao.maps.Roadview(rvContainer); // 로드뷰 객체 생성
+var rc = new kakao.maps.RoadviewClient(); // 좌표를 통한 로드뷰의 panoid를 추출하기 위한 로드뷰 help객체 생성
+var rvPosition = new kakao.maps.LatLng(place.lat, place.longs);
+
+rc.getNearestPanoId(rvPosition, 50, function(panoid) {
+    rv.setPanoId(panoid, rvPosition);//좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
+});
+
+// 로드뷰 초기화 이벤트
+kakao.maps.event.addListener(rv, 'init', function() {
+
+    // 로드뷰에 올릴 마커를 생성합니다.
+    var rMarker = new kakao.maps.Marker({
+        position: myPosition,
+        map: rv //map 대신 rv(로드뷰 객체)로 설정하면 로드뷰에 올라갑니다.
+    });
+    rMarker.setAltitude(6); //마커의 높이를 설정합니다. (단위는 m입니다.)
+    rMarker.setRange(100); //마커가 보일 수 있는 범위를 설정합니다. (단위는 m입니다.)
+
+    // 로드뷰 마커가 중앙에 오도록 로드뷰의 viewpoint 조정합니다.
+    var projection = rv.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
+
+    // 마커의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
+    var viewpoint = projection.viewpointFromCoords(rMarker.getPosition(), rMarker.getAltitude());
+    rv.setViewpoint(viewpoint); //로드뷰에 뷰포인트를 설정합니다.
+});
+
+  }
+
+viewMap();
+
+</script>
+
+
+
+  {% endblock %}

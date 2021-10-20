@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Editer {{ place.title }} {% endblock %}
+
+{% block body %}
+<section class="container top_margin mb-5 place_edit">
+
+    <h1 class="text-center bleu">Editer votre lieu</h1>
+    {% for messages in app.flashes('lieu_edit_success') %}
+
+    <div class="alert alert-success">{{ messages }} <a href="{{ path('user_show',  {'pseudo': app.user.pseudo} ) }}">retourner au porfil</a> </div>
+    {% endfor %}
+    <div class="  my-3 rounded shadow">
+        <h3 class="bg-primary text-white text-center py-2">
+            Editeur d'images<br>
+            <a href="{{ path('lieu_add_img', {'id' : place.id } ) }}" type="button" class="btn btn-success mt-2">
+                Ajouter une images
+            </a>
+        </h3>
+        <div class="d-flex flex-wrap">
+            {% for image in place.images %}
+            <div class="d-flex flex-column me-3 mb-3 p-3">
+                <a href="{{ asset('/place/' ~ image.name) }}">
+                    <img width="100" height="100" src="{{ asset('/place/' ~ image.name) }}" alt="name">
+                </a>
+                {% if place.images | length  > 1 %}
+                <a href="{{ path('lieu_delte_img', {'id' : image.id } ) }}"
+                >Supprimer</a>
+                {% else %}
+                <p>Le lieu doit avoir au minimum 1 image</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-1 col-6">
+                {{ form_row(form.statut) }}
+            </div>
+            {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+            <div class="col-md-1 col-6">
+                {{ form_row(form.premium, {'label' : 'Recommander' } ) }}
+            </div>
+            {% else %}
+        </div>
+        <div class="d-none">
+            {{ form_row(form.premium, {'label' : 'Recommander' } ) }}
+        </div>
+        {% endif %}
+        <div class="row mt-3">
+            <div class="col-md-4 mb-3">
+                {{ form_row(form.title) }}
+            </div>
+            <div class="col-md-4 mb-3">
+                {{ form_row(form.city, {'label' : 'Ville'} ) }}
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    {{ form_row(form.lat) }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    {{ form_row(form.longs) }}
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                {{ form_row(form.categorie) }}
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.description, {'attr': {'rows' : '7' } } ) }}
+        </div>
+        <div class="d-none">
+            {{ form_row(form.images) }}
+        </div>
+        <div class="col-md-2">
+
+            <button type="submit" class="mt-2 btn btn-success d-inline">Editer</button>
+        </div>
+        {{ form_end(form) }}
+
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/image.js') }}"></script>
+{% endblock %}

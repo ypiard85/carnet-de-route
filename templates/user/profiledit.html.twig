@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COREEGO | Edit - {{ user.pseudo }} {% endblock %}
+
+{% block body %}
+
+<section class="top_margin">
+    <h1 class="bleu text-center">Edit utilisateur <br> {{ user.pseudo }}</h1>
+    <div class="container mt-5">
+        {{  form_start(form)  }}
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form_row(form.pseudo) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.token) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.roles) }}
+                </div>
+            </div>
+            <button onclick="confirm('etes vous sur de vouloir modifier cet utilisateur ?')" class="btn btn-success mt-3" >Editer</button>
+        {{  form_end(form)  }}
+    </div>
+
+</section>
+
+{% endblock %}
