@@ -156,18 +156,12 @@ class PlaceController extends AbstractController
 
             //ajour d'un message flash
             $this->addFlash(
-                'notice',
+                'message',
                 'Votre commentaire à bien été ajouter'
             );
 
             $referer = $request->headers->get('referer');
             return $this->redirect($referer);
-        }else{
-            //ajour d'un message flash
-            $this->addFlash(
-                'erreur',
-                "erreur lors de l'envoi de votre commentaire"
-            );
         }
 
         if($request->get('comment')){
@@ -177,7 +171,6 @@ class PlaceController extends AbstractController
                 $comment->setContent($request->get('messagecomment'));
                 $em->persist($comment);
                 $this->addFlash('message', 'Commentaire modifier avec succès');
-
             }
         }
 
@@ -186,6 +179,10 @@ class PlaceController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->remove($comment);
             $em->flush();
+            $this->addFlash('message', 'Commentaire supprimé avec succès');
+
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
         }
 
 

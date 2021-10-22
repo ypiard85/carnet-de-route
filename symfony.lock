@@ -1,4 +1,43 @@
 {
+    "amphp/amp": {
+        "version": "v2.6.1"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.8.1"
+    },
+    "amphp/cache": {
+        "version": "v1.5.0"
+    },
+    "amphp/dns": {
+        "version": "v1.2.3"
+    },
+    "amphp/hpack": {
+        "version": "v3.1.1"
+    },
+    "amphp/http": {
+        "version": "v1.6.3"
+    },
+    "amphp/http-client": {
+        "version": "v4.6.2"
+    },
+    "amphp/parser": {
+        "version": "v1.0.0"
+    },
+    "amphp/process": {
+        "version": "v1.1.2"
+    },
+    "amphp/serialization": {
+        "version": "v1.0.0"
+    },
+    "amphp/socket": {
+        "version": "v1.2.0"
+    },
+    "amphp/sync": {
+        "version": "v1.4.0"
+    },
+    "amphp/windows-registry": {
+        "version": "v0.3.3"
+    },
     "api-platform/api-pack": {
         "version": "v1.3.0"
     },
@@ -21,6 +60,9 @@
     },
     "contributte/application": {
         "version": "v0.5.1"
+    },
+    "daverandom/libdns": {
+        "version": "v2.0.2"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -157,6 +199,9 @@
             "./config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "kelunik/certificate": {
+        "version": "v1.1.2"
+    },
     "knplabs/knp-components": {
         "version": "v3.0.2"
     },
@@ -177,6 +222,15 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.2.0"
+    },
+    "league/uri": {
+        "version": "6.5.0"
+    },
+    "league/uri-interfaces": {
+        "version": "2.3.0"
+    },
+    "league/uri-parser": {
+        "version": "1.4.1"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -268,6 +322,9 @@
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "1.0.0"
     },
@@ -285,9 +342,6 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
-    },
-    "stripe/stripe-php": {
-        "version": "v7.91.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.7"
@@ -498,9 +552,6 @@
     "symfony/options-resolver": {
         "version": "v5.2.4"
     },
-    "symfony/orm-pack": {
-        "version": "v2.1.0"
-    },
     "symfony/phpunit-bridge": {
         "version": "5.1",
         "recipe": {
@@ -557,15 +608,6 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v5.2.4"
-    },
-    "symfony/requirements-checker": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.0",
-            "ref": "02c6e4b9b117c39e8a23eab7f3840ef6e62293b9"
-        }
     },
     "symfony/routing": {
         "version": "5.1",

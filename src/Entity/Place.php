@@ -5,16 +5,16 @@ namespace App\Entity;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PlaceRepository;
+use JMS\Serializer\Annotation as JMS;
 use JMS\Serializer\Annotation\Exclude;
 use ApiPlatform\Core\Annotation\ApiFilter;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
-use JMS\Serializer\Annotation as JMS;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
 
 
 /**
@@ -316,9 +316,6 @@ class Place
         return $this;
     }
 
-    public function __toString(){
-        return $this->categorie;
-    }
 
     public function getStatut(): ?string
     {

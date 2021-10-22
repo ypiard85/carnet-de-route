@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d19498b7f0b48e46cf0621e298e5e4c5"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 
@@ -37,7 +37,7 @@ async function kakaoView(){
 
     /*Initialisation des variables*/
     let r = loc.split('/carnet/')
-    let url = `http://127.0.0.1:8000/apip/route_likes?user.id=${r[1]}`
+    let url = `${window.location.origin}/apip/route_likes?user.id=${r[1]}`
 
     //Recuperation de l'api
     let index =  await axios.get(url).then(res => {

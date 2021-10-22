@@ -106,10 +106,17 @@
 <div class="container mb-5 ">
     <h4 class="py-3">Commentaires - {{ findComment | length  }} </h4>
         <!-- Button trigger modal -->
+    {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalcomment">
       <i class="far fa-comment"></i>
       Commenter
     </button>
+    {% else %}
+    <a href="{{ path('app_login') }}"  class="btn btn-primary">
+      <i class="far fa-comment"></i>
+      Commenter
+    </a>
+    {% endif %}
 
     {% for fd in findComment %}
 
@@ -122,19 +129,17 @@
             <input type="hidden" name="deletecomment" value="{{ fd.id }}" >
             <button onclick="return confirm('etes vous sûr de vouloir supprimer ce commentaire ?')" class="bg-transparent border-0"><i class="fas fa-trash-alt text-danger"></i></button>
           </form>
-            <a class="fw-bold" href="{{ path('user_show', {'id': fd.user.id}) }}"><i class="fas fa-user"></i> {{ fd.user.pseudo }} </a><br>
+            <a class="fw-bold" href="{{ path('user_show', {'pseudo': fd.user.pseudo}) }}"><i class="fas fa-user"></i> {{ fd.user.pseudo }} </a><br>
             <small class="text-decoration-underline">{{  fd.date }}</small>
         </div>
       <p class="py-2">{{ fd.content | raw | nl2br }}</p>
-      {% if app.user %}
-      {% if app.user.pseudo == fd.user.pseudo %}
+      {% if (is_granted('IS_AUTHENTICATED_FULLY') and  app.user.pseudo == fd.user.pseudo ) %}
       <button class="btn btn-sm btn-success modif">Modifier</button>
       <form class="form_edit mt-2 hidden" method="post">
         <textarea name="messagecomment" cols="10" class="form-control" rows="5">{{ fd.content | raw | nl2br }}</textarea>
         <input type="hidden" name="comment" value="{{ fd.id }}">
         <button class="mt-2 btn btn-primary">Modifier</button>
-      </form>
-      {% endif %}
+      </form> 
       {% endif %}
     </div>
     {% endfor %}
@@ -167,7 +172,7 @@
 
 {% block javascripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30142185ce9d5d611e65fe60474b580d"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d19498b7f0b48e46cf0621e298e5e4c5"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 
 
@@ -263,7 +268,7 @@
 
 
 
-    let api = `http://127.0.0.1:8000/apip/places`
+    let api = `${window.location.origin}/apip/places`
 
     let index =  await axios.get(api).then(res => {
         return res.data
@@ -280,14 +285,14 @@
     async function getMeteo(){
       var result = await getPlace();
       var apikey = "2b1ec7a5b325cfbf7c1bc18b936df3f3"
-      var urlmeteo = `http://api.openweathermap.org/data/2.5/weather?q=${result.city.name}&units=metric&appid=2b1ec7a5b325cfbf7c1bc18b936df3f3`
+      var urlmeteo = `https://api.openweathermap.org/data/2.5/weather?q=${result.city.name}&units=metric&appid=2b1ec7a5b325cfbf7c1bc18b936df3f3`
 
       try {
        await axios.get(urlmeteo).then(res => {
            var index = res.data
 
           var htmlContent =
-          `<img width="60" src="http://openweathermap.org/img/wn/${index.weather[0].icon}.png" alt="${result.city.name}">
+          `<img width="60" src="https://openweathermap.org/img/wn/${index.weather[0].icon}.png" alt="${result.city.name}">
             <p class="fs-5">
               <span class="text-dark">${ Math.ceil(index.main.temp)} °C</span>
             </p>

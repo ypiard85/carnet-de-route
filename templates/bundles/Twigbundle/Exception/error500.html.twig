@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Erreur 404{% endblock %}
+{% block title %}Erreur 500{% endblock %}
 
 {% block body %}
 
@@ -7,7 +7,7 @@
     <section class="top_margin text-center">
         <div class="container d-flex align-content-center align-items-center flex-column">
             <div class="left">
-                <h1 class="fw-bold bleu">Vous n'êtes pas autorisé !</h1>
+                <h1 class="fw-bold bleu">Un problème serveur est apparu, nous sommes entrain de résoudre ce problème</h1>
             </div>
             <div class="right">
                 <a href="{{ path('home') }}">Revenir à l'accueil</a>
