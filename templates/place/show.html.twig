@@ -91,7 +91,7 @@
 <!--MAP DE LA PLACE-->
 <div class="container-fluid position-relative">
   <div class="row flex-md-row flex-column-reverse">
-    <div id="roadview" class="col-md-8 col-sm-12 border border-5 border-white" style="height: 400px">
+    <div id="roadview" class="col-md-8 col-sm-12" style="height: 400px">
     </div> <!-- 로드뷰를 표시할 div 입니다 -->
     <div id="map" class="col-md-4 col-sm-12 position-relative" style="background-color: rgba(255, 255, 255, 0.808); min-height: 400px;" >
       <div style="position: absolute; top: 0; bottom: 0; left:0; right: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); z-index: 10;"></div>
@@ -125,10 +125,12 @@
         {% for message in app.flashes('message') %}
           <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
+        {% if (is_granted('IS_AUTHENTICATED_FULLY') and  app.user.pseudo == fd.user.pseudo ) %}
           <form method="post" class="position-absolute" style="right: 10px; bottom: 10px;">
             <input type="hidden" name="deletecomment" value="{{ fd.id }}" >
             <button onclick="return confirm('etes vous sûr de vouloir supprimer ce commentaire ?')" class="bg-transparent border-0"><i class="fas fa-trash-alt text-danger"></i></button>
           </form>
+        {% endif %}
             <a class="fw-bold" href="{{ path('user_show', {'pseudo': fd.user.pseudo}) }}"><i class="fas fa-user"></i> {{ fd.user.pseudo }} </a><br>
             <small class="text-decoration-underline">{{  fd.date }}</small>
         </div>

@@ -27,13 +27,14 @@
 
 <div id="main"></div>
 <!--NOS RECOMMANDATIONS-->
-{% if premiums | length > 0  %}
+{% if premiums | length > 0 %}
 <div class="container  mt-4">
   <h4 class="">Nos partenaires</h4>
   <a href="{{ path('carnet_de_route') }}?premium=Oui">Voir tout</a>
   <div class="swiper-container bigimg my-3">
   <div class="swiper-wrapper">
     {% for premium in premiums %}
+      {% if premium.statut != "Brouillon" %}
     <a href="{{ path('place_show', {'id' : premium.id } ) }}" class="swiper-slide" >
       <img class="shadow" src="{{ asset('./place/') }}{{ premium.images[0].name }}" alt="{{ premium.images[0].name }}">
       <p>
@@ -41,6 +42,7 @@
         {{ premium.title }}
       </p>
     </a>
+    {% endif %}
     {% endfor %}
   </div>
   <div class="swiper-button-next explor_next"></div>
@@ -67,13 +69,14 @@
 </div>
 </div>
 
+{% if lieuxinsolites | length > 0 %}
 <div class="border-bottom container" style="max-width: 90%;"></div>
-
 <div class="container  my-4">
   <h4 class="">Lieux insolites</h4>
   <div class="swiper-container explor_swiper mt-3">
   <div class="swiper-wrapper">
     {% for lieuxinsolite in lieuxinsolites %}
+      {% if lieuxinsolite.statut == "publié" %}
       <a href="{{ path('place_show', {'id' : lieuxinsolite.id} ) }} " class="swiper-slide" >
       <img class="shadow" src="{{ asset('./place/') }}{{ lieuxinsolite.images[0].name }}" alt="">
       <p>
@@ -81,15 +84,17 @@
         {{ lieuxinsolite.title }}
       </p>
     </a>
+    {% endif %}
     {% endfor %}
   </div>
   <div class="swiper-button-next explor_next "></div>
   <div class="swiper-button-prev explor_prev "></div>
 </div>
 </div>
+{% endif %}
 
+{% if natures | length > 0 %}
 <div class="border-bottom container" style="max-width: 90%;"></div>
-
 <div class="container  my-4">
   <h4 class="">Nature</h4>
   <div class="swiper-container explor_swiper mt-3">
@@ -108,7 +113,9 @@
   <div class="swiper-button-prev explor_prev "></div>
 </div>
 </div>
+{% endif %}
 
+{% if panoramas | length > 0 %}
 <div class="border-bottom container" style="max-width: 90%;"></div>
 
 <div class="container  my-4">
@@ -116,6 +123,7 @@
   <div class="swiper-container explor_swiper mt-3">
   <div class="swiper-wrapper">
     {% for panorama in panoramas %}
+      {% if panorama.statut == "publié" %}
     <a href="{{ path('place_show', {'id' : panorama.id} ) }} " class="swiper-slide" >
       <img class="shadow" src="{{ asset('./place/') }}{{ panorama.images[0].name }}" alt="">
       <p>
@@ -123,12 +131,14 @@
         {{ panorama.title }}
       </p>
     </a>
+      {% endif %}
       {% endfor %}
   </div>
   <div class="swiper-button-next explor_next "></div>
   <div class="swiper-button-prev explor_prev "></div>
 </div>
 </div>
+{% endif %}
 
 {% block javascrips %}
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>

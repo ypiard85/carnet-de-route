@@ -17,9 +17,27 @@
         {#{{ encore_entry_link_tags('app') }}#}
       {% endblock %}
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K6C3C1FZQR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-K6C3C1FZQR');
+</script>
+
     </head>
 
   <body>
+
+
+
+    <noscript>
+      <p>
+        Se site utilise javascript, veuillez activer javascrip sur votre ordinateur pour profiter des fonctionnalités
+      </p>
+    </noscript>
 
       <nav class="position-fixed top-0 w-100 bg-white shadow py-4">
         <div class="container align-items-center   d-flex justify-content-between">
