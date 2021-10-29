@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Entity\City;
 use App\Entity\Like;
@@ -14,11 +15,11 @@ use App\Data\SearchData;
 use App\Form\SearchType;
 use App\Entity\RouteLike;
 use App\Form\CommentType;
-use App\Repository\CategorieRepository;
 use App\Repository\CityRepository;
 use App\Repository\LikeRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\CommentRepository;
+use App\Repository\CategorieRepository;
 use App\Repository\RouteLikeRepository;
 use Nette\Application\Responses\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -107,6 +108,7 @@ class PlaceController extends AbstractController
             $place->setUser($this->getUser());
             $place->setStatut('brouillon');
             $place->setPremium(0);
+            $place->setCreatedAt(new \DateTime('now'));
             $em->persist($place);
             $em->flush();
 
@@ -217,7 +219,7 @@ class PlaceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash('lieu_edit_success', 'Votre lieu à été modifier avec sucess' );
-
+            $place->setUpdatedAt(new \DateTime('now'));
             $this->getDoctrine()->getManager()->flush();
 
         }

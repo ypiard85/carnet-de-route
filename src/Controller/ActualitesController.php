@@ -124,7 +124,7 @@ class ActualitesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash('messages', 'Actualite modifier avec success' );
-
+            $actualites->setUpdatedAt(new \DateTime('now'));
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('actualites');

@@ -39,6 +39,11 @@ class Actualites
      */
     private $actuImages;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->actuImages = new ArrayCollection();
@@ -118,6 +123,18 @@ class Actualites
     public function __toString(): string
     {
         return $this->actuImages;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
 }
